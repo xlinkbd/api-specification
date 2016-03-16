@@ -1126,6 +1126,9 @@
                                             "_links": {
                                                 "self": {
                                                     "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                },
+                                                "call": {
+                                                    "href": "/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
                                                 }
                                             },
                                             "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
@@ -1137,6 +1140,9 @@
                                             "_links": {
                                                 "self": {
                                                     "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                },
+                                                "call": {
+                                                    "href": "/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
                                                 }
                                             },
                                             "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
@@ -2740,6 +2746,14 @@
                                     "type": "string"
                                 }
                             }
+                        },
+                        "call": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
                 },
@@ -2761,6 +2775,9 @@
                 "_links": {
                     "self": {
                         "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    },
+                    "call": {
+                        "href": "/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
                     }
                 },
                 "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
