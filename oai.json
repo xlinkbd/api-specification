@@ -66,6 +66,51 @@
                                 {
                                     "type": "object",
                                     "properties": {
+                                        "_links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "self": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "next": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "prev": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "first": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "last": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "href": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
                                         "count": {
                                             "type": "string"
                                         },
@@ -75,10 +120,15 @@
                                         "page_offset": {
                                             "type": "string"
                                         },
-                                        "applications": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/applicationResponse"
+                                        "_embedded": {
+                                            "type": "object",
+                                            "properties": {
+                                                "applications": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/definitions/applicationResponse"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -90,23 +140,50 @@
                         },
                         "examples": {
                             "application/json": {
+                                "_links": {
+                                    "self": {
+                                        "href": "/applications?page_offset=10"
+                                    },
+                                    "next": {
+                                        "href": "/applications?page_offset=20"
+                                    },
+                                    "prev": {
+                                        "href": "/applications"
+                                    },
+                                    "first": {
+                                        "href": "/applications"
+                                    },
+                                    "last": {
+                                        "href": "/applications?page_offset=50"
+                                    }
+                                },
                                 "count": "1020",
                                 "page_size": "50",
                                 "page_offset": "150",
-                                "applications": [
-                                    {
-                                        "name": "Nexmo-conference",
-                                        "application_id": "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                                        "numberpool_id": "10",
-                                        "answer_url": "http://myanswerurl.com",
-                                        "answer_method": "GET",
-                                        "backup_url": "http://mybackupurll.com",
-                                        "backup_method": "GET",
-                                        "event_url": "http://myeventurl.com",
-                                        "event_method": "GET",
-                                        "application_type": "voice"
-                                    }
-                                ]
+                                "_embedded": {
+                                    "applications": [
+                                        {
+                                            "_links": {
+                                                "numberpool": {
+                                                    "href": "/numberpools/10"
+                                                },
+                                                "self": {
+                                                    "href": "/applications/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                }
+                                            },
+                                            "name": "Nexmo-conference",
+                                            "application_id": "63f61863-4a51-4f6b-86e1-46edebcf9356",
+                                            "numberpool_id": "10",
+                                            "answer_url": "http://myanswerurl.com",
+                                            "answer_method": "GET",
+                                            "backup_url": "http://mybackupurll.com",
+                                            "backup_method": "GET",
+                                            "event_url": "http://myeventurl.com",
+                                            "event_method": "GET",
+                                            "application_type": "voice"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -537,10 +614,15 @@
                                         "page_offset": {
                                             "type": "string"
                                         },
-                                        "calls": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/callResponse"
+                                        "_embedded": {
+                                            "type": "object",
+                                            "properties": {
+                                                "calls": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/definitions/callResponse"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -572,20 +654,27 @@
                                 "count": "2",
                                 "page_size": "10",
                                 "page_offset": "10",
-                                "calls": [
-                                    {
-                                        "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                                        "to": "447833726118",
-                                        "from": "27312076887",
-                                        "call_status": "in_progress",
-                                        "rate": "0.39",
-                                        "price": "",
-                                        "duration": "",
-                                        "start_time": "2015-02-04 22:45:00",
-                                        "end_time": "",
-                                        "network": "65512"
-                                    }
-                                ]
+                                "_embedded": {
+                                    "calls": [
+                                        {
+                                            "_links": {
+                                                "self": {
+                                                    "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                }
+                                            },
+                                            "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
+                                            "to": "447833726118",
+                                            "from": "27312076887",
+                                            "call_status": "in_progress",
+                                            "rate": "0.39",
+                                            "price": "",
+                                            "duration": "",
+                                            "start_time": "2015-02-04 22:45:00",
+                                            "end_time": "",
+                                            "network": "65512"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -990,10 +1079,15 @@
                                         "size": {
                                             "type": "string"
                                         },
-                                        "recordings": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/recordingResponse"
+                                        "_embedded": {
+                                            "type": "object",
+                                            "properties": {
+                                                "recordings": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/definitions/recordingResponse"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1026,20 +1120,32 @@
                                 "total": "193",
                                 "page": "2",
                                 "size": "10",
-                                "recordings": [
-                                    {
-                                        "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
-                                        "call_uuid": "ssf61863-4a51-ef6b-11e1-w6edebcf93bb",
-                                        "recording_time": "2015-02-04 22:45:00",
-                                        "duration": "1301"
-                                    },
-                                    {
-                                        "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
-                                        "call_uuid": "ssf61863-4a51-ef6b-11e1-w6edebcf93bb",
-                                        "recording_time": "2015-02-04 22:45:00",
-                                        "duration": "1301"
-                                    }
-                                ]
+                                "_embedded": {
+                                    "recordings": [
+                                        {
+                                            "_links": {
+                                                "self": {
+                                                    "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                }
+                                            },
+                                            "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
+                                            "call_uuid": "ssf61863-4a51-ef6b-11e1-w6edebcf93bb",
+                                            "recording_time": "2015-02-04 22:45:00",
+                                            "duration": "1301"
+                                        },
+                                        {
+                                            "_links": {
+                                                "self": {
+                                                    "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                }
+                                            },
+                                            "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
+                                            "call_uuid": "ssf61863-4a51-ef6b-11e1-w6edebcf93bb",
+                                            "recording_time": "2015-02-04 22:45:00",
+                                            "duration": "1301"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -1383,10 +1489,15 @@
                                         "page_offset": {
                                             "type": "string"
                                         },
-                                        "conferences": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/conferenceResponse"
+                                        "_embedded": {
+                                            "type": "object",
+                                            "properties": {
+                                                "conferences": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/definitions/conferenceResponse"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1418,22 +1529,39 @@
                                 "count": "2",
                                 "page_size": "50",
                                 "page_offset": "0",
-                                "conferences": [
-                                    {
-                                        "conference_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                                        "status": "in_progress",
-                                        "start_time": "2015-02-04T22:45:00Z",
-                                        "end_time": "",
-                                        "participants_count": "5",
-                                        "participants_uuid": [
-                                            "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                                            "63f61863-4a51-4f6b-23e1-46edebcf9352",
-                                            "43f61863-4a51-4f6b-12e1-46edebcf9312",
-                                            "23f61863-4a51-4f6b-82e1-46edebcf9323",
-                                            "43f61863-4a51-4f6b-4e1-46edebcf93545"
-                                        ]
-                                    }
-                                ]
+                                "_embedded": {
+                                    "conferences": [
+                                        {
+                                            "_links": {
+                                                "self": {
+                                                    "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                },
+                                                "participants": [
+                                                    {
+                                                        "href": "/participants/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                    },
+                                                    {
+                                                        "href": "/participants/63f61863-4a51-4f6b-23e1-46edebcf9352"
+                                                    },
+                                                    {
+                                                        "href": "/participants/43f61863-4a51-4f6b-12e1-46edebcf9312"
+                                                    },
+                                                    {
+                                                        "href": "/participants/23f61863-4a51-4f6b-82e1-46edebcf9323"
+                                                    },
+                                                    {
+                                                        "href": "/participants/43f61863-4a51-4f6b-4e1-46edebcf93545"
+                                                    }
+                                                ]
+                                            },
+                                            "conference_uuid": "13f61863-4a51-4f6b-86e1-46edebcf9356",
+                                            "status": "in_progress",
+                                            "start_time": "2015-02-04T22:45:00Z",
+                                            "end_time": "",
+                                            "participants_count": "5"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -1738,10 +1866,15 @@
                                         "page_offset": {
                                             "type": "string"
                                         },
-                                        "participants": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/definitions/participantResponse"
+                                        "_embedded": {
+                                            "type": "object",
+                                            "properties": {
+                                                "participants": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "$ref": "#/definitions/participantResponse"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -1773,23 +1906,33 @@
                                 "count": "2",
                                 "page_size": "50",
                                 "page_offset": "0",
-                                "participants": [
-                                    {
-                                        "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                                        "to": "447833726118",
-                                        "from": "27312076887",
-                                        "call_status": "in-progress",
-                                        "vol": "0",
-                                        "mute": "false",
-                                        "earmuff": "false",
-                                        "rate": "0.39",
-                                        "price": "",
-                                        "duration": "",
-                                        "start_time": "2015-02-04T22:45:00Z",
-                                        "end_time": "",
-                                        "network": "65512"
-                                    }
-                                ]
+                                "_embedded": {
+                                    "participants": [
+                                        {
+                                            "_links": {
+                                                "call": {
+                                                    "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                },
+                                                "self": {
+                                                    "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1"
+                                                }
+                                            },
+                                            "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
+                                            "to": "447833726118",
+                                            "from": "27312076887",
+                                            "call_status": "in-progress",
+                                            "vol": "0",
+                                            "mute": "false",
+                                            "earmuff": "false",
+                                            "rate": "0.39",
+                                            "price": "",
+                                            "duration": "",
+                                            "start_time": "2015-02-04T22:45:00Z",
+                                            "end_time": "",
+                                            "network": "65512"
+                                        }
+                                    ]
+                                }
                             }
                         }
                     }
@@ -2307,11 +2450,40 @@
                     "properties": {
                         "application_id": {
                             "type": "string"
+                        },
+                        "_links": {
+                            "type": "object",
+                            "properties": {
+                                "numberpool": {
+                                    "type": "object",
+                                    "properties": {
+                                        "href": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "self": {
+                                    "type": "object",
+                                    "properties": {
+                                        "href": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             ],
             "example": {
+                "_links": {
+                    "numberpool": {
+                        "href": "/numberpools/10"
+                    },
+                    "self": {
+                        "href": "/applications/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    }
+                },
                 "name": "Nexmo-conference",
                 "application_id": "63f61863-4a51-4f6b-86e1-46edebcf9356",
                 "numberpool_id": "10",
@@ -2424,13 +2596,26 @@
         "callResponse": {
             "type": "object",
             "properties": {
+                "_links": {
+                    "type": "object",
+                    "properties": {
+                        "self": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
+                "call_uuid": {
+                    "type": "string"
+                },
                 "to": {
                     "type": "string"
                 },
                 "from": {
-                    "type": "string"
-                },
-                "call_uuid": {
                     "type": "string"
                 },
                 "call_status": {
@@ -2456,6 +2641,11 @@
                 }
             },
             "example": {
+                "_links": {
+                    "self": {
+                        "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    }
+                },
                 "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
                 "to": "447833726118",
                 "from": "27312076887",
@@ -2540,6 +2730,19 @@
         "recordingResponse": {
             "type": "object",
             "properties": {
+                "_links": {
+                    "type": "object",
+                    "properties": {
+                        "self": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
                 "recording_url": {
                     "type": "string"
                 },
@@ -2555,6 +2758,11 @@
                 }
             },
             "example": {
+                "_links": {
+                    "self": {
+                        "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    }
+                },
                 "recording_url": "https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3",
                 "call_uuid": "ssf61863-4a51-ef6b-11e1-w6edebcf93bb",
                 "recording_time": "2015-02-04 22:45:00",
@@ -2564,6 +2772,30 @@
         "conferenceResponse": {
             "type": "object",
             "properties": {
+                "_links": {
+                    "type": "object",
+                    "properties": {
+                        "self": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "participants": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "conference_uuid": {
                     "type": "string"
                 },
@@ -2578,27 +2810,36 @@
                 },
                 "participants_count": {
                     "type": "string"
-                },
-                "participants_uuid": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 }
             },
             "example": {
-                "conference_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
+                "_links": {
+                    "self": {
+                        "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356"
+                    },
+                    "participants": [
+                        {
+                            "href": "/participants/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                        },
+                        {
+                            "href": "/participants/63f61863-4a51-4f6b-23e1-46edebcf9352"
+                        },
+                        {
+                            "href": "/participants/43f61863-4a51-4f6b-12e1-46edebcf9312"
+                        },
+                        {
+                            "href": "/participants/23f61863-4a51-4f6b-82e1-46edebcf9323"
+                        },
+                        {
+                            "href": "/participants/43f61863-4a51-4f6b-4e1-46edebcf93545"
+                        }
+                    ]
+                },
+                "conference_uuid": "13f61863-4a51-4f6b-86e1-46edebcf9356",
                 "status": "in_progress",
                 "start_time": "2015-02-04T22:45:00Z",
                 "end_time": "",
-                "participants_count": "5",
-                "participants_uuid": [
-                    "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                    "63f61863-4a51-4f6b-23e1-46edebcf9352",
-                    "43f61863-4a51-4f6b-12e1-46edebcf9312",
-                    "23f61863-4a51-4f6b-82e1-46edebcf9323",
-                    "43f61863-4a51-4f6b-4e1-46edebcf93545"
-                ]
+                "participants_count": "5"
             }
         },
         "recordingBase": {
@@ -2668,6 +2909,27 @@
         "participantResponse": {
             "type": "object",
             "properties": {
+                "_links": {
+                    "type": "object",
+                    "properties": {
+                        "call": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "self": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                },
                 "call_uuid": {
                     "type": "string"
                 },
@@ -2709,6 +2971,14 @@
                 }
             },
             "example": {
+                "_links": {
+                    "call": {
+                        "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    },
+                    "self": {
+                        "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1"
+                    }
+                },
                 "call_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
                 "to": "447833726118",
                 "from": "27312076887",
@@ -2881,6 +3151,38 @@
         "whisperResponse": {
             "type": "object",
             "properties": {
+                "_links": {
+                    "type": "object",
+                    "properties": {
+                        "parent": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "self": {
+                            "type": "object",
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "participants": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "href": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
                 "conference_uuid": {
                     "type": "string"
                 },
@@ -2898,26 +3200,34 @@
                 },
                 "participants_count": {
                     "type": "string"
-                },
-                "participants_uuid": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 }
             },
             "example": {
+                "_links": {
+                    "parent": {
+                        "href": "/conferences/35f61863-4a51-4f6b-86e1-46edebcf93ad"
+                    },
+                    "self": {
+                        "href": "/conferences/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                    },
+                    "participants": [
+                        {
+                            "href": "/participants/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                        },
+                        {
+                            "href": "/participants/63f61863-4a51-4f6b-23e1-46edebcf9352"
+                        },
+                        {
+                            "href": "/participants/43f61863-4a51-4f6b-12e1-46edebcf9312"
+                        }
+                    ]
+                },
                 "conference_uuid": "63f61863-4a51-4f6b-86e1-46edebcf9356",
                 "parent_conference_uuid": "35f61863-4a51-4f6b-86e1-46edebcf93ad",
                 "status": "in_progress",
                 "start_time": "2015-02-04T22:45:00Z",
                 "end_time": "",
-                "participants_count": "3",
-                "participants_uuid": [
-                    "63f61863-4a51-4f6b-86e1-46edebcf9356",
-                    "63f61863-4a51-4f6b-23e1-46edebcf9352",
-                    "43f61863-4a51-4f6b-4e1-46edebcf93545"
-                ]
+                "participants_count": "3"
             }
         }
     }
