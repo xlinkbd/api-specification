@@ -26,18 +26,21 @@
                         "type": "string"
                     },
                     {
+                        "default": false,
                         "description": "\nOption to only return the record count. Options are ‘true’ or ‘false’. Defaults to false.",
                         "in": "query",
                         "name": "count",
                         "type": "boolean"
                     },
                     {
+                        "default": 10,
                         "description": "The number of records to limit the response to.",
                         "in": "query",
                         "name": "page_size",
                         "type": "number"
                     },
                     {
+                        "default": 0,
                         "description": "Offset of the first record. ",
                         "in": "query",
                         "name": "page_offset",
@@ -244,9 +247,7 @@
         },
         "/applications/{app_uuid}": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Delete an existing application.",
                 "operationId": "DELETE_applications-app_uuid",
                 "parameters": [
@@ -275,9 +276,7 @@
                 ]
             },
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get details of an existing application.\n",
                 "operationId": "GET_applications-app_uuid",
                 "parameters": [],
@@ -374,9 +373,7 @@
         },
         "/calls": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get details of all calls with filters for status and pagination.",
                 "operationId": "GET_calls",
                 "parameters": [
@@ -404,18 +401,21 @@
                         "type": "string"
                     },
                     {
+                        "default": false,
                         "description": "\nOption to only return the record count. Options are ‘true’ or ‘false’. Defaults to false",
                         "in": "query",
                         "name": "count",
                         "type": "boolean"
                     },
                     {
+                        "default": 10,
                         "description": "The number of records to limit the response to. Defaults to 10",
                         "in": "query",
                         "name": "page_size",
                         "type": "integer"
                     },
                     {
+                        "default": 0,
                         "description": "Offset of the first record. Defaults to 0",
                         "in": "query",
                         "name": "page_offset",
@@ -613,13 +613,12 @@
         },
         "/calls/recordings": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get all recordings hosted by Nexmo.",
                 "operationId": "GET_calls-recordings",
                 "parameters": [
                     {
+                        "default": false,
                         "description": "Option to only return the record count. Options are ‘true’ or ‘false’. Defaults to false.",
                         "in": "query",
                         "name": "count",
@@ -644,12 +643,14 @@
                         "type": "string"
                     },
                     {
+                        "default": 10,
                         "description": "The number of records to limit the response to. Defaults to 10",
                         "in": "query",
                         "name": " page_size",
                         "type": "integer"
                     },
                     {
+                        "default": 0,
                         "description": "Offset of the first record. Defaults to 0",
                         "in": "query",
                         "name": "page_offset",
@@ -810,9 +811,7 @@
         },
         "/calls/recordings/{recording_uuid}": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get details of a specific recording currently hosted by Nexmo.",
                 "operationId": "GET_calls-recordings-recording_uuid",
                 "parameters": [],
@@ -850,9 +849,7 @@
         },
         "/calls/{call_uuid}": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Hang up a current live call.",
                 "operationId": "DELETE_calls-call_uuid",
                 "parameters": [],
@@ -873,9 +870,7 @@
                 ]
             },
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get details of a specific call.",
                 "operationId": "GET_calls-call_uuid",
                 "parameters": [],
@@ -1080,11 +1075,9 @@
         },
         "/calls/{call_uuid}/recordings": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop recording a call and return parameters to `event_url`.",
-                "operationId": "DELETE_calls-callId-recordings",
+                "operationId": "DELETE_calls-call_uuid-recordings",
                 "parameters": [],
                 "produces": [
                     "application/json"
@@ -1161,9 +1154,7 @@
         },
         "/calls/{call_uuid}/stream": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop streaming an audio file to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-stream",
                 "parameters": [
@@ -1236,7 +1227,34 @@
                 ],
                 "description": "Start streaming an audio file to a live call or call leg. Supported formats are mp3, wav and ogg.",
                 "operationId": "POST_calls-call_uuid-stream",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "leg": {
+                                            "default": "both",
+                                            "description": "Which part of the call to stream the audio file to. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
+                                            "enum": [
+                                                "a_leg",
+                                                "b_leg",
+                                                "both"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "$ref": "#/definitions/streamRequest"
+                                }
+                            ]
+                        }
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -1256,9 +1274,7 @@
         },
         "/calls/{call_uuid}/talk": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop text to speech to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-talk",
                 "parameters": [
@@ -1352,7 +1368,34 @@
                 ],
                 "description": "Start text to speech to a live call or call leg.",
                 "operationId": "POST_calls-call_uuid-talk",
-                "parameters": [],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "leg": {
+                                            "default": "both",
+                                            "description": "Which part of the call to send TTS. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
+                                            "enum": [
+                                                "a_leg",
+                                                "b_leg",
+                                                "both"
+                                            ],
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "$ref": "#/definitions/ttsRequest"
+                                }
+                            ]
+                        }
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -1518,9 +1561,7 @@
         },
         "/conferences": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Get a list of all the currently active conferences with pagination information.",
                 "operationId": "GET_conferences",
                 "parameters": [
@@ -1548,18 +1589,21 @@
                         "type": "string"
                     },
                     {
+                        "default": false,
                         "description": "\nOption to only return the record count. Options are ‘true’ or ‘false’. Defaults to false",
                         "in": "query",
                         "name": "count",
                         "type": "boolean"
                     },
                     {
+                        "default": 10,
                         "description": "The number of records to limit the response to. Defaults to 10",
                         "in": "query",
                         "name": "page_size",
                         "type": "integer"
                     },
                     {
+                        "default": 0,
                         "description": "Offset of the first record. Defaults to 0",
                         "in": "query",
                         "name": "page_offset",
@@ -1723,9 +1767,7 @@
         },
         "/conferences/{conference_uuid}": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Ends an existing conference.",
                 "operationId": "DELETE_conferences-conference_uuid",
                 "parameters": [],
@@ -1746,9 +1788,7 @@
                 ]
             },
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Returns the details of an existing conference.",
                 "operationId": "GET_conferences-conference_uuid",
                 "parameters": [],
@@ -1786,9 +1826,7 @@
         },
         "/conferences/{conference_uuid}/participants": {
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Returns all participants in an existing conference.",
                 "operationId": "GET_conferences-conference_uuid-participants",
                 "parameters": [],
@@ -1944,9 +1982,7 @@
         },
         "/conferences/{conference_uuid}/participants/{participant_id}": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Remove a participant from the conference.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id",
                 "parameters": [],
@@ -1967,9 +2003,7 @@
                 ]
             },
             "get": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Returns the details of an existing participant in an existing conference.",
                 "operationId": "GET_conferences-conference_uuid-participants-participant_id",
                 "parameters": [],
@@ -2077,9 +2111,7 @@
         },
         "/conferences/{conference_uuid}/participants/{participant_id}/stream": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop streaming an audio file to a conference participant.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id-stream",
                 "parameters": [],
@@ -2194,9 +2226,7 @@
         },
         "/conferences/{conference_uuid}/recordings": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop recording a call and return parameters to `event_url`.",
                 "operationId": "DELETE_conferences-conference_uuid-recordings",
                 "parameters": [],
@@ -2275,9 +2305,7 @@
         },
         "/conferences/{conference_uuid}/stream": {
             "delete": {
-                "consumes": [
-                    "application/json"
-                ],
+                "consumes": [],
                 "description": "Stop streaming an audio file to a conference.",
                 "operationId": "DELETE_conferences-conference_uuid-stream",
                 "parameters": [
