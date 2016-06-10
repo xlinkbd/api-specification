@@ -11,11 +11,132 @@
         "description": "##OAI Specification of Nexmo's APIs."
     },
     "paths": {
-        "/applications": {
+        "/account": {
             "get": {
                 "consumes": [
                     "application/json"
                 ],
+                "description": "",
+                "operationId": "GET_account",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Get Account Settings",
+                "tags": [
+                    "Settings"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_account",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Update Account Settings (Partial)",
+                "tags": [
+                    "Settings"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_account",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Replace Account Settings",
+                "tags": [
+                    "Settings"
+                ]
+            }
+        },
+        "/account/balance": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_account-balance",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Get Balance",
+                "tags": [
+                    "Balance"
+                ]
+            },
+            "parameters": []
+        },
+        "/account/payments": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_account-payments",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "List Past Payments",
+                "tags": [
+                    "Balance"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_account-payments",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Top Up Account",
+                "tags": [
+                    "Balance"
+                ]
+            }
+        },
+        "/applications": {
+            "get": {
+                "consumes": [],
                 "description": "Get details of all apps associated with an account.",
                 "operationId": "GET_applications",
                 "parameters": [
@@ -2444,6 +2565,222 @@
                     "Conference"
                 ]
             }
+        },
+        "/messages": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_messages",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search / List Messages",
+                "tags": [
+                    "Messages"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Create Message",
+                "tags": [
+                    "Messages"
+                ]
+            }
+        },
+        "/messages/{message_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_messages-message_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Get Message"
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "message_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/numbers": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_numbers",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "List Numbers",
+                "tags": [
+                    "Numbers"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_numbers",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Purchase Number",
+                "tags": [
+                    "Numbers"
+                ]
+            }
+        },
+        "/numbers/available ": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_numbers-available",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search Available Numbers",
+                "tags": [
+                    "Numbers"
+                ]
+            },
+            "parameters": []
+        },
+        "/numbers/{number_uuid}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "DELETE_numbers-number_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Release Number"
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "number_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_numbers-number_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Update Number Settings"
+            }
+        },
+        "/pricing/message": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_pricing-message",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search Message Pricing",
+                "tags": [
+                    "Pricing"
+                ]
+            },
+            "parameters": []
+        },
+        "/pricing/voice": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_pricing-voice",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search Voice Pricing",
+                "tags": [
+                    "Pricing"
+                ]
+            },
+            "parameters": []
         }
     },
     "definitions": {
