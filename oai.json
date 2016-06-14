@@ -2566,6 +2566,73 @@
                 ]
             }
         },
+        "/insights": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_insights",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search / List Insight Requests",
+                "tags": [
+                    "Insight"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_insights",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Start Inishgt Request",
+                "tags": [
+                    "Insight"
+                ]
+            }
+        },
+        "/insights/{insight_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_insights-insight_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Get Insight Status / Information"
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "insight_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
         "/messages": {
             "get": {
                 "consumes": [
@@ -2607,6 +2674,50 @@
                 ]
             }
         },
+        "/messages/2fa": {
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-2fa",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Create 2FA Message (US ShortCode)",
+                "tags": [
+                    "Messages"
+                ]
+            }
+        },
+        "/messages/alert": {
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-alert",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Create Alert Message (US ShortCode)",
+                "tags": [
+                    "Messages"
+                ]
+            }
+        },
         "/messages/{message_uuid}": {
             "get": {
                 "consumes": [
@@ -2632,6 +2743,32 @@
                     "type": "string"
                 }
             ]
+        },
+        "/messages/{message_uuid}/conversion": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "message_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-message_uuid-conversion",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Report Message Conversion"
+            }
         },
         "/numbers": {
             "get": {
@@ -2781,6 +2918,115 @@
                 ]
             },
             "parameters": []
+        },
+        "/verifications": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_verifications",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Search / List Verifications",
+                "tags": [
+                    "Verification"
+                ]
+            },
+            "parameters": [],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_verifications",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Start a Verification Process",
+                "tags": [
+                    "Verification"
+                ]
+            }
+        },
+        "/verifications/{verification_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_verifications-verification_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Get Verification"
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "verification_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_verifications-verification_uuid",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Modify Verification"
+            }
+        },
+        "/verifications/{verification_uuid}/checks": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "verification_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_verifications-verification_uuid-checks",
+                "parameters": [],
+                "produces": [],
+                "responses": {
+                    "default": {
+                        "description": "",
+                        "schema": {}
+                    }
+                },
+                "summary": "Check Verification"
+            }
         }
     },
     "definitions": {
