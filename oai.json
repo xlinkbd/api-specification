@@ -16,39 +16,16 @@
                 "consumes": [
                     "application/json"
                 ],
-                "description": "",
+                "description": "Provide access to:\r\n- API Keys / Global Callbacks\r\n- Default HTTP Method\r\n- Throttling / Features / Etc\r\n- (future) Currency Preference",
                 "operationId": "GET_account",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Get Account Settings",
                 "tags": [
-                    "Settings"
-                ]
-            },
-            "parameters": [],
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_account",
-                "parameters": [],
-                "produces": [],
-                "responses": {
-                    "default": {
-                        "description": "",
-                        "schema": {}
-                    }
-                },
-                "summary": "Update Account Settings (Partial)",
-                "tags": [
-                    "Settings"
+                    "Account"
                 ]
             },
             "put": {
@@ -57,17 +34,14 @@
                 ],
                 "description": "",
                 "operationId": "PUT_account",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Replace Account Settings",
+                "summary": "Update Account",
                 "tags": [
-                    "Settings"
+                    "Account"
                 ]
             }
         },
@@ -77,66 +51,228 @@
                     "application/json"
                 ],
                 "description": "",
-                "operationId": "GET_account-balance",
-                "parameters": [],
-                "produces": [],
+                "operationId": "get-balance",
+                "parameters": [
+                    {
+                        "default": "EUR",
+                        "enum": [
+                            "EUR",
+                            "USD"
+                        ],
+                        "in": "query",
+                        "name": "currency",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Get Balance",
                 "tags": [
-                    "Balance"
+                    "Account"
                 ]
-            },
-            "parameters": []
+            }
         },
-        "/account/payments": {
+        "/account/secondaries": {
             "get": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
-                "operationId": "GET_account-payments",
-                "parameters": [],
-                "produces": [],
+                "operationId": "GET_account-secondaries",
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "List Past Payments",
+                "summary": "List Secondary Accounts",
                 "tags": [
-                    "Balance"
+                    "Account"
+                ]
+            }
+        },
+        "/account/secondaries/{key}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Provide access to:\r\n- API Keys / Global Callbacks\r\n- Default HTTP Method\r\n- Throttling / Features / Etc\r\n- (future) Currency Prefrenece",
+                "operationId": "GET_account-secondaries-key",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Secondary Account",
+                "tags": [
+                    "Account"
                 ]
             },
-            "parameters": [],
-            "post": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "key",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
-                "operationId": "POST_account-payments",
-                "parameters": [],
-                "produces": [],
+                "operationId": "PUT_account-secondaries-key",
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Top Up Account",
+                "summary": "Update Secondary Account",
                 "tags": [
-                    "Balance"
+                    "Account"
+                ]
+            }
+        },
+        "/alerts": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Create an alert to a phone / email / url based on alert criteria.",
+                "operationId": "get_alerts",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "properties": {
+                                        "_embedded": {
+                                            "properties": {
+                                                "alerts": {
+                                                    "items": {},
+                                                    "type": "array"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                {
+                                    "$ref": "#/definitions/hal"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "summary": "Search / List Account Alerts",
+                "tags": [
+                    "Alerts"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Create an alert to a phone / email / url based on alert criteria.",
+                "operationId": "create_alert",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/alert-endpoint"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/alert-endpoint"
+                        }
+                    }
+                },
+                "summary": "Create Account Alert",
+                "tags": [
+                    "Alerts"
+                ]
+            }
+        },
+        "/alerts/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "get_alert",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/alert-endpoint"
+                        }
+                    }
+                },
+                "summary": "Get Account Alert",
+                "tags": [
+                    "Alerts"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "update_alert",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "$ref": "#/definitions/alert-endpoint"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/alert-endpoint"
+                        }
+                    }
+                },
+                "summary": "Update Account Alert",
+                "tags": [
+                    "Alerts"
                 ]
             }
         },
         "/applications": {
             "get": {
-                "consumes": [],
                 "description": "Get details of all apps associated with an account.",
                 "operationId": "GET_applications",
                 "parameters": [
@@ -312,7 +448,6 @@
                     "Application"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/x-www-form-urlencoded"
@@ -368,18 +503,8 @@
         },
         "/applications/{app_uuid}": {
             "delete": {
-                "consumes": [],
                 "description": "Delete an existing application.",
                 "operationId": "DELETE_applications-app_uuid",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "$ref": "#/definitions/applicationRequest"
-                        }
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -397,10 +522,8 @@
                 ]
             },
             "get": {
-                "consumes": [],
                 "description": "Get details of an existing application.\n",
                 "operationId": "GET_applications-app_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -494,7 +617,6 @@
         },
         "/calls": {
             "get": {
-                "consumes": [],
                 "description": "Get details of all calls with filters for status and pagination.",
                 "operationId": "GET_calls",
                 "parameters": [
@@ -673,12 +795,11 @@
                         }
                     }
                 },
-                "summary": "List Calls",
+                "summary": "Search / List Calls",
                 "tags": [
                     "Call"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/x-www-form-urlencoded"
@@ -734,7 +855,6 @@
         },
         "/calls/recordings": {
             "get": {
-                "consumes": [],
                 "description": "Get all recordings hosted by Nexmo.",
                 "operationId": "GET_calls-recordings",
                 "parameters": [
@@ -927,15 +1047,12 @@
                 "tags": [
                     "Recording"
                 ]
-            },
-            "parameters": []
+            }
         },
         "/calls/recordings/{recording_uuid}": {
             "get": {
-                "consumes": [],
                 "description": "Get details of a specific recording currently hosted by Nexmo.",
                 "operationId": "GET_calls-recordings-recording_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -970,10 +1087,8 @@
         },
         "/calls/{call_uuid}": {
             "delete": {
-                "consumes": [],
                 "description": "Hang up a current live call.",
                 "operationId": "DELETE_calls-call_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -991,10 +1106,8 @@
                 ]
             },
             "get": {
-                "consumes": [],
                 "description": "Get details of a specific call.",
                 "operationId": "GET_calls-call_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -1034,53 +1147,54 @@
                 "operationId": "PUT_calls-call_uuid",
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "leg": {
-                                    "default": "both",
-                                    "description": "Leg of the call to perform the action on. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
-                                    "enum": [
-                                        "a_leg",
-                                        "b_leg",
-                                        "both"
-                                    ],
-                                    "type": "string"
-                                },
-                                "orphan_action": {
-                                    "default": "hangup",
-                                    "description": "What to do with orphan legs if ‘leg’ is not ‘both’. Options are ‘transfer’ or ‘hangup’. Defaults to ‘hangup’",
-                                    "enum": [
-                                        "transfer",
-                                        "hangup"
-                                    ],
-                                    "type": "string"
-                                },
-                                "orphan_method": {
-                                    "default": "POST",
-                                    "description": "HTTP method that is used to make the request. Defaults to POST",
-                                    "type": "string"
-                                },
-                                "orphan_url": {
-                                    "description": "URL that gets called if orphan_action is ‘transfer’",
-                                    "type": "string"
-                                },
-                                "transfer_method": {
-                                    "default": "POST",
-                                    "description": "HTTP method used to make the request. Defaults to POST",
-                                    "type": "string"
-                                },
-                                "transfer_url": {
-                                    "description": "\nURL that gets called by transferred leg or call. Should return a Nexmo Call Control Object\n",
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "transfer_url"
-                            ],
-                            "type": "object"
-                        }
+                        "default": "both",
+                        "description": "Leg of the call to perform the action on. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
+                        "enum": [
+                            "a_leg",
+                            "b_leg",
+                            "both"
+                        ],
+                        "in": "formData",
+                        "name": "leg",
+                        "type": "string"
+                    },
+                    {
+                        "description": "\nURL that gets called by transferred leg or call. Should return a Nexmo Call Control Object\n",
+                        "in": "formData",
+                        "name": "transfer_url",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "POST",
+                        "description": "HTTP method used to make the request. Defaults to POST",
+                        "in": "formData",
+                        "name": "transfer_method",
+                        "type": "string"
+                    },
+                    {
+                        "default": "hangup",
+                        "description": "What to do with orphan legs if ‘leg’ is not ‘both’. Options are ‘transfer’ or ‘hangup’. Defaults to ‘hangup’",
+                        "enum": [
+                            "transfer",
+                            "hangup"
+                        ],
+                        "in": "formData",
+                        "name": "orphan_action",
+                        "type": "string"
+                    },
+                    {
+                        "description": "URL that gets called if orphan_action is ‘transfer’",
+                        "in": "formData",
+                        "name": "orphan_url",
+                        "type": "string"
+                    },
+                    {
+                        "default": "POST",
+                        "description": "HTTP method that is used to make the request. Defaults to POST",
+                        "in": "formData",
+                        "name": "orphan_method",
+                        "type": "string"
                     }
                 ],
                 "produces": [
@@ -1140,41 +1254,36 @@
                 "operationId": "POST_calls-call_uuid-dtmf",
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "digits": {
-                                    "description": "Comma separated list of digits to send.",
-                                    "maxLength": 1500,
-                                    "minLength": 0,
-                                    "type": "string"
-                                },
-                                "leg": {
-                                    "default": "both",
-                                    "description": "Which part of the call to send TTS. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
-                                    "enum": [
-                                        "a_leg",
-                                        "b_leg",
-                                        "both"
-                                    ],
-                                    "type": "string"
-                                },
-                                "method": {
-                                    "default": "out",
-                                    "description": "Whether to send DTMF inband or RFC2833. Options are ‘in’ for inband or ‘out’ for out of band. Defaults to ‘out’. ",
-                                    "enum": [
-                                        "in",
-                                        "out"
-                                    ],
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "digits"
-                            ],
-                            "type": "object"
-                        }
+                        "default": "both",
+                        "description": "Which part of the call to send TTS. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
+                        "enum": [
+                            "a_leg",
+                            "b_leg",
+                            "both"
+                        ],
+                        "in": "formData",
+                        "name": "leg",
+                        "type": "string"
+                    },
+                    {
+                        "description": "Comma separated list of digits to send.",
+                        "in": "formData",
+                        "maxLength": 1500,
+                        "minLength": 0,
+                        "name": "digits",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "default": "out",
+                        "description": "Whether to send DTMF inband or RFC2833. Options are ‘in’ for inband or ‘out’ for out of band. Defaults to ‘out’. ",
+                        "enum": [
+                            "in",
+                            "out"
+                        ],
+                        "in": "formData",
+                        "name": "method",
+                        "type": "string"
                     }
                 ],
                 "produces": [
@@ -1190,16 +1299,14 @@
                 },
                 "summary": "Send DTMF",
                 "tags": [
-                    "DTMF"
+                    "DTMF and TTS"
                 ]
             }
         },
         "/calls/{call_uuid}/recordings": {
             "delete": {
-                "consumes": [],
                 "description": "Stop recording a call and return parameters to `event_url`.",
                 "operationId": "DELETE_calls-call_uuid-recordings",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -1275,49 +1382,8 @@
         },
         "/calls/{call_uuid}/stream": {
             "delete": {
-                "consumes": [],
                 "description": "Stop streaming an audio file to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-stream",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "leg": {
-                                    "default": "both",
-                                    "description": "Which part of the call to stream the audio file to. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
-                                    "enum": [
-                                        "a_leg",
-                                        "b_leg",
-                                        "both"
-                                    ],
-                                    "type": "string"
-                                },
-                                "level": {
-                                    "default": 0,
-                                    "description": "Set the audio level of the stream. -1>=level=<1. Defaults to 0. Resolution is 0.1",
-                                    "maximum": -1,
-                                    "minimum": 1,
-                                    "multipleOf": 0.1,
-                                    "type": "number"
-                                },
-                                "loop": {
-                                    "default": 1,
-                                    "description": "Whether to loop the stream once the stream ends. Options are an integer 0>=loop<10 where 0 loops continously. Defaults to 1. ",
-                                    "maximum": 10,
-                                    "minimum": 0,
-                                    "type": "integer"
-                                },
-                                "stream_url": {
-                                    "description": "A comma separated list of audio URLs to stream. ",
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -1395,70 +1461,8 @@
         },
         "/calls/{call_uuid}/talk": {
             "delete": {
-                "consumes": [],
                 "description": "Stop text to speech to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-talk",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "gender": {
-                                    "default": "female",
-                                    "description": "The gender to use for TTS. Options are ‘male’ or ‘female’. Defaults to female",
-                                    "enum": [
-                                        "male",
-                                        "female"
-                                    ],
-                                    "type": "string"
-                                },
-                                "language": {
-                                    "default": "en-gb",
-                                    "description": "The language used to read the message. Defaults to \"en-gb\"  ",
-                                    "type": "string"
-                                },
-                                "leg": {
-                                    "default": "both",
-                                    "description": "Which part of the call to send TTS. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
-                                    "enum": [
-                                        "a_leg",
-                                        "b_leg",
-                                        "both"
-                                    ],
-                                    "type": "string"
-                                },
-                                "level": {
-                                    "description": "Set the audio level of the TTS. -1>=level=<1. Defaults to 0",
-                                    "maximum": 1,
-                                    "minimum": -1,
-                                    "multipleOf": 0.1,
-                                    "type": "number"
-                                },
-                                "loop": {
-                                    "default": false,
-                                    "description": "Whether to loop the once the TTS ends. Options are an integer 0>=loop<10 where 0 loops infinity or ‘false’. Defaults to ‘false’",
-                                    "maximum": 10,
-                                    "minimum": 0,
-                                    "type": [
-                                        "integer",
-                                        "boolean"
-                                    ]
-                                },
-                                "text": {
-                                    "description": "\nBody of the text message. 0>text<1500. Commas control pauses in speech.",
-                                    "maxLength": 1500,
-                                    "minLength": 0,
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "text"
-                            ],
-                            "type": "object"
-                        }
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -1472,7 +1476,7 @@
                 },
                 "summary": "Stop Text to Speech",
                 "tags": [
-                    "Text to Speech"
+                    "DTMF and TTS"
                 ]
             },
             "parameters": [
@@ -1530,7 +1534,7 @@
                 },
                 "summary": "Start Text to Speech",
                 "tags": [
-                    "Text to Speech"
+                    "DTMF and TTS"
                 ]
             }
         },
@@ -1572,7 +1576,7 @@
                 },
                 "summary": "End Whisper",
                 "tags": [
-                    "Whisper"
+                    "Conference Whisper"
                 ]
             },
             "parameters": [
@@ -1624,7 +1628,7 @@
                 },
                 "summary": "Create Whisper",
                 "tags": [
-                    "Whisper"
+                    "Conference Whisper"
                 ]
             },
             "put": {
@@ -1676,13 +1680,12 @@
                 },
                 "summary": "Update Whisper",
                 "tags": [
-                    "Whisper"
+                    "Conference Whisper"
                 ]
             }
         },
         "/conferences": {
             "get": {
-                "consumes": [],
                 "description": "Get a list of all the currently active conferences with pagination information.",
                 "operationId": "GET_conferences",
                 "parameters": [
@@ -1883,15 +1886,12 @@
                 "tags": [
                     "Conference"
                 ]
-            },
-            "parameters": []
+            }
         },
         "/conferences/{conference_uuid}": {
             "delete": {
-                "consumes": [],
                 "description": "Ends an existing conference.",
                 "operationId": "DELETE_conferences-conference_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -1909,10 +1909,8 @@
                 ]
             },
             "get": {
-                "consumes": [],
                 "description": "Returns the details of an existing conference.",
                 "operationId": "GET_conferences-conference_uuid",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -1931,7 +1929,7 @@
                         }
                     }
                 },
-                "summary": "Get Conference",
+                "summary": "Get Conferece",
                 "tags": [
                     "Conference"
                 ]
@@ -1947,10 +1945,8 @@
         },
         "/conferences/{conference_uuid}/participants": {
             "get": {
-                "consumes": [],
                 "description": "Returns all participants in an existing conference.",
                 "operationId": "GET_conferences-conference_uuid-participants",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -2089,7 +2085,7 @@
                 },
                 "summary": "Get Participants",
                 "tags": [
-                    "Participant"
+                    "Conference Participant"
                 ]
             },
             "parameters": [
@@ -2103,10 +2099,8 @@
         },
         "/conferences/{conference_uuid}/participants/{participant_id}": {
             "delete": {
-                "consumes": [],
                 "description": "Remove a participant from the conference.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -2120,14 +2114,12 @@
                 },
                 "summary": "Remove Participant",
                 "tags": [
-                    "Participant"
+                    "Conference Participant"
                 ]
             },
             "get": {
-                "consumes": [],
                 "description": "Returns the details of an existing participant in an existing conference.",
                 "operationId": "GET_conferences-conference_uuid-participants-participant_id",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -2148,7 +2140,7 @@
                 },
                 "summary": "Get Participant",
                 "tags": [
-                    "Participant"
+                    "Conference Participant"
                 ]
             },
             "parameters": [
@@ -2189,28 +2181,19 @@
                 "operationId": "PUT_conferences-conference_uuid-participants-participant_id-controls",
                 "parameters": [
                     {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "action": {
-                                    "description": "The action to performed on a participant. Options are:\n‘vol_up’ – Increase volume of participant\n‘vol_down’ – Decrease volume of participant\n‘mute’ – Mute participant\n‘unmute’ – Unmute participant\n‘earmuff_on’ – Prevent participant hearing conference\n‘earmuff_off’ – Allow participant to hear conference again",
-                                    "enum": [
-                                        "vol_up",
-                                        "vol_down",
-                                        "mute",
-                                        "unmute",
-                                        "earmuff_on",
-                                        "earmuff_off"
-                                    ],
-                                    "type": "string"
-                                }
-                            },
-                            "required": [
-                                "action"
-                            ],
-                            "type": "object"
-                        }
+                        "description": "The action to performed on a participant. Options are:\n‘vol_up’ – Increase volume of participant\n‘vol_down’ – Decrease volume of participant\n‘mute’ – Mute participant\n‘unmute’ – Unmute participant\n‘earmuff_on’ – Prevent participant hearing conference\n‘earmuff_off’ – Allow participant to hear conference again",
+                        "enum": [
+                            "vol_up",
+                            "vol_down",
+                            "mute",
+                            "unmute",
+                            "earmuff_on",
+                            "earmuff_off"
+                        ],
+                        "in": "formData",
+                        "name": "action",
+                        "required": true,
+                        "type": "string"
                     }
                 ],
                 "produces": [
@@ -2226,16 +2209,14 @@
                 },
                 "summary": "Control Participant",
                 "tags": [
-                    "Participant"
+                    "Conference Participant"
                 ]
             }
         },
         "/conferences/{conference_uuid}/participants/{participant_id}/stream": {
             "delete": {
-                "consumes": [],
                 "description": "Stop streaming an audio file to a conference participant.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id-stream",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -2341,16 +2322,14 @@
                 },
                 "summary": "Start Text to Speech",
                 "tags": [
-                    "Participant"
+                    "Conference Participant"
                 ]
             }
         },
         "/conferences/{conference_uuid}/recordings": {
             "delete": {
-                "consumes": [],
                 "description": "Stop recording a call and return parameters to `event_url`.",
                 "operationId": "DELETE_conferences-conference_uuid-recordings",
-                "parameters": [],
                 "produces": [
                     "application/json"
                 ],
@@ -2426,49 +2405,8 @@
         },
         "/conferences/{conference_uuid}/stream": {
             "delete": {
-                "consumes": [],
                 "description": "Stop streaming an audio file to a conference.",
                 "operationId": "DELETE_conferences-conference_uuid-stream",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "leg": {
-                                    "default": "both",
-                                    "description": "Which part of the call to stream the audio file to. Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’",
-                                    "enum": [
-                                        "a_leg",
-                                        "b_leg",
-                                        "both"
-                                    ],
-                                    "type": "string"
-                                },
-                                "level": {
-                                    "default": 0,
-                                    "description": "Set the audio level of the stream. -1>=level=<1. Defaults to 0. Resolution is 0.1",
-                                    "maximum": -1,
-                                    "minimum": 1,
-                                    "multipleOf": 0.1,
-                                    "type": "number"
-                                },
-                                "loop": {
-                                    "default": 1,
-                                    "description": "Whether to loop the stream once the stream ends. Options are an integer 0>=loop<10 where 0 loops continuously. Defaults to 1. ",
-                                    "maximum": 10,
-                                    "minimum": 0,
-                                    "type": "integer"
-                                },
-                                "stream_url": {
-                                    "description": "A comma separated list of audio URLs to stream. ",
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    }
-                ],
                 "produces": [
                     "application/json"
                 ],
@@ -2573,12 +2511,9 @@
                 ],
                 "description": "",
                 "operationId": "GET_insights",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search / List Insight Requests",
@@ -2586,22 +2521,18 @@
                     "Insight"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_insights",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Start Inishgt Request",
+                "summary": "Start Insight Request",
                 "tags": [
                     "Insight"
                 ]
@@ -2614,15 +2545,15 @@
                 ],
                 "description": "",
                 "operationId": "GET_insights-insight_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Get Insight Status / Information"
+                "summary": "Get Insight Status / Information",
+                "tags": [
+                    "Insight"
+                ]
             },
             "parameters": [
                 {
@@ -2640,12 +2571,9 @@
                 ],
                 "description": "",
                 "operationId": "GET_messages",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search / List Messages",
@@ -2653,19 +2581,15 @@
                     "Messages"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_messages",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Create Message",
@@ -2675,46 +2599,38 @@
             }
         },
         "/messages/2fa": {
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_messages-2fa",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Create 2FA Message (US ShortCode)",
+                "summary": "Create 2FA Message",
                 "tags": [
-                    "Messages"
+                    "US Short Codes"
                 ]
             }
         },
         "/messages/alert": {
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_messages-alert",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Create Alert Message (US ShortCode)",
+                "summary": "Create Alert Message",
                 "tags": [
-                    "Messages"
+                    "US Short Codes"
                 ]
             }
         },
@@ -2725,15 +2641,15 @@
                 ],
                 "description": "",
                 "operationId": "GET_messages-message_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Get Message"
+                "summary": "Get Message",
+                "tags": [
+                    "Messages"
+                ]
             },
             "parameters": [
                 {
@@ -2759,15 +2675,15 @@
                 ],
                 "description": "",
                 "operationId": "POST_messages-message_uuid-conversion",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Report Message Conversion"
+                "summary": "Report Message Conversion",
+                "tags": [
+                    "Conversions"
+                ]
             }
         },
         "/numbers": {
@@ -2777,12 +2693,9 @@
                 ],
                 "description": "",
                 "operationId": "GET_numbers",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "List Numbers",
@@ -2790,19 +2703,15 @@
                     "Numbers"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_numbers",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Purchase Number",
@@ -2818,20 +2727,16 @@
                 ],
                 "description": "",
                 "operationId": "GET_numbers-available",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search Available Numbers",
                 "tags": [
                     "Numbers"
                 ]
-            },
-            "parameters": []
+            }
         },
         "/numbers/{number_uuid}": {
             "delete": {
@@ -2840,15 +2745,15 @@
                 ],
                 "description": "",
                 "operationId": "DELETE_numbers-number_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Release Number"
+                "summary": "Release Number",
+                "tags": [
+                    "Numbers"
+                ]
             },
             "parameters": [
                 {
@@ -2864,16 +2769,202 @@
                 ],
                 "description": "",
                 "operationId": "PUT_numbers-number_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Update Number Settings"
+                "summary": "Update Number Settings",
+                "tags": [
+                    "Numbers"
+                ]
             }
+        },
+        "/payment": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment",
+                "parameters": [
+                    {
+                        "description": "Filter by Payment Method ID ",
+                        "in": "query",
+                        "name": "method",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Configuration",
+                "tags": [
+                    "Payment"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_payment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "properties": {
+                                "amount": {
+                                    "description": "Amount t AutoPay",
+                                    "type": "integer"
+                                },
+                                "auto": {
+                                    "description": "Enable / Disable Auto Payments",
+                                    "type": "boolean"
+                                },
+                                "method": {
+                                    "description": "Payment Method ID",
+                                    "type": "string"
+                                },
+                                "threshold": {
+                                    "description": "Balance Threshold to Reload",
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "auto"
+                            ],
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Configuration",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/payment/methods": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-methods",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Payment Methods",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/payment/methods/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-methods-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Method Details",
+                "tags": [
+                    "Payment"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/payment/transactions": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-transactions",
+                "parameters": [
+                    {
+                        "description": "Filter by Payment Method ID ",
+                        "in": "query",
+                        "name": "method",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Past Payments",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/payment/transactions/": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_payment-transactions",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Make Payment",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/payment/transactions/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-transactions-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Details",
+                "tags": [
+                    "Payment"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
         },
         "/pricing/message": {
             "get": {
@@ -2882,34 +2973,27 @@
                 ],
                 "description": "",
                 "operationId": "GET_pricing-message",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search Message Pricing",
                 "tags": [
                     "Pricing"
                 ]
-            },
-            "parameters": []
+            }
         },
-        "/pricing/voice": {
+        "/pricing/voice/{country}": {
             "get": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
-                "operationId": "GET_pricing-voice",
-                "parameters": [],
-                "produces": [],
+                "operationId": "GET_pricing-voice-country",
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search Voice Pricing",
@@ -2917,7 +3001,91 @@
                     "Pricing"
                 ]
             },
-            "parameters": []
+            "parameters": [
+                {
+                    "description": "Country Code or Phone Number",
+                    "in": "path",
+                    "name": "country",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/users": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_users",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Users",
+                "tags": [
+                    "Users"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_users",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create User",
+                "tags": [
+                    "Users"
+                ]
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_users-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get User Details",
+                "tags": [
+                    "Users"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_users-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Update User Details",
+                "tags": [
+                    "Users"
+                ]
+            }
         },
         "/verifications": {
             "get": {
@@ -2926,12 +3094,9 @@
                 ],
                 "description": "",
                 "operationId": "GET_verifications",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Search / List Verifications",
@@ -2939,19 +3104,15 @@
                     "Verification"
                 ]
             },
-            "parameters": [],
             "post": {
                 "consumes": [
                     "application/json"
                 ],
                 "description": "",
                 "operationId": "POST_verifications",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
                 "summary": "Start a Verification Process",
@@ -2967,15 +3128,15 @@
                 ],
                 "description": "",
                 "operationId": "GET_verifications-verification_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Get Verification"
+                "summary": "Get Verification",
+                "tags": [
+                    "Verification"
+                ]
             },
             "parameters": [
                 {
@@ -2991,15 +3152,15 @@
                 ],
                 "description": "",
                 "operationId": "PUT_verifications-verification_uuid",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Modify Verification"
+                "summary": "Modify Verification",
+                "tags": [
+                    "Verification"
+                ]
             }
         },
         "/verifications/{verification_uuid}/checks": {
@@ -3017,19 +3178,43 @@
                 ],
                 "description": "",
                 "operationId": "POST_verifications-verification_uuid-checks",
-                "parameters": [],
-                "produces": [],
                 "responses": {
                     "default": {
-                        "description": "",
-                        "schema": {}
+                        "description": ""
                     }
                 },
-                "summary": "Check Verification"
+                "summary": "Check Verification",
+                "tags": [
+                    "Verification"
+                ]
             }
         }
     },
     "definitions": {
+        "account-user": {
+            "properties": {},
+            "type": "object"
+        },
+        "alert-endpoint": {
+            "properties": {
+                "endpoint": {
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "email",
+                        "webhook",
+                        "phone"
+                    ],
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type",
+                "endpoint"
+            ],
+            "type": "object"
+        },
         "applicationRequest": {
             "example": {
                 "answer_method": "GET",
@@ -3150,6 +3335,18 @@
                 "numberpool_id": "10"
             }
         },
+        "call-endpoint": {
+            "discriminator": "type",
+            "properties": {
+                "type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "type"
+            ],
+            "type": "object"
+        },
         "callBase": {
             "description": "Destination of the call.",
             "properties": {
@@ -3169,27 +3366,23 @@
         },
         "callRequest": {
             "properties": {
-                " sip_username": {
-                    "description": "SIP username for authentication",
-                    "type": "string"
-                },
                 "answer_method": {
                     "default": "POST",
                     "description": "HTTP method that is used to make the request. Defaults to POST",
+                    "enum": [
+                        "GET",
+                        "POST"
+                    ],
                     "type": "string"
                 },
                 "answer_url": {
-                    "description": "URL that gets called once a call is answered. The URL returns a NCCO",
-                    "type": "string"
-                },
-                "backup_method": {
-                    "default": "POST",
-                    "description": "HTTP method that is used to make the request. Defaults to POST",
-                    "type": "string"
-                },
-                "backup_url": {
-                    "description": "Backup event URL in case primary is unavailable",
-                    "type": "string"
+                    "description": "An array of URLs that gets called once a call is answered. First URL to return a 200 is used. The URL should return a NCCO. Parameters passed in the query string are ‘to’, ‘from’ and ‘uuid’ where uuid is the id of the leg.",
+                    "items": {
+                        "format": "uri",
+                        "type": "string"
+                    },
+                    "minItems": 1,
+                    "type": "array"
                 },
                 "dtmf_answer": {
                     "description": "Digits that are sent as soon as the call is answered (pauses are created using ‘p’ = 500ms & ‘*’, ‘#’ are respected)",
@@ -3206,44 +3399,76 @@
                 },
                 "from": {
                     "description": "An e.164 formatted number or a SIP URI.",
-                    "type": "string"
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/phone"
+                        },
+                        {
+                            "$ref": "#/definitions/sip"
+                        },
+                        {
+                            "$ref": "#/definitions/user"
+                        },
+                        {
+                            "$ref": "#/definitions/conversation"
+                        }
+                    ]
                 },
                 "length_timer": {
-                    "description": "Timer in seconds that starts after a call moves to the ‘in_progress’ state. Call is dropped when it reaches 0. 0>=length_timer\n",
+                    "default": 7200,
+                    "description": "Timer in seconds that starts after a call moves to the ‘in_progress’ state. Call is dropped when it reaches 0.\n",
+                    "maximum": 7200,
+                    "minimum": 0,
                     "type": "integer"
                 },
                 "machine_detection": {
                     "description": "How to behave if an answering machine is encountered. Options are ‘continue’ or ‘hangup’. If continue, event_url is called with param MACHINE.  ",
+                    "enum": [
+                        "continue",
+                        "hangup"
+                    ],
                     "type": "string"
                 },
                 "machine_timeout": {
                     "default": 5,
-                    "description": "Machine detection analysis timeout in seconds. 2000>timeout<10000. Defaults to 5s",
+                    "description": "Machine detection analysis timeout in seconds. ",
+                    "maximum": 5000,
+                    "minimum": 2000,
                     "type": "integer"
                 },
                 "ringing_timer": {
-                    "description": "Timer in seconds that starts after a call moves to the ‘ringing’ state. Call is dropped when it reaches 0. 0>=ringing_timer. Default is 60\n",
+                    "default": 60,
+                    "description": "Timer in seconds that starts after a call moves to the ‘ringing’ state. Call is dropped when it reaches 0.",
+                    "maximum": 120,
+                    "minimum": 0,
                     "type": "integer"
                 },
-                "sip_headers": {
-                    "description": "Array of custom SIP headers to send in all SIP requests. Prefixed with ‘NX-’",
-                    "items": {},
-                    "type": "array"
-                },
-                "sip_password": {
-                    "description": "SIP password for authentication",
-                    "type": "string"
-                },
                 "to": {
-                    "description": "Array of destinations in either e.164 format or a SIP URI. Multiple destinations (max 10). E.164 and SIP URI’s can be mixed and matched.",
-                    "type": "string"
+                    "description": "Array of endpoints (see endpoint types supported by NCCO). Multiple destinations.  ",
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/phone"
+                            },
+                            {
+                                "$ref": "#/definitions/sip"
+                            },
+                            {
+                                "$ref": "#/definitions/user"
+                            },
+                            {
+                                "$ref": "#/definitions/conversation"
+                            }
+                        ]
+                    },
+                    "maxItems": 10,
+                    "minItems": 1,
+                    "type": "array"
                 }
             },
             "required": [
                 "to",
-                "from",
-                "answer_url",
-                "event_url"
+                "from"
             ],
             "type": "object"
         },
@@ -3279,10 +3504,14 @@
                     },
                     "type": "object"
                 },
-                "call_status": {
+                "call_uuid": {
                     "type": "string"
                 },
-                "call_uuid": {
+                "direction": {
+                    "enum": [
+                        "outbound",
+                        "inbound"
+                    ],
                     "type": "string"
                 },
                 "duration": {
@@ -3292,7 +3521,20 @@
                     "type": "string"
                 },
                 "from": {
-                    "type": "string"
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/phone"
+                        },
+                        {
+                            "$ref": "#/definitions/sip"
+                        },
+                        {
+                            "$ref": "#/definitions/user"
+                        },
+                        {
+                            "$ref": "#/definitions/conversation"
+                        }
+                    ]
                 },
                 "network": {
                     "type": "string"
@@ -3306,10 +3548,44 @@
                 "start_time": {
                     "type": "string"
                 },
-                "to": {
+                "status": {
+                    "enum": [
+                        "answered",
+                        "busy",
+                        "failed",
+                        "timeout",
+                        "cancelled",
+                        "machine",
+                        "completed"
+                    ],
                     "type": "string"
+                },
+                "to": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/definitions/phone"
+                        },
+                        {
+                            "$ref": "#/definitions/sip"
+                        },
+                        {
+                            "$ref": "#/definitions/user"
+                        },
+                        {
+                            "$ref": "#/definitions/conversation"
+                        }
+                    ]
                 }
             },
+            "required": [
+                "_links",
+                "call_uuid",
+                "status",
+                "rate",
+                "start_time",
+                "network",
+                "direction"
+            ],
             "type": "object"
         },
         "common": {
@@ -3406,6 +3682,25 @@
             },
             "type": "object"
         },
+        "conversation": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/call-endpoint"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "description": "Conversation name",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
         "error": {
             "example": {
                 "detail": "The request cost exceeds your current ballance.",
@@ -3428,6 +3723,65 @@
                     "type": "string"
                 },
                 "type": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "hal": {
+            "properties": {
+                "_links": {
+                    "properties": {
+                        "first": {
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "last": {
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "next": {
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "prev": {
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        "self": {
+                            "properties": {
+                                "href": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    },
+                    "type": "object"
+                },
+                "count": {
+                    "type": "string"
+                },
+                "page_offset": {
+                    "type": "string"
+                },
+                "page_size": {
                     "type": "string"
                 }
             },
@@ -3520,6 +3874,29 @@
                 }
             },
             "type": "object"
+        },
+        "phone": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/call-endpoint"
+                },
+                {
+                    "properties": {
+                        "dtmfAnswer": {
+                            "description": "Digits that are sent as soon as the call is answered (pauses are created using a ‘p’ per 500ms & ‘*’, ‘#’ are respected)",
+                            "type": "string"
+                        },
+                        "number": {
+                            "description": "Number in e.164 format",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "number"
+                    ],
+                    "type": "object"
+                }
+            ]
         },
         "recordingBase": {
             "properties": {
@@ -3707,6 +4084,37 @@
             },
             "type": "object"
         },
+        "sip": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/call-endpoint"
+                },
+                {
+                    "properties": {
+                        "headers": {
+                            "description": "JSON object of optional headers {“header_1”:”value_1”, “header_2”:”value_2”}",
+                            "type": "object"
+                        },
+                        "password": {
+                            "description": "SPI password",
+                            "type": "string"
+                        },
+                        "uri": {
+                            "description": "SIP URL (user@example.com)",
+                            "type": "string"
+                        },
+                        "username": {
+                            "description": "SIP username",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "uri"
+                    ],
+                    "type": "object"
+                }
+            ]
+        },
         "streamRequest": {
             "properties": {
                 "level": {
@@ -3775,6 +4183,25 @@
                 "text"
             ],
             "type": "object"
+        },
+        "user": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/call-endpoint"
+                },
+                {
+                    "properties": {
+                        "name": {
+                            "description": "RTC user that exists in the conversation service",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            ]
         },
         "whisperResponse": {
             "example": {
@@ -3857,6 +4284,18 @@
                 }
             },
             "type": "object"
+        }
+    },
+    "securityDefinitions": {
+        "api_key": {
+            "name": "api_key",
+            "type": "apiKey",
+            "in": "query"
+        },
+        "api_secret": {
+            "name": "api_secret",
+            "type": "apiKey",
+            "in": "query"
         }
     }
 }
