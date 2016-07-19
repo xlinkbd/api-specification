@@ -11,7 +11,7 @@
         "description": "##OAI Specification of Nexmo's APIs."
     },
     "paths": {
-        "/account": {
+        "/account/{account_id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -45,7 +45,7 @@
                 ]
             }
         },
-        "/account/alerts": {
+        "/account/{account_id}/alerts": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -118,7 +118,7 @@
                 ]
             }
         },
-        "/account/alerts/{id}": {
+        "/account/{account_id}/alerts/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -181,7 +181,79 @@
                 ]
             }
         },
-        "/account/balance": {
+        "/account/{account_id}/autoreload": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment",
+                "parameters": [
+                    {
+                        "description": "Filter by Payment Method ID ",
+                        "in": "query",
+                        "name": "method",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Configuration",
+                "tags": [
+                    "Payment"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_payment",
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "schema": {
+                            "properties": {
+                                "amount": {
+                                    "description": "Amount t AutoPay",
+                                    "type": "integer"
+                                },
+                                "auto": {
+                                    "description": "Enable / Disable Auto Payments",
+                                    "type": "boolean"
+                                },
+                                "method": {
+                                    "description": "Payment Method ID",
+                                    "type": "string"
+                                },
+                                "threshold": {
+                                    "description": "Balance Threshold to Reload",
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "auto"
+                            ],
+                            "type": "object"
+                        }
+                    }
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Configuration",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/account/{account_id}/balance": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -211,7 +283,51 @@
                 ]
             }
         },
-        "/account/secondaries": {
+        "/account/{account_id}/instruments": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-methods",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Payment Methods",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/account/{account_id}/instruments/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-methods-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Method Details",
+                "tags": [
+                    "Payment"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/account/{account_id}/secondaries": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -229,49 +345,77 @@
                 ]
             }
         },
-        "/account/secondaries/{key}": {
+        "/account/{account_id}/transactions": {
             "get": {
                 "consumes": [
                     "application/json"
                 ],
-                "description": "Provide access to:\r\n- API Keys / Global Callbacks\r\n- Default HTTP Method\r\n- Throttling / Features / Etc\r\n- (future) Currency Prefrenece",
-                "operationId": "GET_account-secondaries-key",
+                "description": "",
+                "operationId": "GET_payment-transactions",
+                "parameters": [
+                    {
+                        "description": "Filter by Payment Method ID ",
+                        "in": "query",
+                        "name": "method",
+                        "type": "string"
+                    }
+                ],
                 "responses": {
                     "default": {
                         "description": ""
                     }
                 },
-                "summary": "Get Secondary Account",
+                "summary": "Search / List Past Payments",
                 "tags": [
-                    "Account"
+                    "Payment"
+                ]
+            }
+        },
+        "/account/{account_id}/transactions/": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_payment-transactions",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Make Payment",
+                "tags": [
+                    "Payment"
+                ]
+            }
+        },
+        "/account/{account_id}/transactions/{id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_payment-transactions-id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Payment Details",
+                "tags": [
+                    "Payment"
                 ]
             },
             "parameters": [
                 {
                     "in": "path",
-                    "name": "key",
+                    "name": "id",
                     "required": true,
                     "type": "string"
                 }
-            ],
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "PUT_account-secondaries-key",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Update Secondary Account",
-                "tags": [
-                    "Account"
-                ]
-            }
+            ]
         },
-        "/account/users": {
+        "/account/{account_id}/users": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -305,7 +449,7 @@
                 ]
             }
         },
-        "/account/users/{id}": {
+        "/account/{account_id}/users/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -347,67 +491,7 @@
                 ]
             }
         },
-        "/insight/requests": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_insights",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Insight Requests",
-                "tags": [
-                    "Insight"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_insights",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Start Insight Request",
-                "tags": [
-                    "Insight"
-                ]
-            }
-        },
-        "/insight/requests/{insight_uuid}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_insights-insight_uuid",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Insight Status / Information",
-                "tags": [
-                    "Insight"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "insight_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/npa/applications": {
+        "/applications": {
             "get": {
                 "description": "Get details of all apps associated with an account.",
                 "operationId": "GET_applications",
@@ -637,7 +721,7 @@
                 ]
             }
         },
-        "/npa/applications/{app_uuid}": {
+        "/applications/{app_uuid}": {
             "delete": {
                 "description": "Delete an existing application.",
                 "operationId": "DELETE_applications-app_uuid",
@@ -751,7 +835,7 @@
                 ]
             }
         },
-        "/npa/applications/{app_uuid}/keys": {
+        "/applications/{app_uuid}/keys": {
             "parameters": [
                 {
                     "in": "path",
@@ -802,7 +886,7 @@
                 ]
             }
         },
-        "/npa/applications/{app_uuid}/keys/{key_id}": {
+        "/applications/{app_uuid}/keys/{key_id}": {
             "get": {
                 "description": "",
                 "operationId": "GET_npa-applications-app_uuid-keys-key_id",
@@ -859,7 +943,7 @@
                 }
             ]
         },
-        "/npa/available_numbers": {
+        "/available_numbers": {
             "get": {
                 "description": "Search Available Numbers",
                 "operationId": "GET_numbers-available",
@@ -878,1020 +962,7 @@
                 ]
             }
         },
-        "/npa/numbers": {
-            "get": {
-                "description": "List Numbers",
-                "operationId": "GET_numbers",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Numbers",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Purchase Number",
-                "operationId": "POST_numbers",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Purchase Number",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            }
-        },
-        "/npa/numbers/{number_uuid}": {
-            "delete": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Release Number",
-                "operationId": "DELETE_numbers-number_uuid",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Release Number",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "number_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Update Number Settings\n- Set Webhooks\n- Assign to Pool",
-                "operationId": "PUT_numbers-number_uuid",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Update Number Settings",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            }
-        },
-        "/npa/pools": {
-            "get": {
-                "description": "",
-                "operationId": "GET_npa-pools",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Pools",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            }
-        },
-        "/npa/pools/{pool_id}": {
-            "get": {
-                "description": "",
-                "operationId": "GET_npa-pools-pool_id",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Pool Details",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "pool_id",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "put": {
-                "description": "Point to application.",
-                "operationId": "PUT_npa-pools-pool_id",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Update Pool",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            }
-        },
-        "/npa/pools/{pool_id}/numbers": {
-            "get": {
-                "description": "List Numbers",
-                "operationId": "GET_npa-pools-pool_id-numbers",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Pool Numbers",
-                "tags": [
-                    "Numbers",
-                    "Npa"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "pool_id",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/npa/pricing": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_npa-pricing",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Number Pool Pricing",
-                "tags": [
-                    "Numbers"
-                ]
-            }
-        },
-        "/payment": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_payment",
-                "parameters": [
-                    {
-                        "description": "Filter by Payment Method ID ",
-                        "in": "query",
-                        "name": "method",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Payment Configuration",
-                "tags": [
-                    "Payment"
-                ]
-            },
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "PUT_payment",
-                "parameters": [
-                    {
-                        "in": "body",
-                        "name": "body",
-                        "schema": {
-                            "properties": {
-                                "amount": {
-                                    "description": "Amount t AutoPay",
-                                    "type": "integer"
-                                },
-                                "auto": {
-                                    "description": "Enable / Disable Auto Payments",
-                                    "type": "boolean"
-                                },
-                                "method": {
-                                    "description": "Payment Method ID",
-                                    "type": "string"
-                                },
-                                "threshold": {
-                                    "description": "Balance Threshold to Reload",
-                                    "type": "integer"
-                                }
-                            },
-                            "required": [
-                                "auto"
-                            ],
-                            "type": "object"
-                        }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Payment Configuration",
-                "tags": [
-                    "Payment"
-                ]
-            }
-        },
-        "/payment/methods": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_payment-methods",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Payment Methods",
-                "tags": [
-                    "Payment"
-                ]
-            }
-        },
-        "/payment/methods/{id}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_payment-methods-id",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Payment Method Details",
-                "tags": [
-                    "Payment"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "id",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/payment/transactions": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_payment-transactions",
-                "parameters": [
-                    {
-                        "description": "Filter by Payment Method ID ",
-                        "in": "query",
-                        "name": "method",
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Past Payments",
-                "tags": [
-                    "Payment"
-                ]
-            }
-        },
-        "/payment/transactions/": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_payment-transactions",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Make Payment",
-                "tags": [
-                    "Payment"
-                ]
-            }
-        },
-        "/payment/transactions/{id}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_payment-transactions-id",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Payment Details",
-                "tags": [
-                    "Payment"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "id",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/sms": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Global Webhooks, templates, etc.",
-                "operationId": "GET_sms",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get SMS Settings",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            },
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Global Webhooks, templates, etc.",
-                "operationId": "PUT_sms",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Update SMS Settings",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            }
-        },
-        "/sms/messages": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_messages",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Messages",
-                "tags": [
-                    "Messages"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_messages",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Create Message",
-                "tags": [
-                    "Messages"
-                ]
-            }
-        },
-        "/sms/messages/2fa": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_messages-2fa",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Create 2FA Message",
-                "tags": [
-                    "US Short Codes"
-                ]
-            }
-        },
-        "/sms/messages/alert": {
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_messages-alert",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Create Alert Message",
-                "tags": [
-                    "US Short Codes"
-                ]
-            }
-        },
-        "/sms/messages/{message_uuid}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_messages-message_uuid",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Message",
-                "tags": [
-                    "Messages"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "message_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/sms/messages/{message_uuid}/conversion": {
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "message_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_messages-message_uuid-conversion",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Report Message Conversion",
-                "tags": [
-                    "Conversions"
-                ]
-            }
-        },
-        "/sms/pricing": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_sms-pricing",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get SMS Pricing",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            }
-        },
-        "/sms/reports": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Set active template, etc.",
-                "operationId": "GET_sms-reports",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "dateStart",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "dateEnd",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "enum": [
-                            "country",
-                            "date"
-                        ],
-                        "in": "query",
-                        "name": "group",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Aggregated Reports",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            }
-        },
-        "/sms/templates": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_sms-templates",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List SMS Templates",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_sms-templates",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Create SMS Template",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            }
-        },
-        "/sms/templates/{template_id}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_sms-templates-template_id",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get SMS Template",
-                "tags": [
-                    "Account",
-                    "Sms"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "template_id",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/verify": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Provide access to current template, workflow, etc.",
-                "operationId": "GET_verify",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Verify Settings",
-                "tags": [
-                    "Verification"
-                ]
-            },
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Set active template, etc.",
-                "operationId": "PUT_verify",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Update Verify Settings",
-                "tags": [
-                    "Account"
-                ]
-            }
-        },
-        "/verify/pricing": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_verify-pricing",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Verify Pricing",
-                "tags": [
-                    "Account",
-                    "Verify"
-                ]
-            }
-        },
-        "/verify/reports": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_verify-reports",
-                "parameters": [
-                    {
-                        "in": "query",
-                        "name": "country",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "dateStart",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "in": "query",
-                        "name": "dateEnd",
-                        "required": false,
-                        "type": "string"
-                    },
-                    {
-                        "enum": [
-                            "country",
-                            "date"
-                        ],
-                        "in": "query",
-                        "name": "group",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Aggregated Reports",
-                "tags": [
-                    "Account",
-                    "Verify"
-                ]
-            }
-        },
-        "/verify/templates": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "Set active template, etc.",
-                "operationId": "GET_verify-templates",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Verify Templates",
-                "tags": [
-                    "Account",
-                    "Verify"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_verify-templates",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Create Verify Template",
-                "tags": [
-                    "Account",
-                    "Verify"
-                ]
-            }
-        },
-        "/verify/templates/{template_id}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_verify-templates-template_id",
-                "produces": [
-                    "application/json"
-                ],
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Verify Template",
-                "tags": [
-                    "Account",
-                    "Verify"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "template_id",
-                    "required": true,
-                    "type": "string"
-                }
-            ]
-        },
-        "/verify/verifications": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_verifications",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Search / List Verifications",
-                "tags": [
-                    "Verification"
-                ]
-            },
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_verifications",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Start a Verification Process",
-                "tags": [
-                    "Verification"
-                ]
-            }
-        },
-        "/verify/verifications/{verification_uuid}": {
-            "get": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "GET_verifications-verification_uuid",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Get Verification",
-                "tags": [
-                    "Verification"
-                ]
-            },
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "verification_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "put": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "PUT_verifications-verification_uuid",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Modify Verification",
-                "tags": [
-                    "Verification"
-                ]
-            }
-        },
-        "/verify/verifications/{verification_uuid}/checks": {
-            "parameters": [
-                {
-                    "in": "path",
-                    "name": "verification_uuid",
-                    "required": true,
-                    "type": "string"
-                }
-            ],
-            "post": {
-                "consumes": [
-                    "application/json"
-                ],
-                "description": "",
-                "operationId": "POST_verifications-verification_uuid-checks",
-                "responses": {
-                    "default": {
-                        "description": ""
-                    }
-                },
-                "summary": "Check Verification",
-                "tags": [
-                    "Verification"
-                ]
-            }
-        },
-        "/voice/calls": {
+        "/calls": {
             "get": {
                 "description": "Get details of all calls with filters for status and pagination.",
                 "operationId": "GET_calls",
@@ -1954,7 +1025,7 @@
                                         {
                                             "_links": {
                                                 "self": {
-                                                    "href": "/voice/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                    "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
                                                 }
                                             },
                                             "call_status": "in_progress",
@@ -1972,19 +1043,19 @@
                                 },
                                 "_links": {
                                     "first": {
-                                        "href": "/voice/calls"
+                                        "href": "/calls"
                                     },
                                     "last": {
-                                        "href": "/voice/calls?page_offset=50"
+                                        "href": "/calls?page_offset=50"
                                     },
                                     "next": {
-                                        "href": "/voice/calls?page_offset=20"
+                                        "href": "/calls?page_offset=20"
                                     },
                                     "prev": {
-                                        "href": "/voice/calls"
+                                        "href": "/calls"
                                     },
                                     "self": {
-                                        "href": "/voice/calls?page_offset=10"
+                                        "href": "/calls?page_offset=10"
                                     }
                                 },
                                 "count": "2",
@@ -2129,7 +1200,7 @@
                 ]
             }
         },
-        "/voice/calls/recordings": {
+        "/calls/recordings": {
             "get": {
                 "description": "Get all recordings hosted by Nexmo.",
                 "operationId": "GET_calls-recordings",
@@ -2187,7 +1258,7 @@
                                         {
                                             "_links": {
                                                 "call": {
-                                                    "href": "/voice/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
+                                                    "href": "/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
                                                 },
                                                 "self": {
                                                     "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
@@ -2201,7 +1272,7 @@
                                         {
                                             "_links": {
                                                 "call": {
-                                                    "href": "/voice/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
+                                                    "href": "/calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb"
                                                 },
                                                 "self": {
                                                     "href": "/recordings/63f61863-4a51-4f6b-86e1-46edebcf9356"
@@ -2325,7 +1396,7 @@
                 ]
             }
         },
-        "/voice/calls/recordings/{recording_uuid}": {
+        "/calls/recordings/{recording_uuid}": {
             "get": {
                 "description": "Get details of a specific recording currently hosted by Nexmo.",
                 "operationId": "GET_calls-recordings-recording_uuid",
@@ -2361,7 +1432,7 @@
                 }
             ]
         },
-        "/voice/calls/{call_uuid}": {
+        "/calls/{call_uuid}": {
             "delete": {
                 "description": "Hang up a current live call.",
                 "operationId": "DELETE_calls-call_uuid",
@@ -2513,7 +1584,7 @@
                 ]
             }
         },
-        "/voice/calls/{call_uuid}/dtmf": {
+        "/calls/{call_uuid}/dtmf": {
             "parameters": [
                 {
                     "in": "path",
@@ -2579,7 +1650,7 @@
                 ]
             }
         },
-        "/voice/calls/{call_uuid}/recordings": {
+        "/calls/{call_uuid}/recordings": {
             "delete": {
                 "description": "Stop recording a call and return parameters to `event_url`.",
                 "operationId": "DELETE_calls-call_uuid-recordings",
@@ -2656,7 +1727,7 @@
                 ]
             }
         },
-        "/voice/calls/{call_uuid}/stream": {
+        "/calls/{call_uuid}/stream": {
             "delete": {
                 "description": "Stop streaming an audio file to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-stream",
@@ -2735,7 +1806,7 @@
                 ]
             }
         },
-        "/voice/calls/{call_uuid}/talk": {
+        "/calls/{call_uuid}/talk": {
             "delete": {
                 "description": "Stop text to speech to a live call or call leg.",
                 "operationId": "DELETE_calls-call_uuid-talk",
@@ -2814,7 +1885,7 @@
                 ]
             }
         },
-        "/voice/conferences": {
+        "/conferences": {
             "get": {
                 "description": "Get a list of all the currently active conferences with pagination information.",
                 "operationId": "GET_conferences",
@@ -2900,7 +1971,7 @@
                                                     }
                                                 ],
                                                 "self": {
-                                                    "href": "/voice/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                    "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356"
                                                 }
                                             },
                                             "conference_uuid": "13f61863-4a51-4f6b-86e1-46edebcf9356",
@@ -2913,19 +1984,19 @@
                                 },
                                 "_links": {
                                     "first": {
-                                        "href": "/voice/conferences"
+                                        "href": "/conferences"
                                     },
                                     "last": {
-                                        "href": "/voice/conferences?page=1"
+                                        "href": "/conferences?page=1"
                                     },
                                     "next": {
-                                        "href": "/voice/conferences?page_offset=20"
+                                        "href": "/conferences?page_offset=20"
                                     },
                                     "prev": {
-                                        "href": "/voice/conferences"
+                                        "href": "/conferences"
                                     },
                                     "self": {
-                                        "href": "/voice/conferences?page_offset=10"
+                                        "href": "/conferences?page_offset=10"
                                     }
                                 },
                                 "count": "2",
@@ -2941,7 +2012,7 @@
                                             "properties": {
                                                 "conferences": {
                                                     "items": {
-                                                        "$ref": "#/definitions/voice/conferenceResponse"
+                                                        "$ref": "#/definitions/conferenceResponse"
                                                     },
                                                     "type": "array"
                                                 }
@@ -3018,7 +2089,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}": {
+        "/conferences/{conference_uuid}": {
             "delete": {
                 "description": "Ends an existing conference.",
                 "operationId": "DELETE_conferences-conference_uuid",
@@ -3050,7 +2121,7 @@
                         "schema": {
                             "allOf": [
                                 {
-                                    "$ref": "#/definitions/voice/conferenceResponse"
+                                    "$ref": "#/definitions/conferenceResponse"
                                 },
                                 {
                                     "$ref": "#/definitions/common"
@@ -3073,7 +2144,7 @@
                 }
             ]
         },
-        "/voice/conferences/{conference_uuid}/participants": {
+        "/conferences/{conference_uuid}/participants": {
             "get": {
                 "description": "Returns all participants in an existing conference.",
                 "operationId": "GET_conferences-conference_uuid-participants",
@@ -3090,10 +2161,10 @@
                                         {
                                             "_links": {
                                                 "call": {
-                                                    "href": "/voice/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
+                                                    "href": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
                                                 },
                                                 "self": {
-                                                    "href": "/voice/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1"
+                                                    "href": "/conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1"
                                                 }
                                             },
                                             "call_status": "in-progress",
@@ -3114,19 +2185,19 @@
                                 },
                                 "_links": {
                                     "first": {
-                                        "href": "/voice/conferences"
+                                        "href": "/conferences"
                                     },
                                     "last": {
-                                        "href": "/voice/conferences?page=1"
+                                        "href": "/conferences?page=1"
                                     },
                                     "next": {
-                                        "href": "/voice/conferences?page=1"
+                                        "href": "/conferences?page=1"
                                     },
                                     "prev": {
-                                        "href": "/voice/conferences?page=1"
+                                        "href": "/conferences?page=1"
                                     },
                                     "self": {
-                                        "href": "/voice/conferences?page=1"
+                                        "href": "/conferences?page=1"
                                     }
                                 },
                                 "count": "2",
@@ -3227,7 +2298,7 @@
                 }
             ]
         },
-        "/voice/conferences/{conference_uuid}/participants/{participant_id}": {
+        "/conferences/{conference_uuid}/participants/{participant_id}": {
             "delete": {
                 "description": "Remove a participant from the conference.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id",
@@ -3288,7 +2359,7 @@
                 }
             ]
         },
-        "/voice/conferences/{conference_uuid}/participants/{participant_id}/controls": {
+        "/conferences/{conference_uuid}/participants/{participant_id}/controls": {
             "parameters": [
                 {
                     "in": "path",
@@ -3343,7 +2414,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/participants/{participant_id}/stream": {
+        "/conferences/{conference_uuid}/participants/{participant_id}/stream": {
             "delete": {
                 "description": "Stop streaming an audio file to a conference participant.",
                 "operationId": "DELETE_conferences-conference_uuid-participants-participant_id-stream",
@@ -3409,7 +2480,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/participants/{participant_id}/talk": {
+        "/conferences/{conference_uuid}/participants/{participant_id}/talk": {
             "parameters": [
                 {
                     "in": "path",
@@ -3456,7 +2527,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/recordings": {
+        "/conferences/{conference_uuid}/recordings": {
             "delete": {
                 "description": "Stop recording a call and return parameters to `event_url`.",
                 "operationId": "DELETE_conferences-conference_uuid-recordings",
@@ -3533,7 +2604,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/stream": {
+        "/conferences/{conference_uuid}/stream": {
             "delete": {
                 "description": "Stop streaming an audio file to a conference.",
                 "operationId": "DELETE_conferences-conference_uuid-stream",
@@ -3593,7 +2664,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/talk": {
+        "/conferences/{conference_uuid}/talk": {
             "parameters": [
                 {
                     "in": "path",
@@ -3634,7 +2705,7 @@
                 ]
             }
         },
-        "/voice/conferences/{conference_uuid}/whisper": {
+        "/conferences/{conference_uuid}/whisper": {
             "delete": {
                 "consumes": [
                     "application/json"
@@ -3777,6 +2848,746 @@
                 "summary": "Update Whisper",
                 "tags": [
                     "Conference Whisper"
+                ]
+            }
+        },
+        "/insights": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_insights",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Insight Requests",
+                "tags": [
+                    "Insight"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_insights",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Start Insight Request",
+                "tags": [
+                    "Insight"
+                ]
+            }
+        },
+        "/insights/{insight_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_insights-insight_uuid",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Insight Status / Information",
+                "tags": [
+                    "Insight"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "insight_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/message_templates": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_sms-templates",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List SMS Templates",
+                "tags": [
+                    "Account",
+                    "Sms"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_sms-templates",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create SMS Template",
+                "tags": [
+                    "Account",
+                    "Sms"
+                ]
+            }
+        },
+        "/message_templates/{template_id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_sms-templates-template_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get SMS Template",
+                "tags": [
+                    "Account",
+                    "Sms"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "template_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/messages": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_messages",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Messages",
+                "tags": [
+                    "Messages"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create Message",
+                "tags": [
+                    "Messages"
+                ]
+            }
+        },
+        "/messages/2fa": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-2fa",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create 2FA Message",
+                "tags": [
+                    "US Short Codes"
+                ]
+            }
+        },
+        "/messages/alert": {
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-alert",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create Alert Message",
+                "tags": [
+                    "US Short Codes"
+                ]
+            }
+        },
+        "/messages/{message_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_messages-message_uuid",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Message",
+                "tags": [
+                    "Messages"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "message_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/messages/{message_uuid}/conversion": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "message_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_messages-message_uuid-conversion",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Report Message Conversion",
+                "tags": [
+                    "Conversions"
+                ]
+            }
+        },
+        "/numbers": {
+            "get": {
+                "description": "List Numbers",
+                "operationId": "GET_numbers",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Numbers",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Purchase Number",
+                "operationId": "POST_numbers",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Purchase Number",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            }
+        },
+        "/numbers/{number_uuid}": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Release Number",
+                "operationId": "DELETE_numbers-number_uuid",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Release Number",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "number_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Update Number Settings\n- Set Webhooks\n- Assign to Pool",
+                "operationId": "PUT_numbers-number_uuid",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Update Number Settings",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            }
+        },
+        "/pools": {
+            "get": {
+                "description": "",
+                "operationId": "GET_npa-pools",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Pools",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            }
+        },
+        "/pools/{pool_id}": {
+            "get": {
+                "description": "",
+                "operationId": "GET_npa-pools-pool_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Pool Details",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "pool_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "description": "Point to application.",
+                "operationId": "PUT_npa-pools-pool_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Update Pool",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            }
+        },
+        "/pools/{pool_id}/numbers": {
+            "get": {
+                "description": "List Numbers",
+                "operationId": "GET_npa-pools-pool_id-numbers",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Pool Numbers",
+                "tags": [
+                    "Numbers",
+                    "Npa"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "pool_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/pricing/message": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_pricing-message",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search Message Pricing",
+                "tags": [
+                    "Pricing"
+                ]
+            }
+        },
+        "/pricing/voice/{country}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_pricing-voice-country",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search Voice Pricing",
+                "tags": [
+                    "Pricing"
+                ]
+            },
+            "parameters": [
+                {
+                    "description": "Country Code or Phone Number",
+                    "in": "path",
+                    "name": "country",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/reports": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_reports",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Reports",
+                "tags": [
+                    "Reports"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_reports",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create Report",
+                "tags": [
+                    "Reports"
+                ]
+            }
+        },
+        "/reports/report_id/": {
+            "delete": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "DELETE_reports-report_id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Remove Report",
+                "tags": [
+                    "Reports"
+                ]
+            },
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_reports-report_id",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Report Details",
+                "tags": [
+                    "Reports"
+                ]
+            }
+        },
+        "/verification_templates": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "Get active template, etc.",
+                "operationId": "GET_verify-templates",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Verify Templates",
+                "tags": [
+                    "Account",
+                    "Verify"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_verify-templates",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Create Verify Template",
+                "tags": [
+                    "Account",
+                    "Verify"
+                ]
+            },
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_verify-templates",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Set Active Verify Template",
+                "tags": [
+                    "Account",
+                    "Verify"
+                ]
+            }
+        },
+        "/verification_templates/{template_id}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_verify-templates-template_id",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Verify Template",
+                "tags": [
+                    "Account",
+                    "Verify"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "template_id",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/verifications": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_verifications",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Search / List Verifications",
+                "tags": [
+                    "Verification"
+                ]
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_verifications",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Start a Verification Process",
+                "tags": [
+                    "Verification"
+                ]
+            }
+        },
+        "/verifications/{verification_uuid}": {
+            "get": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "GET_verifications-verification_uuid",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Get Verification",
+                "tags": [
+                    "Verification"
+                ]
+            },
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "verification_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "put": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "PUT_verifications-verification_uuid",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Modify Verification",
+                "tags": [
+                    "Verification"
+                ]
+            }
+        },
+        "/verifications/{verification_uuid}/checks": {
+            "parameters": [
+                {
+                    "in": "path",
+                    "name": "verification_uuid",
+                    "required": true,
+                    "type": "string"
+                }
+            ],
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "description": "",
+                "operationId": "POST_verifications-verification_uuid-checks",
+                "responses": {
+                    "default": {
+                        "description": ""
+                    }
+                },
+                "summary": "Check Verification",
+                "tags": [
+                    "Verification"
                 ]
             }
         }
