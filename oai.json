@@ -11,7 +11,7 @@
         "description": "##OAI Specification of Nexmo's APIs."
     },
     "paths": {
-        "/account/{account_id}": {
+        "/accounts/{account_id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -45,7 +45,7 @@
                 ]
             }
         },
-        "/account/{account_id}/alerts": {
+        "/accounts/{account_id}/alerts": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -118,7 +118,7 @@
                 ]
             }
         },
-        "/account/{account_id}/alerts/{id}": {
+        "/accounts/{account_id}/alerts/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -181,7 +181,7 @@
                 ]
             }
         },
-        "/account/{account_id}/autoreload": {
+        "/accounts/{account_id}/autoreload": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -253,7 +253,7 @@
                 ]
             }
         },
-        "/account/{account_id}/balance": {
+        "/accounts/{account_id}/balance": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -283,7 +283,7 @@
                 ]
             }
         },
-        "/account/{account_id}/instruments": {
+        "/accounts/{account_id}/instruments": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -301,7 +301,7 @@
                 ]
             }
         },
-        "/account/{account_id}/instruments/{id}": {
+        "/accounts/{account_id}/instruments/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -327,7 +327,7 @@
                 }
             ]
         },
-        "/account/{account_id}/secondaries": {
+        "/accounts/{account_id}/secondaries": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -345,7 +345,7 @@
                 ]
             }
         },
-        "/account/{account_id}/transactions": {
+        "/accounts/{account_id}/transactions": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -371,7 +371,7 @@
                 ]
             }
         },
-        "/account/{account_id}/transactions/": {
+        "/accounts/{account_id}/transactions/": {
             "post": {
                 "consumes": [
                     "application/json"
@@ -389,7 +389,7 @@
                 ]
             }
         },
-        "/account/{account_id}/transactions/{id}": {
+        "/accounts/{account_id}/transactions/{id}": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -415,7 +415,7 @@
                 }
             ]
         },
-        "/account/{account_id}/users": {
+        "/accounts/{account_id}/users": {
             "get": {
                 "consumes": [
                     "application/json"
@@ -449,7 +449,7 @@
                 ]
             }
         },
-        "/account/{account_id}/users/{id}": {
+        "/accounts/{account_id}/users/{id}": {
             "get": {
                 "consumes": [
                     "application/json"

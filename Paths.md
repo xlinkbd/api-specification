@@ -1,48 +1,48 @@
 # Path Map
-_Generated: Tue, 19 Jul 2016 15:25:27 +0000_
+_Generated: Tue, 19 Jul 2016 16:10:25 +0000_
 
-## /account/{account_id}
+## /accounts/{account_id}
 - `GET`: Get Account Settings
 - `PUT`: Update Account
 
-## /account/{account_id}/alerts
+## /accounts/{account_id}/alerts
 - `GET`: Search / List Account Alerts
 - `POST`: Create Account Alert
 
-## /account/{account_id}/alerts/{id}
+## /accounts/{account_id}/alerts/{id}
 - `GET`: Get Account Alert
 - `PUT`: Update Account Alert
 
-## /account/{account_id}/autoreload
+## /accounts/{account_id}/autoreload
 - `GET`: Get Payment Configuration
 - `PUT`: Get Payment Configuration
 
-## /account/{account_id}/balance
+## /accounts/{account_id}/balance
 - `GET`: Get Balance
 
-## /account/{account_id}/instruments
+## /accounts/{account_id}/instruments
 - `GET`: Search / List Payment Methods
 
-## /account/{account_id}/instruments/{id}
+## /accounts/{account_id}/instruments/{id}
 - `GET`: Get Payment Method Details
 
-## /account/{account_id}/secondaries
+## /accounts/{account_id}/secondaries
 - `GET`: List Secondary Accounts
 
-## /account/{account_id}/transactions
+## /accounts/{account_id}/transactions
 - `GET`: Search / List Past Payments
 
-## /account/{account_id}/transactions/
+## /accounts/{account_id}/transactions/
 - `POST`: Make Payment
 
-## /account/{account_id}/transactions/{id}
+## /accounts/{account_id}/transactions/{id}
 - `GET`: Get Payment Details
 
-## /account/{account_id}/users
+## /accounts/{account_id}/users
 - `GET`: Search / List Users
 - `POST`: Create User
 
-## /account/{account_id}/users/{id}
+## /accounts/{account_id}/users/{id}
 - `GET`: Get User Details
 - `PUT`: Update User Details
 
