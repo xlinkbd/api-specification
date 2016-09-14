@@ -1,6 +1,13 @@
 # API Design Guidelines
 
-## Names and Formats
+- [Names and Formats](#names-and-formats)
+- [Response Structure](#response-structure)
+- [Behaviour](#behaviour)
+- [API Spec](#api-spec)
+- [Versioning](#versioning)
+
+Names and Formats
+-----------------
 
 ### Convention
 - Have parameters / properties in lower case with underscores. 
@@ -120,7 +127,7 @@ The price for each request. This is per request for text based messages, or per 
 The total cost that is the result of the request. 
 
 
-Response Format
+Response Structure
 ---------------
 ### Data Structure
 - Each API defines a single data structure and set of properties (resource). This must be coherent with the other APIs.
