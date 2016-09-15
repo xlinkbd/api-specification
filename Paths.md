@@ -1,5 +1,5 @@
 # Path Map
-_Generated: Tue, 19 Jul 2016 16:10:25 +0000_
+_Generated: Thu, 15 Sep 2016 02:25:29 +0000_
 
 ## /accounts/{account_id}
 - `GET`: Get Account Settings

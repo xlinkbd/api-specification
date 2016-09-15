@@ -6,7 +6,7 @@ host: api.nexmo.com
 info:
   version: '2.0'
   title: Nexmo API
-  description: '##OAI Specification of Nexmo''s APIs.'
+  description: "Open API Specification of Nexmo's Communication APIs"
 paths:
   '/accounts/{account_id}':
     get:
