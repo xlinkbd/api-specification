@@ -6,7 +6,7 @@ securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
 
 paths:
-  /applications:
+  '/applications':
     get:
       summary: List and Filter Applications
       description: >  
@@ -34,39 +34,6 @@ paths:
                           $ref: '#/definitions/applicationResponse'
                         type: array
                     type: object
-          examples:
-            application/json:
-              _embedded:
-                applications:
-                  - _links:
-                      numberpool:
-                        href: /numberpools/10
-                      self:
-                        href: /applications/63f61863-4a51-4f6b-86e1-46edebcf9356
-                    answer_method: GET
-                    answer_url: 'http://myanswerurl.com'
-                    application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-                    application_type: voice
-                    backup_method: GET
-                    backup_url: 'http://mybackupurll.com'
-                    event_method: GET
-                    event_url: 'http://myeventurl.com'
-                    name: Nexmo-conference
-                    numberpool_id: '10'
-              _links:
-                first:
-                  href: /applications
-                last:
-                  href: /applications?page_offset=50
-                next:
-                  href: /applications?page_offset=20
-                prev:
-                  href: /applications
-                self:
-                  href: /applications?page_offset=10
-              count: '1020'
-              page_offset: '150'
-              page_size: '50'
     post:
       summary: Create Application
       description: >
@@ -93,10 +60,6 @@ paths:
                   private_key:
                     type: string
                 type: object
-          examples:
-            application/json:
-              app_id: ab3eud2
-              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
 
   '/applications/{app_uuid}':
     parameters:
@@ -115,18 +78,6 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/applicationResponse'
-          examples:
-            application/json:
-              answer_method: GET
-              answer_url: 'http://myanswerurl.com'
-              application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-              application_type: voice
-              backup_method: GET
-              backup_url: 'http://mybackupurll.com'
-              event_method: GET
-              event_url: 'http://myeventurl.com'
-              name: Nexmo-conference
-              numberpool_id: '10'
     put:
       summary: Update Application
       description: >
@@ -152,10 +103,6 @@ paths:
               shared_secret:
                 type: string
             type: object
-          examples:
-            application/json:
-              app_id: ab3eud2
-              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
     delete:
       summary: Delete Application
       description: >
@@ -184,19 +131,6 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/applicationResponse'
-          examples:
-            application/json:
-              answer_method: GET
-              answer_url: 'http://myanswerurl.com'
-              application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-              application_type: voice
-              backup_method: GET
-              backup_url: 'http://mybackupurll.com'
-              event_method: GET
-              event_url: 'http://myeventurl.com'
-              name: Nexmo-conference
-              numberpool_id: '10'
-
   '/applications/{app_uuid}/keys/{key_id}':
     parameters:
       - $ref: "#/parameters/app_uuid"
@@ -218,18 +152,6 @@ paths:
           schema:
             allOf:
               - $ref: '#/definitions/applicationResponse'
-          examples:
-            application/json:
-              answer_method: GET
-              answer_url: 'http://myanswerurl.com'
-              application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-              application_type: voice
-              backup_method: GET
-              backup_url: 'http://mybackupurll.com'
-              event_method: GET
-              event_url: 'http://myeventurl.com'
-              name: Nexmo-conference
-              numberpool_id: '10'
 
 definitions:
   applicationRequest:
@@ -272,16 +194,6 @@ definitions:
       numberpool_id:
         description: ID of number pool connected to the application.
         type: string
-    example:
-      answer_method: GET
-      answer_url: 'http://myanswerurl.com'
-      application_type: voice
-      backup_method: GET
-      backup_url: 'http://mybackupurll.com'
-      event_method: GET
-      event_url: 'http://myeventurl.com'
-      name: Nexmo-conference
-      numberpool_id: '10'
 
   applicationResponse:
     allOf:
@@ -296,22 +208,6 @@ definitions:
             properties:
               numberpool:
                 $ref: '../common/hal.yaml#/definitions/link'
-    example:
-      _links:
-        numberpool:
-          href: /numberpools/10
-        self:
-          href: /applications/63f61863-4a51-4f6b-86e1-46edebcf9356
-      answer_method: GET
-      answer_url: 'http://myanswerurl.com'
-      application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-      application_type: voice
-      backup_method: GET
-      backup_url: 'http://mybackupurll.com'
-      event_method: GET
-      event_url: 'http://myeventurl.com'
-      name: Nexmo-conference
-      numberpool_id: '10'
 
 parameters:
   app_uuid:
