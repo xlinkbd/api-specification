@@ -1,0 +1,57 @@
+definitions:
+  link:
+    type: object
+    readOnly: true
+    properties:
+      href:
+        type: string
+        format: url
+  self:
+    type: object
+    required:
+      - self
+    properties:
+      self:
+        $ref: '#/definitions/link'
+  paging:
+    allOf:
+      - $ref: '#/definitions/self'
+      - type: object
+        required:
+          - first
+          - last
+        properties:
+          next:
+            $ref: '#/definitions/link'
+          prev:
+            $ref: '#/definitions/link'
+          first:
+            $ref: '#/definitions/link'
+          last:
+            $ref: '#/definitions/link'
+  collection:
+    type: object
+    properties:
+      count:
+        readOnly: true
+        type: string
+      page_offset:
+        readOnly: true
+        type: string
+      page_size:
+        readOnly: true
+        type: string
+
+parameters:
+  page_size:
+    name: page_size
+    default: 10
+    description: The number of records to limit the response to.
+    in: query
+    type: number
+  page_offset:
+    name: page_offset
+    default: 0
+    description: 'Offset of the first record. '
+    in: query
+    type: number

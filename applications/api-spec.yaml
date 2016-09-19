@@ -7,42 +7,32 @@ securityDefinitions:
 paths:
   /applications:
     get:
-      description: Get details of all apps associated with an account.
-      operationId: GET_applications
+      summary: List and Filter Applications
+      description: >  
+        Returns a collection of the account's applications.
+      tags:
+        - Application
       parameters:
-        - description: |-
-
-            Start date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ
-          in: query
-          name: date_start
-          type: string
-        - default: false
-          description: >-
-
-            Option to only return the record count. Options are ‘true’ or
-            ‘false’. Defaults to false.
-          in: query
-          name: count
-          type: boolean
-        - default: 10
-          description: The number of records to limit the response to.
-          in: query
-          name: page_size
-          type: number
-        - default: 0
-          description: 'Offset of the first record. '
-          in: query
-          name: page_offset
-          type: number
-        - description: 'End date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
-          in: query
-          name: date_end
-          type: string
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/page_offset"
       produces:
         - application/json
       responses:
         '200':
-          description: ''
+          description: Application Collection
+          schema:
+            allOf:
+              - $ref: "../common/hal.yaml#/definitions/collection"
+              - $ref: "../common/hal.yaml#/definitions/paging"
+              - type: object
+                properties:
+                  _embedded:
+                    properties:
+                      applications:
+                        items:
+                          $ref: '#/definitions/applicationResponse'
+                        type: array
+                    type: object
           examples:
             application/json:
               _embedded:
@@ -76,73 +66,24 @@ paths:
               count: '1020'
               page_offset: '150'
               page_size: '50'
-          schema:
-            allOf:
-              - properties:
-                  _embedded:
-                    properties:
-                      applications:
-                        items:
-                          $ref: '#/definitions/applicationResponse'
-                        type: array
-                    type: object
-                  _links:
-                    properties:
-                      first:
-                        properties:
-                          href:
-                            type: string
-                        type: object
-                      last:
-                        properties:
-                          href:
-                            type: string
-                        type: object
-                      next:
-                        properties:
-                          href:
-                            type: string
-                        type: object
-                      prev:
-                        properties:
-                          href:
-                            type: string
-                        type: object
-                      self:
-                        properties:
-                          href:
-                            type: string
-                        type: object
-                    type: object
-                  count:
-                    type: string
-                  page_offset:
-                    type: string
-                  page_size:
-                    type: string
-                type: object
-      summary: List Applications
+    post:
+      summary: Create Application
+      description: >
+        Create a new application. Currently only a voice application is supported.
       tags:
         - Application
-    post:
       consumes:
         - application/x-www-form-urlencoded
-      description: Create a new application.
-      operationId: POST_applications
+      produces:
+        - application/json
       parameters:
         - in: body
           name: body
           schema:
             $ref: '#/definitions/applicationRequest'
-      produces:
-        - application/json
       responses:
         '201':
-          description: ''
-          examples:
-            application/json:
-              app_id: ab3eud2
-              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
+          description: Application Resource
           schema:
             allOf:
               - properties:
@@ -151,30 +92,28 @@ paths:
                   private_key:
                     type: string
                 type: object
-      summary: Create Application
-      tags:
-        - Application
+          examples:
+            application/json:
+              app_id: ab3eud2
+              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
+
   '/applications/{app_uuid}':
-    delete:
-      description: Delete an existing application.
-      operationId: DELETE_applications-app_uuid
-      produces:
-        - application/json
-      responses:
-        '204':
-          description: ''
-      summary: Delete Application
+    parameters:
+      - $ref: "#/parameters/app_uuid"
+    get:
+      summary: Get Application
+      description: >
+        Get details of an existing application.
       tags:
         - Application
-    get:
-      description: |
-        Get details of an existing application.
-      operationId: GET_applications-app_uuid
       produces:
         - application/json
       responses:
         '200':
-          description: ''
+          description: Application Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/applicationResponse'
           examples:
             application/json:
               answer_method: GET
@@ -187,38 +126,24 @@ paths:
               event_url: 'http://myeventurl.com'
               name: Nexmo-conference
               numberpool_id: '10'
-          schema:
-            allOf:
-              - $ref: '#/definitions/applicationResponse'
-      summary: Get Application
+    put:
+      summary: Update Application
+      description: >
+        Modify an existing application.
       tags:
         - Application
-    parameters:
-      - in: path
-        name: app_uuid
-        required: true
-        type: string
-    put:
       consumes:
         - application/x-www-form-urlencoded
-      description: >-
-        Modify an existing application (NOTE: whenever a PUT is performed, a new
-        shared secret is created and returned).
-      operationId: PUT_applications-app_uuid
+      produces:
+        - application/json
       parameters:
         - in: body
           name: body
           schema:
             $ref: '#/definitions/applicationRequest'
-      produces:
-        - application/json
       responses:
         '200':
-          description: ''
-          examples:
-            application/json:
-              app_id: ab3eud2
-              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
+          description: Application Resource
           schema:
             properties:
               app_id:
@@ -226,23 +151,37 @@ paths:
               shared_secret:
                 type: string
             type: object
-      summary: Update Application
+          examples:
+            application/json:
+              app_id: ab3eud2
+              shared_secret: 63f61863-4a51-4f6b-86e1-46edebcf9356
+    delete:
+      summary: Delete Application
+      description: >
+        Delete an exsisting appllication.
       tags:
         - Application
+      produces: []
+      responses:
+        '204':
+          description: No Content
   '/applications/{app_uuid}/keys':
     parameters:
-      - in: path
-        name: app_uuid
-        required: true
-        type: string
+      - $ref: "#/parameters/app_uuid"
     post:
-      description: ''
-      operationId: POST_npa-applications-app_uuid-keys
+      summary: Add Public Key
+      description: >
+        Upload and associate a public key with an application.
+      tags:
+        - Application
       produces:
         - application/json
       responses:
         '200':
-          description: ''
+          description: Application Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/applicationResponse'
           examples:
             application/json:
               answer_method: GET
@@ -255,63 +194,48 @@ paths:
               event_url: 'http://myeventurl.com'
               name: Nexmo-conference
               numberpool_id: '10'
-          schema:
-            allOf:
-              - $ref: '#/definitions/applicationResponse'
-      summary: Add Application Key
-      tags:
-        - Application
-        - Npa
   '/applications/{app_uuid}/keys/{key_id}':
-    get:
-      description: ''
-      operationId: GET_npa-applications-app_uuid-keys-key_id
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: ''
-          examples:
-            application/json:
-              answer_method: GET
-              answer_url: 'http://myanswerurl.com'
-              application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
-              application_type: voice
-              backup_method: GET
-              backup_url: 'http://mybackupurll.com'
-              event_method: GET
-              event_url: 'http://myeventurl.com'
-              name: Nexmo-conference
-              numberpool_id: '10'
-          schema:
-            allOf:
-              - $ref: '#/definitions/applicationResponse'
-      summary: Get Application Key
-      tags:
-        - Application
-        - Npa
     parameters:
-      - in: path
-        name: app_uuid
-        required: true
-        type: string
+      - $ref: "#/parameters/app_uuid"
       - in: path
         name: key_id
         required: true
         type: string
+    get:
+      summary: Get Application Public Key
+      tags:
+        - Application
+      description: >
+        Get a public key associated with the application.
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Application Response
+          schema:
+            allOf:
+              - $ref: '#/definitions/applicationResponse'
+          examples:
+            application/json:
+              answer_method: GET
+              answer_url: 'http://myanswerurl.com'
+              application_id: 63f61863-4a51-4f6b-86e1-46edebcf9356
+              application_type: voice
+              backup_method: GET
+              backup_url: 'http://mybackupurll.com'
+              event_method: GET
+              event_url: 'http://myeventurl.com'
+              name: Nexmo-conference
+              numberpool_id: '10'
 
 definitions:
   applicationRequest:
-    example:
-      answer_method: GET
-      answer_url: 'http://myanswerurl.com'
-      application_type: voice
-      backup_method: GET
-      backup_url: 'http://mybackupurll.com'
-      event_method: GET
-      event_url: 'http://myeventurl.com'
-      name: Nexmo-conference
-      numberpool_id: '10'
+    type: object
+    required:
+      - name
+      - answer_url
+      - event_url
+      - application_type
     properties:
       answer_method:
         default: POST
@@ -345,32 +269,30 @@ definitions:
       numberpool_id:
         description: ID of number pool connected to the application.
         type: string
-    required:
-      - name
-      - answer_url
-      - event_url
-      - application_type
-    type: object
+    example:
+      answer_method: GET
+      answer_url: 'http://myanswerurl.com'
+      application_type: voice
+      backup_method: GET
+      backup_url: 'http://mybackupurll.com'
+      event_method: GET
+      event_url: 'http://myeventurl.com'
+      name: Nexmo-conference
+      numberpool_id: '10'
+
   applicationResponse:
     allOf:
       - $ref: '#/definitions/applicationRequest'
-      - properties:
-          _links:
-            properties:
-              numberpool:
-                properties:
-                  href:
-                    type: string
-                type: object
-              self:
-                properties:
-                  href:
-                    type: string
-                type: object
-            type: object
+      - $ref: '../common/hal.yaml#/definitions/self'
+      - type: object
+        properties:
           application_id:
             type: string
-        type: object
+          _links:
+            type: object
+            properties:
+              numberpool:
+                $ref: '../common/hal.yaml#/definitions/link'
     example:
       _links:
         numberpool:
@@ -387,3 +309,12 @@ definitions:
       event_url: 'http://myeventurl.com'
       name: Nexmo-conference
       numberpool_id: '10'
+      
+
+parameters:
+  app_uuid:
+    description: Unique Application Identifier 
+    in: path
+    name: app_uuid
+    required: true
+    type: string
