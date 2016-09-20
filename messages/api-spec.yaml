@@ -1,0 +1,137 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Applications API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+paths:
+  '/messages':
+    get:
+      summary: List and Filter Messages
+      description: >
+        Returns a collection of the message resources.
+      tags:
+        - Messages
+      consumes:
+        - application/json
+      responses:
+        200:
+          description: Message Collection
+          schema:
+            allOf:
+              - $ref: '#/definitions/collection'
+    post:
+      summary: Send A Message
+      description: >
+        Create a message to be delivered over carrier or app networks.
+      tags:
+        - Messages
+      consumes:
+        - application/json
+      responses:
+        201:
+          description: Message Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/message'
+
+  '/messages/2fa':
+    post:
+      summary: Create 2FA Message
+      description: >
+        TODO: Potential way to use shared short code. Number pools may also be a solution.
+      tags:
+        - Messages
+        - Shared Short Codes
+      consumes:
+        - application/json
+      responses:
+        201:
+          description: Message Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/message'
+
+  '/messages/alert':
+    post:
+      summary: Create Alert Message
+      description: >
+        TODO: Potential way to use shared short code. Number pools may also be a solution.
+      tags:
+        - Messages
+        - Shared Short Codes
+      consumes:
+        - application/json
+      responses:
+        201:
+          description: Message Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/message'
+
+  '/messages/{message_uuid}':
+    parameters:
+      - $ref: "#/parameters/message_uuid"
+    get:
+      summary: Get Message
+      description: >
+        Get log of a sent or recieved message.
+      tags:
+        - Messages
+      consumes:
+        - application/json
+      responses:
+        200:
+          description: Message Resource
+          schema:
+            allOf:
+              - $ref: '#/definitions/message'
+
+  '/messages/{message_uuid}/conversion':
+    parameters:
+      - $ref: "#/parameters/message_uuid"
+    post:
+      summary: Report Message Conversion
+      description: >
+        Create a conversion report for a sent message. This can only be done once.
+      tags:
+        - Messages
+        - Conversions
+      consumes:
+        - application/json
+      responses:
+        204:
+          description: No Content
+
+definitions:
+  message:
+    description: >
+      Representation of a message (inbound or outbound), returned from API and used as the payload for message webhooks.
+    allOf:
+      - $ref: '../common/hal.yaml#/definitions/self'
+      - type: object
+        properties:
+          message_id: 
+            description: Message Identifier 
+            type: string
+  collection:
+    description: >
+      Collection of messasge resources.
+    allOf:
+      - $ref: "../common/hal.yaml#/definitions/collection"
+      - $ref: "../common/hal.yaml#/definitions/paging"
+      - type: object
+        properties:
+          _embedded:
+            type: object
+            properties:
+              messagess:
+                type: array
+                items:
+                  $ref: '#/definitions/message'
+parameters:
+  message_uuid:
+    name: message_uuid
+    in: path
+    required: true
+    type: string
