@@ -1,0 +1,48 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Number Insight API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /insights:
+    get:
+      consumes:
+        - application/json
+      description: ''
+      operationId: GET_insights
+      responses:
+        default:
+          description: ''
+      summary: Search / List Insight Requests
+      tags:
+        - Insight
+    post:
+      consumes:
+        - application/json
+      description: ''
+      operationId: POST_insights
+      responses:
+        default:
+          description: ''
+      summary: Start Insight Request
+      tags:
+        - Insight
+  '/insights/{insight_uuid}':
+    get:
+      consumes:
+        - application/json
+      description: ''
+      operationId: GET_insights-insight_uuid
+      responses:
+        default:
+          description: ''
+      summary: Get Insight Status / Information
+      tags:
+        - Insight
+    parameters:
+      - in: path
+        name: insight_uuid
+        required: true
+        type: string
