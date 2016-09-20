@@ -1,0 +1,118 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Application API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /users:
+    get:
+      produces:
+      - application/json
+      description: Gets a filtered list of User objects
+      parameters:
+        - name: name
+          in: query
+          type: string
+          required: false
+      responses:
+        '200':
+          description: A list of users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/user_lite'
+    post:
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      description: Updates a specfic user
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+      responses:
+        '200':
+          description: A user
+          schema:
+            $ref: '#/definitions/user_lite'
+
+  /users/{user_id}:
+    put:
+      produces:
+      - application/json
+      consumes:
+      - application/json
+      description: Updates a specfic user
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          required: true
+          type: string
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/user'
+      responses:
+        '200':
+          description: A user
+          schema:
+            $ref: '#/definitions/user_lite'
+    get:
+      produces:
+      - application/json
+      description: Gets a specfic user
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: A user
+          schema:
+            $ref: '#/definitions/user'
+    delete:
+      produces:
+      - application/json
+      parameters:
+        - name: user_id
+          in: path
+          description: User ID
+          type: string
+          required: true
+      responses:
+        '200':
+          description: Success
+
+definitions:
+  user_lite:
+    type: object
+    properties:
+      uuid:
+        description: ID of the corresponding User
+        type: string
+      name:
+        description: The unique name for this User
+        type: string
+
+  user:
+    allOf:
+    - $ref: '#/definitions/user_lite'
+    - type: object
+      properties:
+        display_name:
+          description: The full name to be displayed to end users
+          type: string
+        image_url:
+          description: A URL for an image representing this user
+          type: string
+        channels:
+          type: object
