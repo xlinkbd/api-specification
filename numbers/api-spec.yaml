@@ -1,0 +1,72 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Applications API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /numbers:
+    get:
+      description: List Numbers
+      operationId: GET_numbers
+      produces:
+        - application/json
+      responses:
+        default:
+          description: ''
+      summary: Search / List Numbers
+      tags:
+        - Numbers
+        - Npa
+    post:
+      consumes:
+        - application/json
+      description: Purchase Number
+      operationId: POST_numbers
+      produces:
+        - application/json
+      responses:
+        default:
+          description: ''
+      summary: Purchase Number
+      tags:
+        - Numbers
+        - Npa
+  '/numbers/{number_uuid}':
+    delete:
+      consumes:
+        - application/json
+      description: Release Number
+      operationId: DELETE_numbers-number_uuid
+      produces:
+        - application/json
+      responses:
+        default:
+          description: ''
+      summary: Release Number
+      tags:
+        - Numbers
+        - Npa
+    parameters:
+      - in: path
+        name: number_uuid
+        required: true
+        type: string
+    put:
+      consumes:
+        - application/json
+      description: |-
+        Update Number Settings
+        - Set Webhooks
+        - Assign to Pool
+      operationId: PUT_numbers-number_uuid
+      produces:
+        - application/json
+      responses:
+        default:
+          description: ''
+      summary: Update Number Settings
+      tags:
+        - Numbers
+        - Npa
