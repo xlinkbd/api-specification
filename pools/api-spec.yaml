@@ -1,9 +1,10 @@
 swagger: '2.0'
 info:
   version: '2.0'
-  title: "Nexmo Applications API"
+  title: "Nexmo Pool API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
+
 paths:
   /pools:
     get:
@@ -17,6 +18,7 @@ paths:
       summary: Search / List Pools
       tags:
         - Numbers
+
   '/pools/{pool_id}':
     get:
       description: ''
@@ -45,6 +47,7 @@ paths:
       summary: Update Pool
       tags:
         - Numbers
+
   '/pools/{pool_id}/numbers':
     get:
       description: List Numbers

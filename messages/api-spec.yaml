@@ -1,9 +1,10 @@
 swagger: '2.0'
 info:
   version: '2.0'
-  title: "Nexmo Applications API"
+  title: "Nexmo Message API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
+
 paths:
   '/messages':
     get:
@@ -114,6 +115,7 @@ definitions:
           message_id: 
             description: Message Identifier 
             type: string
+
   collection:
     description: >
       Collection of messasge resources.
@@ -129,6 +131,7 @@ definitions:
                 type: array
                 items:
                   $ref: '#/definitions/message'
+
 parameters:
   message_uuid:
     name: message_uuid

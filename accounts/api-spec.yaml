@@ -31,6 +31,7 @@ paths:
       summary: Update Account
       tags:
         - Account
+
   '/accounts/{account_id}/alerts':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -78,6 +79,7 @@ paths:
       summary: Create Account Alert
       tags:
         - Alerts
+
   '/accounts/{account_id}/alerts/{id}':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -120,6 +122,7 @@ paths:
       summary: Update Account Alert
       tags:
         - Alerts
+
   '/accounts/{account_id}/autoreload':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -170,6 +173,7 @@ paths:
       summary: Get Payment Configuration
       tags:
         - Payment
+
   '/accounts/{account_id}/balance':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -192,6 +196,7 @@ paths:
       summary: Get Balance
       tags:
         - Account
+
   '/accounts/{account_id}/instruments':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -206,6 +211,7 @@ paths:
       summary: Search / List Payment Methods
       tags:
         - Payment
+
   '/accounts/{account_id}/instruments/{id}':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -224,6 +230,7 @@ paths:
       summary: Get Payment Method Details
       tags:
         - Payment
+
   '/accounts/{account_id}/secondaries':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -238,6 +245,7 @@ paths:
       summary: List Secondary Accounts
       tags:
         - Account
+
   '/accounts/{account_id}/transactions':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -252,6 +260,7 @@ paths:
       summary: Search / List Past Payments
       tags:
         - Payment
+
   '/accounts/{account_id}/transactions/':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -266,6 +275,7 @@ paths:
       summary: Make Payment
       tags:
         - Payment
+
   '/accounts/{account_id}/transactions/{id}':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -284,6 +294,7 @@ paths:
       summary: Get Payment Details
       tags:
         - Payment
+
   '/accounts/{account_id}/users':
     parameters:
       - $ref: "#/parameters/account_id"
@@ -309,6 +320,7 @@ paths:
       summary: Create User
       tags:
         - Users
+
   '/accounts/{account_id}/users/{id}':
     get:
       consumes:

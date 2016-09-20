@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '2.0'
-  title: "Nexmo Applications API"
+  title: "Nexmo Call API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
 
@@ -634,6 +634,7 @@ definitions:
       - to
       - from
     type: object
+
   callRequest:
     properties:
       answer_method:
@@ -725,6 +726,7 @@ definitions:
       - to
       - from
     type: object
+
   callResponse:
     example:
       _links:
@@ -799,6 +801,7 @@ definitions:
       - network
       - direction
     type: object
+
   call-endpoint:
     discriminator: type
     properties:
@@ -807,6 +810,7 @@ definitions:
     required:
       - type
     type: object
+
   phone:
     allOf:
       - $ref: '#/definitions/call-endpoint'
@@ -822,6 +826,7 @@ definitions:
         required:
           - number
         type: object
+
   sip:
     allOf:
       - $ref: '#/definitions/call-endpoint'
@@ -843,6 +848,7 @@ definitions:
         required:
           - uri
         type: object
+
   recordingBase:
     properties:
       backup_method:
@@ -910,6 +916,7 @@ definitions:
     required:
       - event_url
     type: object
+
   recordingRequest:
     properties:
       backup_method:
@@ -984,6 +991,7 @@ definitions:
     required:
       - event_url
     type: object
+
   recordingResponse:
     example:
       _links:
@@ -1019,6 +1027,7 @@ definitions:
       recording_url:
         type: string
     type: object
+
   conversation:
     allOf:
       - $ref: '#/definitions/call-endpoint'
@@ -1029,6 +1038,7 @@ definitions:
         required:
           - name
         type: object
+
   ttsRequest:
     properties:
       gender:
@@ -1069,6 +1079,7 @@ definitions:
     required:
       - text
     type: object
+
   user:
     allOf:
       - $ref: '#/definitions/call-endpoint'
@@ -1079,6 +1090,7 @@ definitions:
         required:
           - name
         type: object
+
   streamRequest:
     properties:
       level:

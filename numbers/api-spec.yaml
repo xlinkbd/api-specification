@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '2.0'
-  title: "Nexmo Applications API"
+  title: "Nexmo Number API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
 
@@ -18,7 +18,6 @@ paths:
       summary: Search / List Numbers
       tags:
         - Numbers
-        - Npa
     post:
       consumes:
         - application/json
@@ -32,7 +31,7 @@ paths:
       summary: Purchase Number
       tags:
         - Numbers
-        - Npa
+
   '/numbers/{number_uuid}':
     delete:
       consumes:
@@ -47,7 +46,6 @@ paths:
       summary: Release Number
       tags:
         - Numbers
-        - Npa
     parameters:
       - in: path
         name: number_uuid
@@ -69,4 +67,3 @@ paths:
       summary: Update Number Settings
       tags:
         - Numbers
-        - Npa

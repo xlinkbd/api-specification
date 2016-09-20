@@ -29,6 +29,7 @@ paths:
       summary: Create Report
       tags:
         - Reports
+
   /reports/report_id/:
     delete:
       consumes:

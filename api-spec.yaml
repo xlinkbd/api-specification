@@ -8,6 +8,133 @@ info:
   title: Nexmo API
   description: "Open API Specification of Nexmo's Communication APIs"
 paths:
+  # Accounts
+  '/accounts/{account_id}':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}'
+  '/accounts/{account_id}/alerts':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1alerts'
+  '/accounts/{account_id}/alerts/{id}':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1alerts~1{id}'
+  '/accounts/{account_id}/autoreload':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1autoreload'
+  '/accounts/{account_id}/balance':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1balance'
+  '/accounts/{account_id}/instruments':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1instruments'
+  '/accounts/{account_id}/instruments/{id}':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1instruments~1{id}'
+  '/accounts/{account_id}/secondaries':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1secondaries'
+  '/accounts/{account_id}/transactions':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1transactions'
+  '/accounts/{account_id}/transactions/':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1transactions~1'
+  '/accounts/{account_id}/transactions/{id}':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1transactions~1{id}'
+  '/accounts/{account_id}/users':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1users'
+  '/accounts/{account_id}/users/{id}':
+    $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}~1users~1{id}'
+
+  # Applications
+  '/applications':
+    $ref: 'applications/api-spec.yaml#/paths/~1applications'
+  '/applications/{app_uuid}':
+    $ref: 'applications/api-spec.yaml#/paths/~1applications~1{app_uuid}'
+  '/applications/{app_uuid}/keys':
+    $ref: 'applications/api-spec.yaml#/paths/~1applications~1{app_uuid}~1keys'
+  '/applications/{app_uuid}/keys/{key_id}':
+    $ref: 'applications/api-spec.yaml#/paths/~1applications~1{app_uuid}~1keys~1{key_id}'
+
+  # Calls
+  '/calls':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls'
+  '/calls/recordings':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1recordings'
+  '/calls/recordings/{recording_uuid}':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1recordings~1{recording_uuid}'
+  '/calls/{call_uuid}':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}'
+  '/calls/{call_uuid}/dtmf':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}~1dtmf'
+  '/calls/{call_uuid}/recordings':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}~1recordings'
+  '/calls/{call_uuid}/stream':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}~1stream'
+  '/calls/{call_uuid}/talk':
+    $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}~1talk'
+
+  # Conversations
+  '/conferences':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences'
+  '/conferences/{conference_uuid}':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}'
+  '/conferences/{conference_uuid}/participants':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants'
+  '/conferences/{conference_uuid}/participants/{participant_id}':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}'
+  '/conferences/{conference_uuid}/participants/{participant_id}/controls':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1controls'
+  '/conferences/{conference_uuid}/participants/{participant_id}/stream':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1stream'
+  '/conferences/{conference_uuid}/participants/{participant_id}/talk':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1talk'
+  '/conferences/{conference_uuid}/recordings':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1recordings'
+  '/conferences/{conference_uuid}/stream':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1stream'
+  '/conferences/{conference_uuid}/talk':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1talk'
+  '/conferences/{conference_uuid}/whisper':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1whisper'
+
+  # Insights
+  '/insights':
+    $ref: 'insights/api-spec.yaml#/paths/~1insights'
+  '/insights/{insight_uuid}':
+    $ref: 'insights/api-spec.yaml#/paths/~1insights~1{insight_uuid}'
+
+  # Messages
+  '/messages':
+    $ref: 'messages/api-spec.yaml#/paths/~1messages'
+  '/messages/2fa':
+    $ref: 'messages/api-spec.yaml#/paths/~1messages~12fa'
+  '/messages/alert':
+    $ref: 'messages/api-spec.yaml#/paths/~1messages~1alert'
+  '/messages/{message_uuid}':
+    $ref: 'messages/api-spec.yaml#/paths/~1messages~1{message_uuid}'
+  '/messages/{message_uuid}/conversion':
+    $ref: 'messages/api-spec.yaml#/paths/~1messages~1{message_uuid}~1conversion'
+
+  # Numbers
+  '/numbers':
+    $ref: 'numbers/api-spec.yaml#/paths/~1numbers'
+  '/numbers/{number_uuid}':
+    $ref: 'numbers/api-spec.yaml#/paths/~1numbers~1{number_uuid}'
+
+  # Pools
+  '/pools':
+    $ref: 'pools/api-spec.yaml#/paths/~1pools'
+  '/pools/{pool_id}':
+    $ref: 'pools/api-spec.yaml#/paths/~1pools~1{pool_id}'
+  '/pools/{pool_id}/numbers':
+    $ref: 'pools/api-spec.yaml#/paths/~1pools~1{pool_id}~1numbers'
+
+  # Reports
+  '/reports':
+    $ref: 'reports/api-spec.yaml#/paths/~1reports'
+  '/reports/report_id/':
+    $ref: 'reports/api-spec.yaml#/paths/~1reports~1report_id~1'
+
+  # Verifications
+  '/verifications':
+    $ref: 'verifications/api-spec.yaml#/paths/~1verifications'
+  '/verifications/{verification_uuid}':
+    $ref: 'verifications/api-spec.yaml#/paths/~1verifications~1{verification_uuid}'
+  '/verifications/{verification_uuid}/checks':
+    $ref: 'verifications/api-spec.yaml#/paths/~1verifications~1{verification_uuid}~1checks'
+
+  # Operations with uncertain paths.
   /available_numbers:
     get:
       description: Search Available Numbers
@@ -20,7 +147,6 @@ paths:
       summary: Search Available Numbers
       tags:
         - Numbers
-        - Npa
   /message_templates:
     get:
       consumes:
@@ -165,24 +291,6 @@ paths:
         type: string
 
 definitions:
-  account-user:
-    properties: {}
-    type: object
-  common:
-    properties:
-      description:
-        description: Human readable message
-        type: string
-      request_id:
-        description: The unique ID of the API request
-        type: string
-      status_code:
-        description: Unique Nexmo status code
-        type: string
-      timestamp:
-        description: Timestamp of resource creation UTC
-        type: string
-    type: object
   error:
     example:
       detail: The request cost exceeds your current ballance.
@@ -200,43 +308,6 @@ definitions:
       title:
         type: string
       type:
-        type: string
-    type: object
-  hal:
-    properties:
-      _links:
-        properties:
-          first:
-            properties:
-              href:
-                type: string
-            type: object
-          last:
-            properties:
-              href:
-                type: string
-            type: object
-          next:
-            properties:
-              href:
-                type: string
-            type: object
-          prev:
-            properties:
-              href:
-                type: string
-            type: object
-          self:
-            properties:
-              href:
-                type: string
-            type: object
-        type: object
-      count:
-        type: string
-      page_offset:
-        type: string
-      page_size:
         type: string
     type: object
 securityDefinitions:

@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: '2.0'
-  title: "Nexmo Applications API"
+  title: "Nexmo Conversation API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
 
@@ -140,6 +140,7 @@ paths:
       summary: List Conferences
       tags:
         - Conference
+
   '/conferences/{conference_uuid}':
     delete:
       description: Ends an existing conference.
@@ -171,6 +172,7 @@ paths:
         name: conference_uuid
         required: true
         type: string
+
   '/conferences/{conference_uuid}/participants':
     get:
       description: Returns all participants in an existing conference.
@@ -270,6 +272,7 @@ paths:
         name: conference_uuid
         required: true
         type: string
+
   '/conferences/{conference_uuid}/participants/{participant_id}':
     delete:
       description: Remove a participant from the conference.
@@ -307,6 +310,7 @@ paths:
         name: participant_id
         required: true
         type: string
+
   '/conferences/{conference_uuid}/participants/{participant_id}/controls':
     parameters:
       - in: path
@@ -350,6 +354,7 @@ paths:
       summary: Control Participant
       tags:
         - Conference Participant
+
   '/conferences/{conference_uuid}/participants/{participant_id}/stream':
     delete:
       description: Stop streaming an audio file to a conference participant.
@@ -390,6 +395,7 @@ paths:
       summary: Start Stream
       tags:
         - Conference Participant
+
   '/conferences/{conference_uuid}/participants/{participant_id}/talk':
     parameters:
       - in: path
@@ -418,6 +424,7 @@ paths:
       summary: Start Text to Speech
       tags:
         - Conference Participant
+
   '/conferences/{conference_uuid}/recordings':
     delete:
       description: Stop recording a call and return parameters to `event_url`.
@@ -462,6 +469,7 @@ paths:
       summary: Create Recording
       tags:
         - Conference
+
   '/conferences/{conference_uuid}/stream':
     delete:
       description: Stop streaming an audio file to a conference.
@@ -497,6 +505,7 @@ paths:
       summary: Start Stream
       tags:
         - Conference
+
   '/conferences/{conference_uuid}/talk':
     parameters:
       - in: path
@@ -521,6 +530,7 @@ paths:
       summary: Start Text to Speech
       tags:
         - Conference
+
   '/conferences/{conference_uuid}/whisper':
     delete:
       consumes:
@@ -658,6 +668,7 @@ definitions:
       status:
         type: string
     type: object
+
   participantResponse:
     example:
       _links:
@@ -719,6 +730,7 @@ definitions:
       vol:
         type: string
     type: object
+
   whisperResponse:
     example:
       _links:

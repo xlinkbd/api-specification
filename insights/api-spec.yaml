@@ -29,6 +29,7 @@ paths:
       summary: Start Insight Request
       tags:
         - Insight
+
   '/insights/{insight_uuid}':
     get:
       consumes:
