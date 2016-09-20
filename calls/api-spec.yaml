@@ -1,0 +1,1106 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Applications API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /calls:
+    get:
+      description: Get details of all calls with filters for status and pagination.
+      operationId: GET_calls
+      parameters:
+        - description: >-
+            Filter for status of call. Options are ‘in_progress’, ‘complete’,
+            ‘all’. Defaults to ‘all’
+          enum:
+            - in_progress
+            - complete
+            - all
+          in: query
+          name: status
+          type: string
+        - description: 'Start date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_start
+          type: string
+        - description: 'End date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_end
+          type: string
+        - default: false
+          description: >-
+
+            Option to only return the record count. Options are ‘true’ or
+            ‘false’. Defaults to false
+          in: query
+          name: count
+          type: boolean
+        - default: 10
+          description: The number of records to limit the response to. Defaults to 10
+          in: query
+          name: page_size
+          type: integer
+        - default: 0
+          description: Offset of the first record. Defaults to 0
+          in: query
+          name: page_offset
+          type: integer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              _embedded:
+                calls:
+                  - _links:
+                      self:
+                        href: /calls/63f61863-4a51-4f6b-86e1-46edebcf9356
+                    call_status: in_progress
+                    call_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+                    duration: ''
+                    end_time: ''
+                    from: '27312076887'
+                    network: '65512'
+                    price: ''
+                    rate: '0.39'
+                    start_time: '2015-02-04 22:45:00'
+                    to: '447833726118'
+              _links:
+                first:
+                  href: /calls
+                last:
+                  href: /calls?page_offset=50
+                next:
+                  href: /calls?page_offset=20
+                prev:
+                  href: /calls
+                self:
+                  href: /calls?page_offset=10
+              count: '2'
+              page_offset: '10'
+              page_size: '10'
+          schema:
+            allOf:
+              - properties:
+                  _embedded:
+                    properties:
+                      calls:
+                        items:
+                          $ref: '#/definitions/callResponse'
+                        type: array
+                    type: object
+                  _links:
+                    properties:
+                      first:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      last:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      next:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      prev:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      self:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                    type: object
+                  count:
+                    type: string
+                  page_offset:
+                    type: string
+                  page_size:
+                    type: string
+                type: object
+      summary: Search / List Calls
+      tags:
+        - Call
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Make an outbound SIP or PSTN call
+      operationId: POST_calls
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/callRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+          examples:
+            application/json:
+              call_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+              start_time: '2015-02-04 22:45:00'
+          schema:
+            allOf:
+              - properties:
+                  call_uuid:
+                    type: string
+                  start_time:
+                    type: string
+                type: object
+      summary: Create Call
+      tags:
+        - Call
+
+  /calls/recordings:
+    get:
+      description: Get all recordings hosted by Nexmo.
+      operationId: GET_calls-recordings
+      parameters:
+        - default: false
+          description: >-
+            Option to only return the record count. Options are ‘true’ or
+            ‘false’. Defaults to false.
+          in: query
+          name: count
+          type: boolean
+        - description: 'Start date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_start
+          type: string
+        - description: 'End date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_end
+          type: string
+        - description: Filter based on a specific call uuid
+          in: query
+          name: call_uuid
+          type: string
+        - default: 10
+          description: The number of records to limit the response to. Defaults to 10
+          in: query
+          name: ' page_size'
+          type: integer
+        - default: 0
+          description: Offset of the first record. Defaults to 0
+          in: query
+          name: page_offset
+          type: integer
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              _embedded:
+                recordings:
+                  - _links:
+                      call:
+                        href: /calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+                      self:
+                        href: /recordings/63f61863-4a51-4f6b-86e1-46edebcf9356
+                    call_uuid: ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+                    duration: '1301'
+                    recording_time: '2015-02-04 22:45:00'
+                    recording_url: >-
+                      https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3
+                  - _links:
+                      call:
+                        href: /calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+                      self:
+                        href: /recordings/63f61863-4a51-4f6b-86e1-46edebcf9356
+                    call_uuid: ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+                    duration: '1301'
+                    recording_time: '2015-02-04 22:45:00'
+                    recording_url: >-
+                      https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3
+              _links:
+                first:
+                  href: /recordings
+                last:
+                  href: /recordings?page_offset=190
+                next:
+                  href: /recordings?page_offset=20
+                prev:
+                  href: /recordings
+                self:
+                  href: /recordings?page_offset=10
+              count: '10'
+              page: '2'
+              size: '10'
+              total: '193'
+          schema:
+            allOf:
+              - properties:
+                  _embedded:
+                    properties:
+                      recordings:
+                        items:
+                          $ref: '#/definitions/recordingResponse'
+                        type: array
+                    type: object
+                  _links:
+                    properties:
+                      first:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      last:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      next:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      prev:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      self:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                    type: object
+                  count:
+                    type: string
+                  page:
+                    type: string
+                  size:
+                    type: string
+                  total:
+                    type: string
+                type: object
+      summary: List Recordings
+      tags:
+        - Recording
+
+  '/calls/recordings/{recording_uuid}':
+    get:
+      description: Get details of a specific recording currently hosted by Nexmo.
+      operationId: GET_calls-recordings-recording_uuid
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/recordingResponse'
+      summary: Get Recording
+      tags:
+        - Recording
+    parameters:
+      - in: path
+        name: recording_uuid
+        required: true
+        type: string
+
+  '/calls/{call_uuid}':
+    delete:
+      description: Hang up a current live call.
+      operationId: DELETE_calls-call_uuid
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Hangup Call
+      tags:
+        - Call
+    get:
+      description: Get details of a specific call.
+      operationId: GET_calls-call_uuid
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/callResponse'
+      summary: Get Call
+      tags:
+        - Call
+    parameters:
+      - in: path
+        name: call_uuid
+        required: true
+        type: string
+    put:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: ''
+      operationId: PUT_calls-call_uuid
+      parameters:
+        - default: both
+          description: >-
+            Leg of the call to perform the action on. Options are ‘a_leg’,
+            ‘b_leg’ or ‘both’. Defaults to ‘both’
+          enum:
+            - a_leg
+            - b_leg
+            - both
+          in: formData
+          name: leg
+          type: string
+        - description: >
+
+            URL that gets called by transferred leg or call. Should return a
+            Nexmo Call Control Object
+          in: formData
+          name: transfer_url
+          required: true
+          type: string
+        - default: POST
+          description: HTTP method used to make the request. Defaults to POST
+          in: formData
+          name: transfer_method
+          type: string
+        - default: hangup
+          description: >-
+            What to do with orphan legs if ‘leg’ is not ‘both’. Options are
+            ‘transfer’ or ‘hangup’. Defaults to ‘hangup’
+          enum:
+            - transfer
+            - hangup
+          in: formData
+          name: orphan_action
+          type: string
+        - description: URL that gets called if orphan_action is ‘transfer’
+          in: formData
+          name: orphan_url
+          type: string
+        - default: POST
+          description: HTTP method that is used to make the request. Defaults to POST
+          in: formData
+          name: orphan_method
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              call_uuid:
+                - 20f61863-4a51-ef6b-86e1-w6edebcf9356
+                - 63f61863-wa51-4f6b-86e1-46edebcf9356
+          schema:
+            allOf:
+              - properties:
+                  call_uuid:
+                    items:
+                      type: string
+                    type: array
+                type: object
+      summary: Modify Call
+      tags:
+        - Call
+
+  '/calls/{call_uuid}/dtmf':
+    parameters:
+      - in: path
+        name: call_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Send DTMF to a live call or leg.
+      operationId: POST_calls-call_uuid-dtmf
+      parameters:
+        - default: both
+          description: >-
+            Which part of the call to send TTS. Options are ‘a_leg’, ‘b_leg’ or
+            ‘both’. Defaults to ‘both’
+          enum:
+            - a_leg
+            - b_leg
+            - both
+          in: formData
+          name: leg
+          type: string
+        - description: Comma separated list of digits to send.
+          in: formData
+          maxLength: 1500
+          minLength: 0
+          name: digits
+          required: true
+          type: string
+        - default: out
+          description: >-
+            Whether to send DTMF inband or RFC2833. Options are ‘in’ for inband
+            or ‘out’ for out of band. Defaults to ‘out’.
+          enum:
+            - in
+            - out
+          in: formData
+          name: method
+          type: string
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Send DTMF
+      tags:
+        - DTMF and TTS
+
+  '/calls/{call_uuid}/recordings':
+    delete:
+      description: Stop recording a call and return parameters to `event_url`.
+      operationId: DELETE_calls-call_uuid-recordings
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+          schema:
+            $ref: '#/definitions/recordingResponse'
+      summary: Stop Recording
+      tags:
+        - Recording
+    parameters:
+      - in: path
+        name: call_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: >
+        Start recording a call that is in progress and return parameters to
+        `event_url` when the call ends.
+
+
+        URLS returning audio files support the following mime types:
+
+        - audio/wav
+
+        - audio/mpeg
+
+        - audio/ogg
+      operationId: POST_calls-call_uuid-recordings
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/recordingRequest'
+      produces:
+        - application/json
+      responses:
+        '202':
+          description: ''
+          examples:
+            application/json:
+              recording_uuid: 20f61863-4a51-ef6b-86e1-w6edebcf9356
+          schema:
+            allOf:
+              - properties:
+                  recording_uuid:
+                    type: string
+                type: object
+      summary: Create Recording
+      tags:
+        - Recording
+
+  '/calls/{call_uuid}/stream':
+    delete:
+      description: Stop streaming an audio file to a live call or call leg.
+      operationId: DELETE_calls-call_uuid-stream
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Stop Stream
+      tags:
+        - Stream
+    parameters:
+      - in: path
+        name: call_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: >-
+        Start streaming an audio file to a live call or call leg. Supported
+        formats are mp3, wav and ogg.
+      operationId: POST_calls-call_uuid-stream
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - properties:
+                  leg:
+                    default: both
+                    description: >-
+                      Which part of the call to stream the audio file to.
+                      Options are ‘a_leg’, ‘b_leg’ or ‘both’. Defaults to ‘both’
+                    enum:
+                      - a_leg
+                      - b_leg
+                      - both
+                    type: string
+                type: object
+              - $ref: '#/definitions/streamRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Start Stream
+      tags:
+        - Stream
+
+  '/calls/{call_uuid}/talk':
+    delete:
+      description: Stop text to speech to a live call or call leg.
+      operationId: DELETE_calls-call_uuid-talk
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Stop Text to Speech
+      tags:
+        - DTMF and TTS
+    parameters:
+      - in: path
+        name: call_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Start text to speech to a live call or call leg.
+      operationId: POST_calls-call_uuid-talk
+      parameters:
+        - in: body
+          name: body
+          schema:
+            allOf:
+              - properties:
+                  leg:
+                    default: both
+                    description: >-
+                      Which part of the call to send TTS. Options are ‘a_leg’,
+                      ‘b_leg’ or ‘both’. Defaults to ‘both’
+                    enum:
+                      - a_leg
+                      - b_leg
+                      - both
+                    type: string
+                type: object
+              - $ref: '#/definitions/ttsRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Start Text to Speech
+      tags:
+        - DTMF and TTS
+
+definitions:
+  callBase:
+    description: Destination of the call.
+    properties:
+      from:
+        description: An e.164 formatted number or a SIP URI.
+        type: string
+      to:
+        type: string
+    required:
+      - to
+      - from
+    type: object
+  callRequest:
+    properties:
+      answer_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        enum:
+          - GET
+          - POST
+        type: string
+      answer_url:
+        description: >-
+          An array of URLs that gets called once a call is answered. First URL
+          to return a 200 is used. The URL should return a NCCO. Parameters
+          passed in the query string are ‘to’, ‘from’ and ‘uuid’ where uuid is
+          the id of the leg.
+        items:
+          format: uri
+          type: string
+        minItems: 1
+        type: array
+      dtmf_answer:
+        description: >-
+          Digits that are sent as soon as the call is answered (pauses are
+          created using ‘p’ = 500ms & ‘*’, ‘#’ are respected)
+        type: string
+      event_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        type: string
+      event_url:
+        description: >-
+          Asynchronous webhook that gets called each time one of the following
+          call events are fired. The call states are:  ‘started’, ‘ringing’,
+          answered,’busy’, ‘failed’, ‘timeout’, ‘cancelled’, ‘machine’,
+          ‘complete’
+        type: string
+      from:
+        description: An e.164 formatted number or a SIP URI.
+        oneOf:
+          - $ref: '#/definitions/phone'
+          - $ref: '#/definitions/sip'
+          - $ref: '#/definitions/user'
+          - $ref: '#/definitions/conversation'
+      length_timer:
+        default: 7200
+        description: >
+          Timer in seconds that starts after a call moves to the ‘in_progress’
+          state. Call is dropped when it reaches 0.
+        maximum: 7200
+        minimum: 0
+        type: integer
+      machine_detection:
+        description: >-
+          How to behave if an answering machine is encountered. Options are
+          ‘continue’ or ‘hangup’. If continue, event_url is called with param
+          MACHINE.
+        enum:
+          - continue
+          - hangup
+        type: string
+      machine_timeout:
+        default: 5
+        description: 'Machine detection analysis timeout in seconds. '
+        maximum: 5000
+        minimum: 2000
+        type: integer
+      ringing_timer:
+        default: 60
+        description: >-
+          Timer in seconds that starts after a call moves to the ‘ringing’
+          state. Call is dropped when it reaches 0.
+        maximum: 120
+        minimum: 0
+        type: integer
+      to:
+        description: >-
+          Array of endpoints (see endpoint types supported by NCCO). Multiple
+          destinations.
+        items:
+          anyOf:
+            - $ref: '#/definitions/phone'
+            - $ref: '#/definitions/sip'
+            - $ref: '#/definitions/user'
+            - $ref: '#/definitions/conversation'
+        maxItems: 10
+        minItems: 1
+        type: array
+    required:
+      - to
+      - from
+    type: object
+  callResponse:
+    example:
+      _links:
+        self:
+          href: /calls/63f61863-4a51-4f6b-86e1-46edebcf9356
+      call_status: in_progress
+      call_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+      duration: ''
+      end_time: ''
+      from: '27312076887'
+      network: '65512'
+      price: ''
+      rate: '0.39'
+      start_time: '2015-02-04 22:45:00'
+      to: '447833726118'
+    properties:
+      _links:
+        properties:
+          self:
+            properties:
+              href:
+                type: string
+            type: object
+        type: object
+      call_uuid:
+        type: string
+      direction:
+        enum:
+          - outbound
+          - inbound
+        type: string
+      duration:
+        type: string
+      end_time:
+        type: string
+      from:
+        oneOf:
+          - $ref: '#/definitions/phone'
+          - $ref: '#/definitions/sip'
+          - $ref: '#/definitions/user'
+          - $ref: '#/definitions/conversation'
+      network:
+        type: string
+      price:
+        type: string
+      rate:
+        type: string
+      start_time:
+        type: string
+      status:
+        enum:
+          - answered
+          - busy
+          - failed
+          - timeout
+          - cancelled
+          - machine
+          - completed
+        type: string
+      to:
+        oneOf:
+          - $ref: '#/definitions/phone'
+          - $ref: '#/definitions/sip'
+          - $ref: '#/definitions/user'
+          - $ref: '#/definitions/conversation'
+    required:
+      - _links
+      - call_uuid
+      - status
+      - rate
+      - start_time
+      - network
+      - direction
+    type: object
+  call-endpoint:
+    discriminator: type
+    properties:
+      type:
+        type: string
+    required:
+      - type
+    type: object
+  phone:
+    allOf:
+      - $ref: '#/definitions/call-endpoint'
+      - properties:
+          dtmfAnswer:
+            description: >-
+              Digits that are sent as soon as the call is answered (pauses are
+              created using a ‘p’ per 500ms & ‘*’, ‘#’ are respected)
+            type: string
+          number:
+            description: Number in e.164 format
+            type: string
+        required:
+          - number
+        type: object
+  sip:
+    allOf:
+      - $ref: '#/definitions/call-endpoint'
+      - properties:
+          headers:
+            description: >-
+              JSON object of optional headers {“header_1”:”value_1”,
+              “header_2”:”value_2”}
+            type: object
+          password:
+            description: SPI password
+            type: string
+          uri:
+            description: SIP URL (user@example.com)
+            type: string
+          username:
+            description: SIP username
+            type: string
+        required:
+          - uri
+        type: object
+  recordingBase:
+    properties:
+      backup_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        type: string
+      backup_url:
+        description: Backup callback URL in case primary is unavailable
+        type: string
+      beep_finish:
+        default: false
+        description: >-
+          Whether to beep when the recording finishes. Options are ‘true’ or
+          ‘false’. Defaults to false
+        type: boolean
+      beep_start:
+        default: false
+        description: >-
+          Whether to beep when the recording starts. Options are ‘true’ or
+          ‘false’. Defaults to false
+        type: boolean
+      destination_url:
+        description: >-
+          Optional URL to record the recording to if it is not hosted by Nexmo.
+          If omitted, the recording is hosted by Nexmo
+        type: string
+      event_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        type: string
+      event_url:
+        default: >-
+          Asynchronous webook that gets called following a recording that
+          returns the URL of the recording and other meta data
+        type: string
+      format:
+        default: mp3
+        description: >-
+          Format of the file. Options are ‘mp3’, ‘wav’ or ‘vorbis’. Defaults to
+          ‘mp3’
+        enum:
+          - mp3
+          - wav
+          - vorbis
+        type: string
+      public:
+        default: true
+        description: >-
+          Whether to require credentials to access the file or public. Options
+          are ‘true’ or ‘false’. Defaults to ‘false’
+        type: boolean
+      streamed:
+        default: false
+        description: >-
+          If destination_url is specified, whether to stream the recording
+          immediately or uploaded via a multipart form submission once the
+          recording has finished. Options are ‘true’ or ‘false’. Defaults to
+          ‘false’ (only valid if split is ‘false’)
+        type: boolean
+      validity_time:
+        description: >-
+          Time in minutes that the recording is valid for until it is deleted if
+          hosted by Nexmo. 1>validity_time. Default is indefinite
+        type: integer
+    required:
+      - event_url
+    type: object
+  recordingRequest:
+    properties:
+      backup_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        type: string
+      backup_url:
+        description: Backup callback URL in case primary is unavailable
+        type: string
+      beep_finish:
+        default: false
+        description: >-
+          Whether to beep when the recording finishes. Options are ‘true’ or
+          ‘false’. Defaults to false
+        type: boolean
+      beep_start:
+        default: false
+        description: >-
+          Whether to beep when the recording starts. Options are ‘true’ or
+          ‘false’. Defaults to false
+        type: boolean
+      destination_url:
+        description: >-
+          Optional URL to record the recording to if it is not hosted by Nexmo.
+          If omitted, the recording is hosted by Nexmo
+        type: string
+      event_method:
+        default: POST
+        description: HTTP method that is used to make the request. Defaults to POST
+        type: string
+      event_url:
+        default: >-
+          Asynchronous webook that gets called following a recording that
+          returns the URL of the recording and other meta data
+        type: string
+      format:
+        default: mp3
+        description: >-
+          Format of the file. Options are ‘mp3’, ‘wav’ or ‘vorbis’. Defaults to
+          ‘mp3’
+        enum:
+          - mp3
+          - wav
+          - vorbis
+        type: string
+      public:
+        default: true
+        description: >-
+          Whether to require credentials to access the file or public. Options
+          are ‘true’ or ‘false’. Defaults to ‘false’
+        type: boolean
+      split:
+        default: false
+        description: >-
+          Whether to split the recording into two separate recordings per leg
+          (prefixed with ‘a_’ or ‘b_’. Options are ‘true’ or ‘false’. Defaults
+          to ‘false’
+        type: boolean
+      streamed:
+        default: false
+        description: >-
+          If destination_url is specified, whether to stream the recording
+          immediately or uploaded via a multipart form submission once the
+          recording has finished. Options are ‘true’ or ‘false’. Defaults to
+          ‘false’ (only valid if split is ‘false’)
+        type: boolean
+      validity_time:
+        description: >-
+          Time in minutes that the recording is valid for until it is deleted if
+          hosted by Nexmo. 1>validity_time. Default is indefinite
+        type: integer
+    required:
+      - event_url
+    type: object
+  recordingResponse:
+    example:
+      _links:
+        call:
+          href: /calls/ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+        self:
+          href: /recordings/63f61863-4a51-4f6b-86e1-46edebcf9356
+      call_uuid: ssf61863-4a51-ef6b-11e1-w6edebcf93bb
+      duration: '1301'
+      recording_time: '2015-02-04 22:45:00'
+      recording_url: 'https://media.nexmo/a3euw8A/20f61863-4a51-ef6b-86e1-w6edebcf9356.mp3'
+    properties:
+      _links:
+        properties:
+          call:
+            properties:
+              href:
+                type: string
+            type: object
+          self:
+            properties:
+              href:
+                type: string
+            type: object
+        type: object
+      call_uuid:
+        type: string
+      duration:
+        description: Duration in seconds.
+        type: string
+      recording_time:
+        type: string
+      recording_url:
+        type: string
+    type: object
+  conversation:
+    allOf:
+      - $ref: '#/definitions/call-endpoint'
+      - properties:
+          name:
+            description: Conversation name
+            type: string
+        required:
+          - name
+        type: object
+  ttsRequest:
+    properties:
+      gender:
+        default: female
+        description: >-
+          The gender to use for TTS. Options are ‘male’ or ‘female’. Defaults to
+          female
+        enum:
+          - male
+          - female
+        type: string
+      language:
+        default: en-gb
+        description: 'The language used to read the message. Defaults to "en-gb"  '
+        type: string
+      level:
+        description: Set the audio level of the TTS. -1>=level=<1. Defaults to 0
+        maximum: 1
+        minimum: -1
+        multipleOf: 0.1
+        type: number
+      loop:
+        default: 1
+        description: >-
+          Whether to loop the once the TTS ends. Options are an integer
+          0>=loop<10 where 0 loops continously. Defaults to 1
+        maximum: 10
+        minimum: 0
+        type: integer
+      text:
+        description: >-
+
+          Body of the text message. 0>text<1500. Commas control pauses in
+          speech.
+        maxLength: 1500
+        minLength: 0
+        type: string
+    required:
+      - text
+    type: object
+  user:
+    allOf:
+      - $ref: '#/definitions/call-endpoint'
+      - properties:
+          name:
+            description: RTC user that exists in the conversation service
+            type: string
+        required:
+          - name
+        type: object
+  streamRequest:
+    properties:
+      level:
+        default: 0
+        description: >-
+          Set the audio level of the stream. -1>=level=<1. Defaults to 0.
+          Resolution is 0.1
+        maximum: -1
+        minimum: 1
+        multipleOf: 0.1
+        type: number
+      loop:
+        default: 1
+        description: >-
+          Whether to loop the stream once the stream ends. Options are an
+          integer 0>=loop<10 where 0 loops continously. Defaults to 1.
+        maximum: 10
+        minimum: 0
+        type: integer
+      stream_url:
+        description: 'A comma separated list of audio URLs to stream. '
+        type: string
+    required:
+      - stream_url
+    type: object

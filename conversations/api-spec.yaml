@@ -1,0 +1,772 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Applications API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /conferences:
+    get:
+      description: >-
+        Get a list of all the currently active conferences with pagination
+        information.
+      operationId: GET_conferences
+      parameters:
+        - description: >-
+            Filter for status of call. Options are ‘in_progress’, ‘complete’,
+            ‘all’. Defaults to ‘all’
+          enum:
+            - in_progress
+            - complete
+            - all
+          in: query
+          name: status
+          type: string
+        - description: 'Start date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_start
+          type: string
+        - description: 'End date range in ISO-8601 UTC format YYYY-MM-DDTHH:MM:SSZ'
+          in: query
+          name: date_end
+          type: string
+        - default: false
+          description: >-
+
+            Option to only return the record count. Options are ‘true’ or
+            ‘false’. Defaults to false
+          in: query
+          name: count
+          type: boolean
+        - default: 10
+          description: The number of records to limit the response to. Defaults to 10
+          in: query
+          name: page_size
+          type: integer
+        - default: 0
+          description: Offset of the first record. Defaults to 0
+          in: query
+          name: page_offset
+          type: integer
+        - description: >-
+            Filter for name conf name. Takes partial match with wildcard e.g.
+            *mo, nex* etc.
+          in: query
+          name: name
+          type: string
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              _embedded:
+                conferences:
+                  - _links:
+                      participants:
+                        - href: /participants/63f61863-4a51-4f6b-86e1-46edebcf9356
+                        - href: /participants/63f61863-4a51-4f6b-23e1-46edebcf9352
+                        - href: /participants/43f61863-4a51-4f6b-12e1-46edebcf9312
+                        - href: /participants/23f61863-4a51-4f6b-82e1-46edebcf9323
+                        - href: /participants/43f61863-4a51-4f6b-4e1-46edebcf93545
+                      self:
+                        href: /conferences/13f61863-4a51-4f6b-86e1-46edebcf9356
+                    conference_uuid: 13f61863-4a51-4f6b-86e1-46edebcf9356
+                    end_time: ''
+                    participants_count: '5'
+                    start_time: '2015-02-04T22:45:00Z'
+                    status: in_progress
+              _links:
+                first:
+                  href: /conferences
+                last:
+                  href: /conferences?page=1
+                next:
+                  href: /conferences?page_offset=20
+                prev:
+                  href: /conferences
+                self:
+                  href: /conferences?page_offset=10
+              count: '2'
+              page_offset: '0'
+              page_size: '50'
+          schema:
+            allOf:
+              - properties:
+                  _embedded:
+                    properties:
+                      conferences:
+                        items:
+                          $ref: '#/definitions/conferenceResponse'
+                        type: array
+                    type: object
+                  _links:
+                    properties:
+                      first:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      last:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      next:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      prev:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      self:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                    type: object
+                  count:
+                    type: string
+                  page_offset:
+                    type: string
+                  page_size:
+                    type: string
+                type: object
+      summary: List Conferences
+      tags:
+        - Conference
+  '/conferences/{conference_uuid}':
+    delete:
+      description: Ends an existing conference.
+      operationId: DELETE_conferences-conference_uuid
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: End Conference
+      tags:
+        - Conference
+    get:
+      description: Returns the details of an existing conference.
+      operationId: GET_conferences-conference_uuid
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/conferenceResponse'
+      summary: Get Conference
+      tags:
+        - Conference
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+  '/conferences/{conference_uuid}/participants':
+    get:
+      description: Returns all participants in an existing conference.
+      operationId: GET_conferences-conference_uuid-participants
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          examples:
+            application/json:
+              _embedded:
+                participants:
+                  - _links:
+                      call:
+                        href: /calls/63f61863-4a51-4f6b-86e1-46edebcf9356
+                      self:
+                        href: >-
+                          /conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1
+                    call_status: in-progress
+                    call_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+                    duration: ''
+                    earmuff: 'false'
+                    end_time: ''
+                    from: '27312076887'
+                    mute: 'false'
+                    network: '65512'
+                    price: ''
+                    rate: '0.39'
+                    start_time: '2015-02-04T22:45:00Z'
+                    to: '447833726118'
+                    vol: '0'
+              _links:
+                first:
+                  href: /conferences
+                last:
+                  href: /conferences?page=1
+                next:
+                  href: /conferences?page=1
+                prev:
+                  href: /conferences?page=1
+                self:
+                  href: /conferences?page=1
+              count: '2'
+              page_offset: '0'
+              page_size: '50'
+          schema:
+            allOf:
+              - properties:
+                  _embedded:
+                    properties:
+                      participants:
+                        items:
+                          $ref: '#/definitions/participantResponse'
+                        type: array
+                    type: object
+                  _links:
+                    properties:
+                      first:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      last:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      next:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      prev:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                      self:
+                        properties:
+                          href:
+                            type: string
+                        type: object
+                    type: object
+                  count:
+                    type: string
+                  page_offset:
+                    type: string
+                  page_size:
+                    type: string
+                type: object
+      summary: Get Participants
+      tags:
+        - Conference Participant
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+  '/conferences/{conference_uuid}/participants/{participant_id}':
+    delete:
+      description: Remove a participant from the conference.
+      operationId: DELETE_conferences-conference_uuid-participants-participant_id
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Remove Participant
+      tags:
+        - Conference Participant
+    get:
+      description: >-
+        Returns the details of an existing participant in an existing
+        conference.
+      operationId: GET_conferences-conference_uuid-participants-participant_id
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/participantResponse'
+      summary: Get Participant
+      tags:
+        - Conference Participant
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+      - in: path
+        name: participant_id
+        required: true
+        type: string
+  '/conferences/{conference_uuid}/participants/{participant_id}/controls':
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+      - in: path
+        name: participant_id
+        required: true
+        type: string
+    put:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Perform RPC style actions on conference participants.
+      operationId: PUT_conferences-conference_uuid-participants-participant_id-controls
+      parameters:
+        - description: |-
+            The action to performed on a participant. Options are:
+            ‘vol_up’ – Increase volume of participant
+            ‘vol_down’ – Decrease volume of participant
+            ‘mute’ – Mute participant
+            ‘unmute’ – Unmute participant
+            ‘earmuff_on’ – Prevent participant hearing conference
+            ‘earmuff_off’ – Allow participant to hear conference again
+          enum:
+            - vol_up
+            - vol_down
+            - mute
+            - unmute
+            - earmuff_on
+            - earmuff_off
+          in: formData
+          name: action
+          required: true
+          type: string
+      produces:
+        - application/json
+      responses:
+        '202':
+          description: ''
+      summary: Control Participant
+      tags:
+        - Conference Participant
+  '/conferences/{conference_uuid}/participants/{participant_id}/stream':
+    delete:
+      description: Stop streaming an audio file to a conference participant.
+      operationId: DELETE_conferences-conference_uuid-participants-participant_id-stream
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Stop Stream
+      tags:
+        - Conference Participant
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+      - in: path
+        name: participant_id
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: |
+        Stream an audio file to a conference participant.
+      operationId: POST_conferences-conference_uuid-participants-participant_id-stream
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '../calls/api-spec.yaml#/definitions/streamRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Start Stream
+      tags:
+        - Conference Participant
+  '/conferences/{conference_uuid}/participants/{participant_id}/talk':
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+      - in: path
+        name: participant_id
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Play TTS to a single conference participant only.
+      operationId: POST_conferences-conference_uuid-participants-participant_id-talk
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '../calls/api-spec.yaml#/definitions/ttsRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Start Text to Speech
+      tags:
+        - Conference Participant
+  '/conferences/{conference_uuid}/recordings':
+    delete:
+      description: Stop recording a call and return parameters to `event_url`.
+      operationId: DELETE_conferences-conference_uuid-recordings
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Stop Recording
+      tags:
+        - Conference
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Start recording an existing conference.
+      operationId: POST_conferences-conference_uuid-recordings
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '../calls/api-spec.yaml#/definitions/recordingBase'
+      produces:
+        - application/json
+      responses:
+        '202':
+          description: ''
+          examples:
+            application/json:
+              recording_uuid: 20f61863-4a51-ef6b-86e1-w6edebcf9356
+          schema:
+            allOf:
+              - properties:
+                  recording_uuid:
+                    type: string
+                type: object
+      summary: Create Recording
+      tags:
+        - Conference
+  '/conferences/{conference_uuid}/stream':
+    delete:
+      description: Stop streaming an audio file to a conference.
+      operationId: DELETE_conferences-conference_uuid-stream
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Stop Stream
+      tags:
+        - Conference
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Stream an audio file to a conference.
+      operationId: POST_conferences-conference_uuid-stream
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '../calls/api-spec.yaml#/definitions/streamRequest'
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+      summary: Start Stream
+      tags:
+        - Conference
+  '/conferences/{conference_uuid}/talk':
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      description: Play Text To Speech into a conference.
+      operationId: POST_conferences-conference_uuid-talk
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '../calls/api-spec.yaml#/definitions/ttsRequest'
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: Start Text to Speech
+      tags:
+        - Conference
+  '/conferences/{conference_uuid}/whisper':
+    delete:
+      consumes:
+        - application/json
+      description: Returns participants of a whisper back to the parent conference.
+      operationId: DELETE_conference-conference_uuid-whisper
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              conference_uuid:
+                description: ID of whisper sub-conference
+                type: string
+            required:
+              - conference_uuid
+            type: object
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+      summary: End Whisper
+      tags:
+        - Conference Whisper
+    parameters:
+      - in: path
+        name: conference_uuid
+        required: true
+        type: string
+    post:
+      consumes:
+        - application/json
+      description: >-
+        Allow two or more conference participants to speak off the record
+        directly without other conference participants hearing them by creating
+        a sub-conference. Whispers accept all conference API call’s. The
+        `conference_uuid` returned is a child of the parent conference.
+      operationId: POST_conference-conference_uuid-whisper
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              participants:
+                description: An array of ‘call_uuid’’s to join a whisper.
+                type: string
+            type: object
+      produces:
+        - application/json
+      responses:
+        '201':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/whisperResponse'
+      summary: Create Whisper
+      tags:
+        - Conference Whisper
+    put:
+      consumes:
+        - application/json
+      description: >-
+        Modify those participants in the the whisper subconference. Those
+        excluded are returned to the parent conference.
+      operationId: PUT_conference-conference_uuid-whisper
+      parameters:
+        - in: body
+          name: body
+          schema:
+            properties:
+              conference_uuid:
+                description: ID of whisper sub-conference
+                type: string
+              participants:
+                description: New array of ‘call_uuid’ to modify the whisper
+                type: string
+            required:
+              - participants
+              - conference_uuid
+            type: object
+      produces:
+        - application/json
+      responses:
+        '204':
+          description: ''
+          schema:
+            allOf:
+              - $ref: '#/definitions/whisperResponse'
+      summary: Update Whisper
+      tags:
+        - Conference Whisper
+
+definitions:
+  conferenceResponse:
+    example:
+      _links:
+        participants:
+          - href: /participants/63f61863-4a51-4f6b-86e1-46edebcf9356
+          - href: /participants/63f61863-4a51-4f6b-23e1-46edebcf9352
+          - href: /participants/43f61863-4a51-4f6b-12e1-46edebcf9312
+          - href: /participants/23f61863-4a51-4f6b-82e1-46edebcf9323
+          - href: /participants/43f61863-4a51-4f6b-4e1-46edebcf93545
+        self:
+          href: /conferences/13f61863-4a51-4f6b-86e1-46edebcf9356
+      conference_uuid: 13f61863-4a51-4f6b-86e1-46edebcf9356
+      end_time: ''
+      participants_count: '5'
+      start_time: '2015-02-04T22:45:00Z'
+      status: in_progress
+    properties:
+      _links:
+        properties:
+          participants:
+            items:
+              properties:
+                href:
+                  type: string
+              type: object
+            type: array
+          self:
+            properties:
+              href:
+                type: string
+            type: object
+        type: object
+      conference_uuid:
+        type: string
+      end_time:
+        type: string
+      participants_count:
+        type: string
+      start_time:
+        type: string
+      status:
+        type: string
+    type: object
+  participantResponse:
+    example:
+      _links:
+        call:
+          href: /calls/63f61863-4a51-4f6b-86e1-46edebcf9356
+        self:
+          href: /conferences/13f61863-4a51-4f6b-86e1-46edebcf9356/participants/1
+      call_status: in-progress
+      call_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+      duration: ''
+      earmuff: 'false'
+      end_time: ''
+      from: '27312076887'
+      mute: 'false'
+      network: '65512'
+      price: ''
+      rate: '0.39'
+      start_time: '2015-02-04T22:45:00Z'
+      to: '447833726118'
+      vol: '0'
+    properties:
+      _links:
+        properties:
+          call:
+            properties:
+              href:
+                type: string
+            type: object
+          self:
+            properties:
+              href:
+                type: string
+            type: object
+        type: object
+      call_status:
+        type: string
+      call_uuid:
+        type: string
+      duration:
+        type: string
+      earmuff:
+        type: string
+      end_time:
+        type: string
+      from:
+        type: string
+      mute:
+        type: string
+      network:
+        type: string
+      price:
+        type: string
+      rate:
+        type: string
+      start_time:
+        type: string
+      to:
+        type: string
+      vol:
+        type: string
+    type: object
+  whisperResponse:
+    example:
+      _links:
+        parent:
+          href: /conferences/35f61863-4a51-4f6b-86e1-46edebcf93ad
+        participants:
+          - href: /participants/63f61863-4a51-4f6b-86e1-46edebcf9356
+          - href: /participants/63f61863-4a51-4f6b-23e1-46edebcf9352
+          - href: /participants/43f61863-4a51-4f6b-12e1-46edebcf9312
+        self:
+          href: /conferences/63f61863-4a51-4f6b-86e1-46edebcf9356
+      conference_uuid: 63f61863-4a51-4f6b-86e1-46edebcf9356
+      end_time: ''
+      parent_conference_uuid: 35f61863-4a51-4f6b-86e1-46edebcf93ad
+      participants_count: '3'
+      start_time: '2015-02-04T22:45:00Z'
+      status: in_progress
+    properties:
+      _links:
+        properties:
+          parent:
+            properties:
+              href:
+                type: string
+            type: object
+          participants:
+            items:
+              properties:
+                href:
+                  type: string
+              type: object
+            type: array
+          self:
+            properties:
+              href:
+                type: string
+            type: object
+        type: object
+      conference_uuid:
+        type: string
+      end_time:
+        type: string
+      parent_conference_uuid:
+        type: string
+      participants_count:
+        type: string
+      start_time:
+        type: string
+      status:
+        type: string
+    type: object
