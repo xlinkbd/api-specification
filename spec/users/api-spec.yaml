@@ -8,9 +8,13 @@ securityDefinitions:
 paths:
   /users:
     get:
+      summary: List and Filter Users
+      description: > 
+        Returns a collection of the application's users.
+      tags:
+        - Users
       produces:
       - application/json
-      description: Gets a filtered list of User objects
       parameters:
         - name: name
           in: query
@@ -18,96 +22,107 @@ paths:
           required: false
       responses:
         '200':
-          description: A list of users
+          description: Application Collection
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/user_lite'
+            $ref: "#/definitions/collection"
     post:
+      summary: Create User
+      description: >
+        Create a new user, used by the conversation API and the message API.
+      tags:
+        - Users
       produces:
       - application/json
       consumes:
       - application/json
-      description: Updates a specfic user
       parameters:
         - name: body
           in: body
           required: true
           schema:
-            $ref: '#/definitions/user'
+            $ref: '#/definitions/resource'
       responses:
         '200':
-          description: A user
+          description: User Resource
           schema:
-            $ref: '#/definitions/user_lite'
+            $ref: '#/definitions/resource'
 
   /users/{user_id}:
+    parameters:
+      - $ref: "#/parameters/user_id"    
+    get:
+      summary: Get User
+      description: >
+        Get details of an exsisting user.
+      tags:
+        - Users
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: A user
+          schema:
+            $ref: '#/definitions/resource'
     put:
+      summary: Update User
+      description: > 
+        Modify an exsisting user.
+      tags:
+        - Users
       produces:
       - application/json
       consumes:
       - application/json
-      description: Updates a specfic user
       parameters:
-        - name: user_id
-          in: path
-          description: User ID
-          required: true
-          type: string
         - name: body
           in: body
           required: true
           schema:
-            $ref: '#/definitions/user'
+            $ref: '#/definitions/resource'
       responses:
         '200':
           description: A user
           schema:
-            $ref: '#/definitions/user_lite'
-    get:
-      produces:
-      - application/json
-      description: Gets a specfic user
-      parameters:
-        - name: user_id
-          in: path
-          description: User ID
-          required: true
-          type: string
-      responses:
-        '200':
-          description: A user
-          schema:
-            $ref: '#/definitions/user'
+            $ref: '#/definitions/resource'
     delete:
+      summary: Delete User
+      description: >
+        Delete a exsisting user.
+      tags: 
+        - User
       produces:
       - application/json
-      parameters:
-        - name: user_id
-          in: path
-          description: User ID
-          type: string
-          required: true
       responses:
-        '200':
-          description: Success
+        '204':
+          description: No Content
 
 definitions:
-  user_lite:
+  collection:
     type: object
-    properties:
-      uuid:
-        description: ID of the corresponding User
-        type: string
-      name:
-        description: The unique name for this User
-        type: string
-
-  user:
     allOf:
-    - $ref: '#/definitions/user_lite'
+      - $ref: "../common/hal.yaml#/definitions/collection"
+      - $ref: "../common/hal.yaml#/definitions/paging"
+      - type: object
+        properties:
+          _embedded:
+            type: object
+            properties:
+              users:
+                type: array
+                items:
+                  $ref: '#/definitions/resource'
+    
+  resource:
+    allOf:
+    - $ref: '../common/hal.yaml#/definitions/self'
     - type: object
       properties:
+        uuid:
+          description: ID of the corresponding User
+          type: string
+        name:
+          description: The unique name for this User
+          type: string
         display_name:
           description: The full name to be displayed to end users
           type: string
@@ -116,3 +131,11 @@ definitions:
           type: string
         channels:
           type: object
+        
+parameters:
+  user_id:
+    name: user_id
+    in: path
+    description: User ID
+    required: true
+    type: string
