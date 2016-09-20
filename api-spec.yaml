@@ -110,67 +110,6 @@ paths:
         name: template_id
         required: true
         type: string
-  /pools:
-    get:
-      description: ''
-      operationId: GET_npa-pools
-      produces:
-        - application/json
-      responses:
-        default:
-          description: ''
-      summary: Search / List Pools
-      tags:
-        - Numbers
-        - Npa
-  '/pools/{pool_id}':
-    get:
-      description: ''
-      operationId: GET_npa-pools-pool_id
-      produces:
-        - application/json
-      responses:
-        default:
-          description: ''
-      summary: Get Pool Details
-      tags:
-        - Numbers
-        - Npa
-    parameters:
-      - in: path
-        name: pool_id
-        required: true
-        type: string
-    put:
-      description: Point to application.
-      operationId: PUT_npa-pools-pool_id
-      produces:
-        - application/json
-      responses:
-        default:
-          description: ''
-      summary: Update Pool
-      tags:
-        - Numbers
-        - Npa
-  '/pools/{pool_id}/numbers':
-    get:
-      description: List Numbers
-      operationId: GET_npa-pools-pool_id-numbers
-      produces:
-        - application/json
-      responses:
-        default:
-          description: ''
-      summary: Search / List Pool Numbers
-      tags:
-        - Numbers
-        - Npa
-    parameters:
-      - in: path
-        name: pool_id
-        required: true
-        type: string
   /pricing/message:
     get:
       consumes:
