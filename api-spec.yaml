@@ -689,74 +689,7 @@ paths:
         name: template_id
         required: true
         type: string
-  /verifications:
-    get:
-      consumes:
-        - application/json
-      description: ''
-      operationId: GET_verifications
-      responses:
-        default:
-          description: ''
-      summary: Search / List Verifications
-      tags:
-        - Verification
-    post:
-      consumes:
-        - application/json
-      description: ''
-      operationId: POST_verifications
-      responses:
-        default:
-          description: ''
-      summary: Start a Verification Process
-      tags:
-        - Verification
-  '/verifications/{verification_uuid}':
-    get:
-      consumes:
-        - application/json
-      description: ''
-      operationId: GET_verifications-verification_uuid
-      responses:
-        default:
-          description: ''
-      summary: Get Verification
-      tags:
-        - Verification
-    parameters:
-      - in: path
-        name: verification_uuid
-        required: true
-        type: string
-    put:
-      consumes:
-        - application/json
-      description: ''
-      operationId: PUT_verifications-verification_uuid
-      responses:
-        default:
-          description: ''
-      summary: Modify Verification
-      tags:
-        - Verification
-  '/verifications/{verification_uuid}/checks':
-    parameters:
-      - in: path
-        name: verification_uuid
-        required: true
-        type: string
-    post:
-      consumes:
-        - application/json
-      description: ''
-      operationId: POST_verifications-verification_uuid-checks
-      responses:
-        default:
-          description: ''
-      summary: Check Verification
-      tags:
-        - Verification
+
 definitions:
   account-user:
     properties: {}
