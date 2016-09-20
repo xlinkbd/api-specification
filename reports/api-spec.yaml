@@ -1,0 +1,54 @@
+swagger: '2.0'
+info:
+  version: '2.0'
+  title: "Nexmo Report API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  /reports:
+    get:
+      consumes:
+        - application/json
+      description: ''
+      operationId: GET_reports
+      responses:
+        default:
+          description: ''
+      summary: Search / List Reports
+      tags:
+        - Reports
+    post:
+      consumes:
+        - application/json
+      description: ''
+      operationId: POST_reports
+      responses:
+        default:
+          description: ''
+      summary: Create Report
+      tags:
+        - Reports
+  /reports/report_id/:
+    delete:
+      consumes:
+        - application/json
+      description: ''
+      operationId: DELETE_reports-report_id
+      responses:
+        default:
+          description: ''
+      summary: Remove Report
+      tags:
+        - Reports
+    get:
+      consumes:
+        - application/json
+      description: ''
+      operationId: GET_reports-report_id
+      responses:
+        default:
+          description: ''
+      summary: Get Report Details
+      tags:
+        - Reports
