@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '2.0'
+  version: '1'
   title: "Nexmo Application API"
 securityDefinitions:
   $ref: ../api-spec.yaml#/securityDefinitions
