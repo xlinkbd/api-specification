@@ -315,3 +315,154 @@ paths:
       responses:
         '200':
           description: Success
+
+definitions:
+  event_lite:
+    type: object
+    properties:
+      id:
+        type: integer
+      type:
+        type: string
+
+  event:
+    allOf:
+    - $ref: '#/definitions/event_lite'
+    - type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+        body:
+          type: object
+        timestamp:
+          type: object
+          description: ISO-8601 dates
+          properties:
+            created:
+              type: string
+              format: date-time
+            deleted:
+              type: string
+              format: date-time
+
+  conversation_lite:
+    type: object
+    properties:
+      uuid:
+        type: string
+      name:
+        type: string
+      sequence_number:
+        description: The last event id in this conversation
+        type: integer
+      self_uuid:
+        description: The member id of the requesting user (if any)
+
+  conversation:
+    allOf:
+    - $ref: '#/definitions/conversation_lite'
+    - type: object
+      properties:
+        display_name:
+          type: string
+        image_url:
+          type: string
+        properties:
+          type: object
+          description: Settings for the conversation
+          properties:
+            speaking_detection_level:
+              type: string
+        members:
+          type: array
+          items:
+            $ref: '#/definitions/member_lite'
+        timestamp:
+          type: object
+          description: ISO-8601 dates
+          properties:
+            created:
+              type: string
+              format: date-time
+            deleted:
+              type: string
+              format: date-time
+
+  member_lite:
+    type: object
+    properties:
+      uuid:
+        type: string
+        description: Member ID
+      state:
+        type: string
+        description: State
+        enum: [knocking, invited, joined, left]
+
+  member:
+    allOf:
+    - $ref: '#/definitions/member_lite'
+    - type: object
+      properties:
+        timestamp:
+          type: object
+          description: ISO-8601 dates
+          properties:
+            created:
+              type: string
+              format: date-time
+            knocked:
+              type: string
+              format: date-time
+            invited:
+              type: string
+              format: date-time
+            joined:
+              type: string
+              format: date-time
+            left:
+              type: string
+              format: date-time
+        user:
+          $ref: '../users/api-spec.yaml#/definitions/user_lite'
+        channel:
+          type: object
+          properties:
+            app:
+              type: object
+            pstn:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: The Call ID
+                from:
+                  type: string
+                to:
+                  type: string
+                direction:
+                  type: string
+                  description: Direction of call, outbound is from the conversation
+                  enum: [inbound, outbound]
+                network:
+                  type: string
+                rate:
+                  type: string
+                price:
+                  type: string
+                  description: Only available for a member in left state
+            sip:
+              type: object
+            sms:
+              type: object
+        media:
+          type: object
+          properties:
+            text:
+              type: object
+            audio:
+              type: object
+            video:
+              type: object
