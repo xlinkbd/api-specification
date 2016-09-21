@@ -17,8 +17,7 @@ paths:
       - application/json
       parameters:
         - $ref: "../common/hal.yaml#/parameters/page_size"
-        - $ref: "../common/hal.yaml#/parameters/since"
-        - $ref: "../common/hal.yaml#/parameters/until"
+        - $ref: "../common/hal.yaml#/parameters/page_offset"
         - name: name
           in: query
           type: string
@@ -52,7 +51,7 @@ paths:
 
   /users/{user_id}:
     parameters:
-      - $ref: "#/parameters/user_id"    
+      - $ref: "#/parameters/user_id"
     get:
       summary: Get User
       description: >
@@ -104,7 +103,7 @@ definitions:
     type: object
     allOf:
       - $ref: "../common/hal.yaml#/definitions/collection"
-      - $ref: "../common/hal.yaml#/definitions/cursor"
+      - $ref: "../common/hal.yaml#/definitions/paging"
       - type: object
         properties:
           _embedded:
