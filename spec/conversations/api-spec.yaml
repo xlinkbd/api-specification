@@ -8,29 +8,36 @@ securityDefinitions:
 paths:
   /conversations:
     get:
+      summary: List and Filter Conversations
+      description: >
+        Returns a collection of the application's conversations.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a filtered list of Conversation objects
       parameters:
+        - $ref: "#/parameters/filter_user"
         - name: name
           in: query
           type: string
           required: false
-        - name: user_uuid
-          in: query
-          description: Restrict to conversations this user is a memebr of
-          type: string
-          required: false
       responses:
         '200':
-          description: A list of conversations
+          description: Conversation Collection
           schema:
             type: array
             items:
-              $ref: '#/definitions/conversation_lite'
+              $ref: '#/definitions/conversation_collection'
     post:
+      summary: Create Conversation
+      description: >
+        Create a conversation.
+      tags:
+        - Conversations
+      consumes:
+       - application/json
       produces:
-      - application/json
+       - application/json
       parameters:
         - name: body
           in: body
@@ -38,37 +45,38 @@ paths:
           schema:
             $ref: '#/definitions/conversation'
       responses:
-        '200':
-          description: Success
+        '201':
+          description: Conversation Resource
           schema:
-            $ref: '#/definitions/conversation_lite'
+            $ref: '#/definitions/conversation'
 
   /conversations/{conversation_id}:
+    parameters:
+      - $ref: "#/parameters/conversation_id"
     get:
+      summary: Get a Conversation
+      description: > 
+        Returns a specific conversation.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a specific conversation
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          type: string
-          required: true
       responses:
         '200':
-          description: A conversation
+          description: Conversation Resource
           schema:
             $ref: '#/definitions/conversation'
     put:
+      summary:  Update a Conversation
+      description: >
+        Udpate a specific conversation.
+      tags:
+        - Conversations
+      consumes:
+        - application/json
       produces:
-      - application/json
-      description: Udpate a specific conversation
+        - application/json
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          type: string
-          required: true
         - name: body
           in: body
           required: true
@@ -80,28 +88,30 @@ paths:
           schema:
             $ref: '#/definitions/conversation'
     delete:
-      produces:
-      - application/json
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          type: string
-          required: true
+      summary:  Delete a Conversation
+      description: >
+        Delete a specific conversation.
+      tags:
+        - Conversations
+      produces: []
       responses:
-        '200':
-          description: Success
+        '204':
+          description: No Content
 
   /conversations/{conversation_id}/members:
+    parameters:
+      - $ref: "#/parameters/conversation_id"
     post:
+      summary:  Add a Member
+      description: >
+        Invite or join a member to a conversation.
+      tags:
+        - Conversations
+      consumes:
+      - application/json
       produces:
       - application/json
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
         - name: action
           in: query
           required: true
@@ -113,20 +123,22 @@ paths:
           schema:
             $ref: '#/definitions/member'
       responses:
-        '200':
-          description: Success
+        '201':
+          description: Member Resource
           schema:
-            $ref: '#/definitions/member_lite'
+            $ref: '#/definitions/member'
     get:
+      summary:  List and Filter Members
+      description: >
+        Returns a collection of the conversation's members.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a filtered list of Member objecs
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/since"
+        - $ref: "../common/hal.yaml#/parameters/until"
         - name: state
           in: query
           description: The member state
@@ -143,59 +155,40 @@ paths:
           description: Only return the record count
           required: false
           type: integer
-        - name: page_size
-          in: query
-          description: The number of records to limit the response to
-          required: false
-          type: integer
-        - name: cursor
-          in: query
-          description: The last id in the previous page
-          required: false
-          type: string
       responses:
         '200':
-          description: A list of members
+          description: Member Collection
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/member_lite'
+            $ref: '#/definitions/member_collection'
 
   /conversations/{conversation_id}/members/{member_id}:
+    parameters:
+      - $ref: "#/parameters/conversation_id"
+      - $ref: "#/parameters/member_id"
     get:
+      summary: Get a Member
+      description: >
+        Returns a specfic member resource.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a specfic member
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
-        - name: member_id
-          in: path
-          description: Member ID
-          required: true
-          type: string
       responses:
         '200':
-          description: A member
+          description: Member Resource
           schema:
             $ref: '#/definitions/member'
     put:
+      summary: Update a Member
+      description: >
+        Update a specfic member resource.
+      tags:
+        - Conversations
+      consumes:
+      - application/json
       produces:
       - application/json
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
-        - name: member_id
-          in: path
-          description: Member ID
-          required: true
-          type: string
         - name: action
           in: query
           required: true
@@ -208,128 +201,116 @@ paths:
             $ref: '#/definitions/member'
       responses:
         '200':
-          description: Success
+          description: Member Collection
           schema:
-            $ref: '#/definitions/member_lite'
+            $ref: '#/definitions/member'
     delete:
-      produces:
-      - application/json
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          type: string
-          required: true
-        - name: member_id
-          in: path
-          description: Member ID
-          required: true
-          type: string
+      summary: Delete a Member
+      description: >
+        Delete a specfic member resource.
+      tags:
+        - Conversations
+      produces: []
       responses:
-        '200':
-          description: Success
+        '204':
+          description: No Content
 
   /conversations/{conversation_id}/events:
+    parameters:
+      - $ref: "#/parameters/conversation_id"
     post:
+      summary: Create Conversation Event
+      description: >
+        Add an event to the conversation.
+      tags:
+        - Conversations
+      consumes:
+      - application/json
       produces:
       - application/json
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
         - name: body
           in: body
           required: true
           schema:
             $ref: '#/definitions/event'
       responses:
-        '200':
-          description: Success
+        '201':
+          description: Event Resource
           schema:
-            $ref: '#/definitions/event_lite'
+            $ref: '#/definitions/event'
     get:
+      summary: List and Filter Conversation Events
+      description: >
+        Returns a collection of the conversation's events.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a filtered list of Event objecs
       parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
-        - name: start_id
-          in: query
-          description: Starting event id
-          required: false
-          type: integer
-        - name: end_id
-          in: query
-          description: Ending event id
-          required: false
-          type: integer
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/since"
+        - $ref: "../common/hal.yaml#/parameters/until"
       responses:
         '200':
-          description: Success
+          description: Event Collection
           schema:
-            type: array
-            items:
-              $ref: '#/definitions/event'
+            $ref: '#/definitions/event_collection'
 
   /conversations/{conversation_id}/events/{event_id}:
+    parameters:
+      - $ref: "#/parameters/conversation_id"
+      - $ref: "#/parameters/event_id"
     get:
+      summary: Get Event
+      description: >
+        Returns a specific event.
+      tags:
+        - Conversations
       produces:
       - application/json
-      description: Gets a specfic event
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          required: true
-          type: string
-        - name: event_id
-          in: path
-          description: Event ID
-          required: true
-          type: string
       responses:
         '200':
-          description: An event
+          description: Event Resource
           schema:
             $ref: '#/definitions/event'
     delete:
+      summary: Delete Event
+      description: >
+        Delete a specific event.
+      tags:
+        - Conversations
       produces:
       - application/json
-      parameters:
-        - name: conversation_id
-          in: path
-          description: Conversation ID
-          type: string
-          required: true
-        - name: event_id
-          in: path
-          description: Event ID
-          required: true
-          type: string
       responses:
-        '200':
-          description: Success
+        '204':
+          description: No Content
 
 definitions:
-  event_lite:
+  event_collection:
     type: object
-    properties:
-      id:
-        type: integer
-      type:
-        type: string
+    allOf:
+      - $ref: "../common/hal.yaml#/definitions/collection"
+      - $ref: "../common/hal.yaml#/definitions/cursor"
+      - type: object
+        properties:
+          _embedded:
+            type: object
+            properties:
+              events:
+                type: array
+                items:
+                  $ref: '#/definitions/event'
 
   event:
     allOf:
-    - $ref: '#/definitions/event_lite'
+    - $ref: '../common/hal.yaml#/definitions/self'
     - type: object
       properties:
+        id:
+          type: integer
+        type:
+          type: string
         from:
           type: string
         to:
@@ -347,24 +328,38 @@ definitions:
               type: string
               format: date-time
 
-  conversation_lite:
+  conversation_collection:
     type: object
-    properties:
-      uuid:
-        type: string
-      name:
-        type: string
-      sequence_number:
-        description: The last event id in this conversation
-        type: integer
-      self_uuid:
-        description: The member id of the requesting user (if any)
+    allOf:
+      - $ref: "../common/hal.yaml#/definitions/collection"
+      - $ref: "../common/hal.yaml#/definitions/paging"
+      - type: object
+        properties:
+          _embedded:
+            type: object
+            properties:
+              conversations:
+                type: array
+                items:
+                  $ref: '#/definitions/conversation'
 
   conversation:
     allOf:
-    - $ref: '#/definitions/conversation_lite'
+    - $ref: '../common/hal.yaml#/definitions/self'
     - type: object
       properties:
+        uuid:
+          type: string
+          readOnly: true
+        name:
+          type: string
+        sequence_number:
+          description: The last event id in this conversation
+          type: integer
+          readOnly: true
+        self_uuid:
+          description: The member id of the requesting user (if any)
+          readOnly: true
         display_name:
           type: string
         image_url:
@@ -375,10 +370,6 @@ definitions:
           properties:
             speaking_detection_level:
               type: string
-        members:
-          type: array
-          items:
-            $ref: '#/definitions/member_lite'
         timestamp:
           type: object
           description: ISO-8601 dates
@@ -389,23 +380,40 @@ definitions:
             deleted:
               type: string
               format: date-time
+        _embedded:
+          type: object
+          properties:
+            members:
+              type: array
+              items:
+                $ref: '#/definitions/member'
 
-  member_lite:
+  member_collection:
     type: object
-    properties:
-      uuid:
-        type: string
-        description: Member ID
-      state:
-        type: string
-        description: State
-        enum: [knocking, invited, joined, left]
+    allOf:
+      - $ref: "../common/hal.yaml#/definitions/collection"
+      - $ref: "../common/hal.yaml#/definitions/cursor"
+      - type: object
+        properties:
+          _embedded:
+            type: object
+            properties:
+              members:
+                type: array
+                items:
+                  $ref: '#/definitions/member'
 
   member:
     allOf:
-    - $ref: '#/definitions/member_lite'
     - type: object
       properties:
+        uuid:
+          type: string
+          description: Member ID
+        state:
+          type: string
+          description: State
+          enum: [knocking, invited, joined, left]
         timestamp:
           type: object
           description: ISO-8601 dates
@@ -426,7 +434,7 @@ definitions:
               type: string
               format: date-time
         user:
-          $ref: '../users/api-spec.yaml#/definitions/user_lite'
+          $ref: '../users/api-spec.yaml#/definitions/resource'
         channel:
           type: object
           properties:
@@ -466,3 +474,32 @@ definitions:
               type: object
             video:
               type: object
+              
+parameters:
+  filter_user:
+    name: user_uuid
+    in: query
+    description: Restrict to conversations this user is a memebr of
+    type: string
+    required: false
+  conversation_id:
+    name: conversation_id
+    in: path
+    description: Conversation ID
+    type: string
+    required: true
+  member_id:  
+    name: member_id
+    in: path
+    description: Member ID
+    required: true
+    type: string
+  event_id:
+    name: event_id
+    in: path
+    description: Event ID
+    required: true
+    type: string
+    
+    
+  
