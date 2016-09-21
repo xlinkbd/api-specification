@@ -66,28 +66,18 @@ paths:
     $ref: 'calls/api-spec.yaml#/paths/~1calls~1{call_uuid}~1talk'
 
   # Conversations
-  '/conferences':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences'
-  '/conferences/{conference_uuid}':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}'
-  '/conferences/{conference_uuid}/participants':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants'
-  '/conferences/{conference_uuid}/participants/{participant_id}':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}'
-  '/conferences/{conference_uuid}/participants/{participant_id}/controls':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1controls'
-  '/conferences/{conference_uuid}/participants/{participant_id}/stream':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1stream'
-  '/conferences/{conference_uuid}/participants/{participant_id}/talk':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1participants~1{participant_id}~1talk'
-  '/conferences/{conference_uuid}/recordings':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1recordings'
-  '/conferences/{conference_uuid}/stream':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1stream'
-  '/conferences/{conference_uuid}/talk':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1talk'
-  '/conferences/{conference_uuid}/whisper':
-    $ref: 'conversations/api-spec.yaml#/paths/~1conferences~1{conference_uuid}~1whisper'
+  '/conversations':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations'
+  '/conversations/{conversation_id}':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations~1{conversation_id}'
+  '/conversations/{conversation_id}/members':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations~1{conversation_id}~1members'
+  '/conversations/{conversation_id}/members/{member_id}':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations~1{conversation_id}~1members~1{member_id}'
+  '/conversations/{conversation_id}/events':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations~1{conversation_id}~1events'
+  '/conversations/{conversation_id}/events/{event_id}':
+    $ref: 'conversations/api-spec.yaml#/paths/~1conversations~1{conversation_id}~1events~1{event_id}'
 
   # Insights
   '/insights':
