@@ -13,7 +13,7 @@ definitions:
     properties:
       self:
         $ref: '#/definitions/link'
-  paging:
+  collection:
     allOf:
       - $ref: '#/definitions/self'
       - type: object
@@ -29,8 +29,12 @@ definitions:
             $ref: '#/definitions/link'
           last:
             $ref: '#/definitions/link'
-  collection:
+  paging:
     type: object
+    required:
+      - count
+      - page_size
+      - page_offset
     properties:
       count:
         readOnly: true
@@ -39,6 +43,28 @@ definitions:
         readOnly: true
         type: string
       page_size:
+        readOnly: true
+        type: string
+  cursor:
+    type: object
+    required:
+      - count
+      - page_size
+    properties:
+      count:
+        readOnly: true
+        type: string
+      page_size:
+        readOnly: true
+        type: string
+      since:
+        description: >
+          Returned `page_size` records after (but not including) the id provided. Will not be returned with `until`.
+        readOnly: true
+        type: string
+      until:
+        description: >
+          Returned `page_size` records before (but not including) the id provided. Will not be returned with `since`.
         readOnly: true
         type: string
 
@@ -52,6 +78,18 @@ parameters:
   page_offset:
     name: page_offset
     default: 0
-    description: 'Offset of the first record. '
+    description: Offset of the first record.
+    in: query
+    type: number
+  since:
+    name: since
+    description: >
+      Return `page_size` records after (but not including) the id provided. Can not be used with `until`.
+    in: query
+    type: number
+  until:
+    name: until
+    description: >
+      Return `page_size` records before (but not including) the id provided. Can not be used with `since`.
     in: query
     type: number
