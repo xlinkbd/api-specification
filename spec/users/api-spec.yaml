@@ -16,6 +16,9 @@ paths:
       produces:
       - application/json
       parameters:
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/since"
+        - $ref: "../common/hal.yaml#/parameters/until"
         - name: name
           in: query
           type: string
@@ -101,7 +104,7 @@ definitions:
     type: object
     allOf:
       - $ref: "../common/hal.yaml#/definitions/collection"
-      - $ref: "../common/hal.yaml#/definitions/paging"
+      - $ref: "../common/hal.yaml#/definitions/cursor"
       - type: object
         properties:
           _embedded:
