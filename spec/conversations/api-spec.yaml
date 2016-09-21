@@ -380,14 +380,27 @@ definitions:
             deleted:
               type: string
               format: date-time
-        _embedded:
+        _links:
+          readOnly: true
           type: object
           properties:
             members:
               type: array
               items:
-                $ref: '#/definitions/member'
-
+                type: object
+                properties:
+                  href:
+                    type: string
+                    format: url
+                  name:
+                    type: string
+                    description: >
+                      The member's name.
+                  title:
+                    type: string
+                    description: >
+                      The member's display name.
+                      
   member_collection:
     type: object
     allOf:
