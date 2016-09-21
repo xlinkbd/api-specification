@@ -8,6 +8,7 @@ info:
   title: Nexmo API
   description: "Open API Specification of Nexmo's Communication APIs"
 paths:
+
   # Accounts
   '/accounts/{account_id}':
     $ref: 'accounts/api-spec.yaml#/paths/~1accounts~1{account_id}'
@@ -125,6 +126,12 @@ paths:
     $ref: 'reports/api-spec.yaml#/paths/~1reports'
   '/reports/report_id/':
     $ref: 'reports/api-spec.yaml#/paths/~1reports~1report_id~1'
+
+  # Users
+  '/users':
+    $ref: 'users/api-spec.yaml#/paths/~1users'
+  '/users/{user_id}':
+    $ref: 'users/api-spec.yaml#/paths/~1users~1{user_id}'
 
   # Verifications
   '/verifications':
