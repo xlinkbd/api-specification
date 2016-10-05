@@ -1,0 +1,170 @@
+swagger: '2.0'
+info:
+  version: '1'
+  title: "Nexmo Files API"
+securityDefinitions:
+  $ref: ../api-spec.yaml#/securityDefinitions
+
+paths:
+  '/files':
+    get:
+      summary: List and Filter Files
+      description: >
+        Returns a collection of files. If accessed with an application JWT, only that application's files are returned. If accessed with JWT that has no application claim, all the account's files (for all applications) will be returned.
+      tags:
+        - File
+      parameters:
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/page_offset"
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Files Collection
+          schema:
+            $ref: '#/definitions/collection'
+    post:
+      summary: Create File
+      description: >
+        Upload a new file, or create a file from a URL.
+      tags:
+        - File
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/url'
+      responses:
+        '201':
+          description: File Resource
+          schema:
+            $ref: "#/definitions/resource"
+
+  '/files/{file_id}':
+    parameters:
+      - $ref: "#/parameters/id"
+    get:
+      summary: Get File
+      description: >
+        Get a file, or its details.
+      tags:
+        - File
+      produces:
+        - application/json
+      parameters:
+        - name: info
+          in: query
+          description: Return the file information, not the file?
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: File Resource
+          schema:
+            $ref: '#/definitions/resource'
+    delete:
+      summary: Delete File
+      description: >
+        Delete an exsisting appllication.
+      tags:
+        - File
+      produces: []
+      responses:
+        '204':
+          description: No Content
+
+definitions:
+  url:
+    type: object
+    required:
+      - url
+    properties:
+      url:
+        description: The url of the file to retrieve.
+        type: string
+
+  resource:
+    type: object
+    properties:
+      id:
+        description: Unique identifier of the file.
+        type: string
+        readOnly: true
+      original_file_name:
+        description: Original name of file.
+        type: string
+        readOnly: true
+      mime_type:
+        description: The `Content-Type` of the file.
+        type: string
+        readOnly: true
+      application_id:
+        description: ID of application that created the file.
+        type: string
+        readOnly: true
+      account_id:
+        description: ID of account that created the file.
+        type: string
+        readOnly: true
+      store_id:
+        description: Storage engine.
+        type: string
+        readOnly: true
+        enum:
+        - s3
+      max_downloads_allowed:
+        description: max_downloads_allowed
+        type: integer
+      times_downloaded:
+        description: The number of times the file has been downaloded.
+        type: integer
+        default: 0
+      etag:
+        description: ETag for use with `If-None-Match`.
+        type: string
+      media_size:
+        description: The files size in bytes.
+        type: integer
+      time_created:
+        description: Timestamp of file creation.
+        type: string
+        format: date-time
+      time_last_updated:
+        description: Timestamp of last update.
+        type: string
+        format: date-time
+      _links:
+        type: object
+        properties:
+          self:
+            $ref: '../common/hal.yaml#/definitions/link'
+          download:
+            $ref: '../common/hal.yaml#/definitions/link'
+        
+  collection:
+    allOf:
+      - $ref: "../common/hal.yaml#/definitions/paging"
+      - type: object
+        properties:
+          _links:
+           $ref: "../common/hal.yaml#/definitions/collection"
+          _embedded:
+            type: object
+            properties:
+              files:
+                type: array
+                items:
+                  $ref: '#/definitions/resource'
+            
+  
+parameters:
+  id:
+    description: Unique Identifier for File
+    in: path
+    name: file_id
+    required: true
+    type: string
