@@ -1,0 +1,9 @@
+{
+  "name": "nexmo-spec-tools",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "swagger-editor-server": "https://codeload.github.com/tjlytle/swagger-editor-server/tar.gz/bf401d48014e99971afa2c1af379ebfbe0100e05",
+    "swagger-editor": "^2.8.1"
+  }
+}
