@@ -159,7 +159,7 @@ definitions:
         $ref: "#/definitions/addressable"
       message: 
         description: >
-          Message to deliver. At least on property is requred. `text` sends a simple message, if sending rich content by `url` a `text` description is required. `media` may only be used on its own. If a custom `content` is sent the `type` must also be sent.
+          Message to deliver. At least one property is requred. `text` sends a simple message, if sending rich content by `url` a `text` description is required. `media` may only be used on its own. If a custom `content` is sent the `type` must also be sent.
         type: object
         properties:
           text: 
