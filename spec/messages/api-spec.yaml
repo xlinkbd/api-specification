@@ -105,22 +105,163 @@ paths:
           description: No Content
 
 definitions:
+  addressable:
+    description: Representation of an addressable entity.
+    type: object
+    properties:
+      type:
+        description: Type of entity.
+        type: string
+        enum:
+          - mobile
+          - facebook
+          - wechat
+          - viber
+      itentifier:
+        description: >
+          The address or identifier for this entity. 
+
+  text:
+    description: Text message.
+    type: object
+    required:
+      - text
+    properties:
+      text: 
+        description: Message body.
+        type: string
+        
+  rich:
+    description: Rich contnet.
+    type: object
+    required:
+      - text
+      - url
+    properties:
+      text: 
+        description: Description of content.
+        type: string
+      url:
+        description: Location of the content.
+        type: string
+        format: url
+        
+  media:
+    description: Binary content.
+    type: object
+    required:
+      - media
+    properties:
+      media: 
+        description: Binary content, base64 encoded
+        type: string
+        format: byte
+    
+  custom:
+    description: Custom message.
+    type: object
+    required:
+      - type
+      - content
+    properties:
+      type:
+        description: Custom type.
+        type: string
+      content:
+        description: JSON message structure.
+        type: string
+
   message:
     description: >
       Representation of a message (inbound or outbound), returned from API and used as the payload for message webhooks.
-    allOf:
-      - $ref: '../common/hal.yaml#/definitions/self'
-      - type: object
+    type: object
+    required:
+      - message_id
+      - to
+      - from
+      - direction
+      - status
+    properties:
+      message_id:
+        description: Message Identifier 
+        type: string
+        format: uuid
+        readOnly: true
+      to: 
+        $ref: "#/definitions/addressable"
+      from: 
+        $ref: "#/definitions/addressable"
+      message: 
+        description: The message to deliver.
+        oneOf:
+        - $ref: "#/definitions/text"
+        - $ref: "#/definitions/rich"
+        - $ref: "#/definitions/media"
+        - $ref: "#/definitions/custom"
+          
+      direction:
+        description: Indicates if the message was inbound or outbound.
+        type: string
+        enum:
+          - inbound
+          - outbound
+        readOnly: true
+      status:
+        description: Current status of message.
+        type: string
+        enum: 
+          - delivered
+          - expired
+          - failed
+          - rejected
+          - accepted
+          - bufferend
+          - unknown
+        readOnly: true
+      created:
+        description: Timestamp message was created.
+        type: string
+        format: date-type
+        readOnly: true
+      delivered:
+        description: Timestamp message was delivered.
+        type: string
+        format: date-type
+        readOnly: true
+      usage:
+        description: Usage of balance or quota incurred for this message.
+        type: object
+        readOnly: true
         properties:
-          message_id: 
-            description: Message Identifier 
+          currency:
+            description: The currency of the usage cost.
             type: string
+          amount:
+            description: The usage amount.
+            type: string
+      network:
+        description: Identifier of the network delivering the message.
+        type: object
+        readOnly: true
+        properties:
+          type: 
+            description: Type of entity.
+            type: string
+            enum:
+              - mobile
+              - facebook
+              - wechat
+              - viber
+          itentifier:
+            description: >
+              The address or identifier for the network. 
+      _links:
+        $ref: "../common/hal.yaml#/definitions/collection"
 
   collection:
     description: >
       Collection of messasge resources.
     allOf:
-      - $ref: "../common/hal.yaml#/definitions/collection"
       - $ref: "../common/hal.yaml#/definitions/paging"
       - type: object
         properties:
@@ -131,6 +272,8 @@ definitions:
                 type: array
                 items:
                   $ref: '#/definitions/message'
+          _links:
+            $ref: "../common/hal.yaml#/definitions/collection"
 
 parameters:
   message_uuid:
