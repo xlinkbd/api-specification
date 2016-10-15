@@ -59,13 +59,33 @@ paths:
         200:
           description: Message Resource
           schema:
-            allOf:
-              - $ref: '#/definitions/resource'
+            $ref: '#/definitions/resource'
 
   '/messages/{message_uuid}/conversion':
     parameters:
       - $ref: "#/parameters/message_uuid"
-    post:
+    get:
+      summary: Report Message Conversion
+      description: >
+        Get the conversion report for this message.
+      tags:
+        - Messages
+        - Conversions
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/conversion'
+      responses:
+        200:
+          description: Conversion Resource
+          schema:
+            $ref: '#/definitions/conversion'
+        400:
+          description: Conversion Not Found
+    put:
       summary: Report Message Conversion
       description: >
         Create a conversion report for a sent message. This can only be done once.
@@ -74,11 +94,29 @@ paths:
         - Conversions
       consumes:
         - application/json
+      produces:
+        - application/json
       responses:
-        204:
-          description: No Content
+        201:
+          description: Conversion Resource
+          schema:
+            $ref: '#/definitions/conversion'
 
 definitions:
+  conversion:
+    description: Report of conversion.
+    type: object
+    properties:
+      delivered: 
+        description: >
+          `true` if the message was delivered.
+        type: boolean
+      timestamp:
+        description: >
+          The time the message was converted in RFC3339's date-time format. 
+        type: string
+        format: date-time
+
   addressable:
     description: Representation of an addressable entity.
     type: object
@@ -198,6 +236,13 @@ definitions:
           itentifier:
             description: >
               The address or identifier for the network. 
+      _embedded:
+        description: Embedded Resources
+        type: object
+        readOnly: true
+        properties:
+          conversion:
+            $ref: "#/definitions/conversion"
       _links:
         $ref: "../common/hal.yaml#/definitions/collection"
 
