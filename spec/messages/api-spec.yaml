@@ -121,56 +121,6 @@ definitions:
         description: >
           The address or identifier for this entity. 
 
-  text:
-    description: Text message.
-    type: object
-    required:
-      - text
-    properties:
-      text: 
-        description: Message body.
-        type: string
-        
-  rich:
-    description: Rich contnet.
-    type: object
-    required:
-      - text
-      - url
-    properties:
-      text: 
-        description: Description of content.
-        type: string
-      url:
-        description: Location of the content.
-        type: string
-        format: url
-        
-  media:
-    description: Binary content.
-    type: object
-    required:
-      - media
-    properties:
-      media: 
-        description: Binary content, base64 encoded
-        type: string
-        format: byte
-    
-  custom:
-    description: Custom message.
-    type: object
-    required:
-      - type
-      - content
-    properties:
-      type:
-        description: Custom type.
-        type: string
-      content:
-        description: JSON message structure.
-        type: string
-
   message:
     description: >
       Representation of a message (inbound or outbound), returned from API and used as the payload for message webhooks.
@@ -181,6 +131,7 @@ definitions:
       - from
       - direction
       - status
+      - message
     properties:
       message_id:
         description: Message Identifier 
@@ -192,12 +143,27 @@ definitions:
       from: 
         $ref: "#/definitions/addressable"
       message: 
-        description: The message to deliver.
-        oneOf:
-        - $ref: "#/definitions/text"
-        - $ref: "#/definitions/rich"
-        - $ref: "#/definitions/media"
-        - $ref: "#/definitions/custom"
+        description: >
+          Message to deliver. At least on property is requred. `text` sends a simple message, if sending rich content by `url` a `text` description is required. `media` may only be used on its own. If a custom `content` is sent the `type` must also be sent.
+        type: object
+        properties:
+          text: 
+            description: Message body or description of content.
+            type: string
+          url:
+            description: Location of the content.
+            type: string
+            format: url
+          media: 
+            description: Binary content, base64 encoded
+            type: string
+            format: byte
+          type:
+            description: Name of custom type.
+            type: string
+          content:
+            description: JSON message structure.
+            type: string
           
       direction:
         description: Indicates if the message was inbound or outbound.
