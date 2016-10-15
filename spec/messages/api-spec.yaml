@@ -13,14 +13,16 @@ paths:
         Returns a collection of the message resources.
       tags:
         - Messages
-      consumes:
+      parameters:
+        - $ref: "../common/hal.yaml#/parameters/page_size"
+        - $ref: "../common/hal.yaml#/parameters/page_offset"
+      produces:
         - application/json
       responses:
         200:
           description: Message Collection
           schema:
-            allOf:
-              - $ref: '#/definitions/collection'
+            $ref: '#/definitions/collection'
     post:
       summary: Send A Message
       description: >
@@ -29,46 +31,18 @@ paths:
         - Messages
       consumes:
         - application/json
-      responses:
-        201:
-          description: Message Resource
-          schema:
-            allOf:
-              - $ref: '#/definitions/message'
-
-  '/messages/2fa':
-    post:
-      summary: Create 2FA Message
-      description: >
-        TODO: Potential way to use shared short code. Number pools may also be a solution.
-      tags:
-        - Messages
-        - Shared Short Codes
-      consumes:
+      produces:
         - application/json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/resource'
       responses:
         201:
           description: Message Resource
           schema:
-            allOf:
-              - $ref: '#/definitions/message'
-
-  '/messages/alert':
-    post:
-      summary: Create Alert Message
-      description: >
-        TODO: Potential way to use shared short code. Number pools may also be a solution.
-      tags:
-        - Messages
-        - Shared Short Codes
-      consumes:
-        - application/json
-      responses:
-        201:
-          description: Message Resource
-          schema:
-            allOf:
-              - $ref: '#/definitions/message'
+            $ref: '#/definitions/resource'
 
   '/messages/{message_uuid}':
     parameters:
@@ -86,7 +60,7 @@ paths:
           description: Message Resource
           schema:
             allOf:
-              - $ref: '#/definitions/message'
+              - $ref: '#/definitions/resource'
 
   '/messages/{message_uuid}/conversion':
     parameters:
@@ -121,17 +95,20 @@ definitions:
         description: >
           The address or identifier for this entity. 
 
-  message:
+  resource:
     description: >
       Representation of a message (inbound or outbound), returned from API and used as the payload for message webhooks.
     type: object
     required:
-      - message_id
       - to
       - from
+      - message
+      - message_id
       - direction
       - status
-      - message
+      - created
+      - usage
+      - network
     properties:
       message_id:
         description: Message Identifier 
@@ -237,7 +214,7 @@ definitions:
               messagess:
                 type: array
                 items:
-                  $ref: '#/definitions/message'
+                  $ref: '#/definitions/resource'
           _links:
             $ref: "../common/hal.yaml#/definitions/collection"
 
