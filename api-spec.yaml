@@ -9,6 +9,12 @@ info:
   description: "Open API Specification of Nexmo's Communication APIs"
 paths:
   '/accounts/{account_id}':
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
     get:
       consumes:
         - application/json
@@ -32,6 +38,12 @@ paths:
       tags:
         - Account
   '/accounts/{account_id}/alerts':
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
     get:
       consumes:
         - application/json
@@ -93,6 +105,11 @@ paths:
       tags:
         - Alerts
     parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
       - in: path
         name: id
         required: true
@@ -124,6 +141,11 @@ paths:
       description: ''
       operationId: GET_payment
       parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
         - description: 'Filter by Payment Method ID '
           in: query
           name: method
@@ -140,6 +162,11 @@ paths:
       description: ''
       operationId: PUT_payment
       parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
         - in: body
           name: body
           schema:
@@ -172,6 +199,11 @@ paths:
       description: ''
       operationId: get-balance
       parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
         - default: EUR
           enum:
             - EUR
@@ -186,6 +218,12 @@ paths:
       tags:
         - Account
   '/accounts/{account_id}/instruments':
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
     get:
       consumes:
         - application/json
@@ -199,6 +237,12 @@ paths:
         - Payment
   '/accounts/{account_id}/instruments/{id}':
     get:
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
       consumes:
         - application/json
       description: ''
@@ -216,6 +260,12 @@ paths:
         type: string
   '/accounts/{account_id}/secondaries':
     get:
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
       consumes:
         - application/json
       description: ''
@@ -230,13 +280,18 @@ paths:
     get:
       consumes:
         - application/json
-      description: ''
-      operationId: GET_payment-transactions
       parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
         - description: 'Filter by Payment Method ID '
           in: query
           name: method
           type: string
+      description: ''
+      operationId: GET_payment-transactions
       responses:
         default:
           description: ''
@@ -245,6 +300,12 @@ paths:
         - Payment
   '/accounts/{account_id}/transactions/':
     post:
+      parameters:
+        - name: account_id
+          in: path
+          required: true
+          description: The account id.
+          type: string
       consumes:
         - application/json
       description: ''
@@ -257,6 +318,15 @@ paths:
         - Payment
   '/accounts/{account_id}/transactions/{id}':
     get:
+      parameters:
+      - in: path
+        name: account_id
+        required: true
+        type: string
+      - in: path
+        name: id
+        required: true
+        type: string
       consumes:
         - application/json
       description: ''
@@ -267,12 +337,13 @@ paths:
       summary: Get Payment Details
       tags:
         - Payment
-    parameters:
-      - in: path
-        name: id
-        required: true
-        type: string
   '/accounts/{account_id}/users':
+    parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
     get:
       consumes:
         - application/json
@@ -308,6 +379,11 @@ paths:
       tags:
         - Users
     parameters:
+      - name: account_id
+        in: path
+        required: true
+        description: The account id.
+        type: string
       - in: path
         name: id
         required: true
@@ -2562,12 +2638,14 @@ definitions:
           ‘complete’
         type: string
       from:
-        description: An e.164 formatted number or a SIP URI.
-        oneOf:
-          - $ref: '#/definitions/phone'
-          - $ref: '#/definitions/sip'
-          - $ref: '#/definitions/user'
-          - $ref: '#/definitions/conversation'
+        type: string
+        description:  |
+          The single or mixed collection of endpoint types you connected to. Possible value are:
+                  phone - phone numbers in [e.164](https://en.wikipedia.org/wiki/E.164) format. Options are:
+                | Code  | Meaning |
+                | --- | --- |
+                | number  |  the phone number to connect to in E.164 format. |
+                | dtmfAnswer  | Set the digits that are sent to the user as soon as the Call is answered. The * and # digits are respected. You create pauses using p. Each pause is 500ms.  |
       length_timer:
         default: 7200
         description: >
@@ -2600,18 +2678,15 @@ definitions:
         minimum: 0
         type: integer
       to:
-        description: >-
-          Array of endpoints (see endpoint types supported by NCCO). Multiple
-          destinations.
-        items:
-          anyOf:
-            - $ref: '#/definitions/phone'
-            - $ref: '#/definitions/sip'
-            - $ref: '#/definitions/user'
-            - $ref: '#/definitions/conversation'
-        maxItems: 10
-        minItems: 1
-        type: array
+        type: string
+        description:  |
+          The single or mixed collection of endpoint types you connected to. Possible value are:
+                  phone - phone numbers in [e.164](https://en.wikipedia.org/wiki/E.164) format. Options are:
+                | Code  | Meaning |
+                | --- | --- |
+                | number  |  the phone number to connect to in E.164 format. |
+                | dtmfAnswer  | Set the digits that are sent to the user as soon as the Call is answered. The * and # digits are respected. You create pauses using p. Each pause is 500ms.  |
+
     required:
       - to
       - from
@@ -2652,11 +2727,15 @@ definitions:
       end_time:
         type: string
       from:
-        oneOf:
-          - $ref: '#/definitions/phone'
-          - $ref: '#/definitions/sip'
-          - $ref: '#/definitions/user'
-          - $ref: '#/definitions/conversation'
+        type: string
+        description:  |
+          The single or mixed collection of endpoint types you connected to. Possible value are:
+                  phone - phone numbers in [e.164](https://en.wikipedia.org/wiki/E.164) format. Options are:
+                | Code  | Meaning |
+                | --- | --- |
+                | number  |  the phone number to connect to in E.164 format. |
+                | dtmfAnswer  | Set the digits that are sent to the user as soon as the Call is answered. The * and # digits are respected. You create pauses using p. Each pause is 500ms.  |
+
       network:
         type: string
       price:
@@ -2676,11 +2755,7 @@ definitions:
           - completed
         type: string
       to:
-        oneOf:
-          - $ref: '#/definitions/phone'
-          - $ref: '#/definitions/sip'
-          - $ref: '#/definitions/user'
-          - $ref: '#/definitions/conversation'
+        type: string
     required:
       - _links
       - call_uuid
@@ -3090,7 +3165,6 @@ definitions:
   streamRequest:
     properties:
       level:
-        default: 0
         description: >-
           Set the audio level of the stream. -1>=level=<1. Defaults to 0.
           Resolution is 0.1
