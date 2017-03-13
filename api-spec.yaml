@@ -2478,9 +2478,6 @@ paths:
       tags:
         - Verification
 definitions:
-  account-user:
-    properties: {}
-    type: object
   alert-endpoint:
     properties:
       endpoint:
@@ -2588,18 +2585,6 @@ definitions:
         type: string
     required:
       - type
-    type: object
-  callBase:
-    description: Destination of the call.
-    properties:
-      from:
-        description: An e.164 formatted number or a SIP URI.
-        type: string
-      to:
-        type: string
-    required:
-      - to
-      - from
     type: object
   callRequest:
     properties:
@@ -2817,35 +2802,6 @@ definitions:
       status:
         type: string
     type: object
-  conversation:
-    allOf:
-      - $ref: '#/definitions/call-endpoint'
-      - properties:
-          name:
-            description: Conversation name
-            type: string
-        required:
-          - name
-        type: object
-  error:
-    example:
-      detail: The request cost exceeds your current ballance.
-      instance: 'https://api.nexmo.com/calls/63f61863-4a51-4f6b-86e1-46edebcf9356'
-      status: '403'
-      title: Out Of Credit
-      type: 'https://docs.nexmo.com/Error#out-of-credit'
-    properties:
-      detail:
-        type: string
-      instance:
-        type: string
-      status:
-        type: string
-      title:
-        type: string
-      type:
-        type: string
-    type: object
   hal:
     properties:
       _links:
@@ -2944,21 +2900,6 @@ definitions:
       vol:
         type: string
     type: object
-  phone:
-    allOf:
-      - $ref: '#/definitions/call-endpoint'
-      - properties:
-          dtmfAnswer:
-            description: >-
-              Digits that are sent as soon as the call is answered (pauses are
-              created using a ‘p’ per 500ms & ‘*’, ‘#’ are respected)
-            type: string
-          number:
-            description: Number in e.164 format
-            type: string
-        required:
-          - number
-        type: object
   recordingBase:
     properties:
       backup_method:
@@ -3135,27 +3076,6 @@ definitions:
       recording_url:
         type: string
     type: object
-  sip:
-    allOf:
-      - $ref: '#/definitions/call-endpoint'
-      - properties:
-          headers:
-            description: >-
-              JSON object of optional headers {“header_1”:”value_1”,
-              “header_2”:”value_2”}
-            type: object
-          password:
-            description: SPI password
-            type: string
-          uri:
-            description: SIP URL (user@example.com)
-            type: string
-          username:
-            description: SIP username
-            type: string
-        required:
-          - uri
-        type: object
   streamRequest:
     properties:
       level:
@@ -3220,16 +3140,6 @@ definitions:
     required:
       - text
     type: object
-  user:
-    allOf:
-      - $ref: '#/definitions/call-endpoint'
-      - properties:
-          name:
-            description: RTC user that exists in the conversation service
-            type: string
-        required:
-          - name
-        type: object
   whisperResponse:
     example:
       _links:
