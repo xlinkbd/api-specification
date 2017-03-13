@@ -717,6 +717,8 @@ paths:
     get:
       description: Get details of all calls with filters for status and pagination.
       operationId: GET_calls
+      security:
+        - Bearer: []
       parameters:
         - description: >-
             Filter for status of call. Options are ‘in_progress’, ‘complete’,
@@ -844,6 +846,8 @@ paths:
         - application/x-www-form-urlencoded
       description: Make an outbound SIP or PSTN call
       operationId: POST_calls
+      security:
+        - Bearer: []
       parameters:
         - in: body
           name: body
@@ -1026,6 +1030,8 @@ paths:
       operationId: DELETE_calls-call_uuid
       produces:
         - application/json
+      security:
+        - Bearer: []
       responses:
         '204':
           description: ''
@@ -1039,6 +1045,8 @@ paths:
       operationId: GET_calls-call_uuid
       produces:
         - application/json
+      security:
+        - Bearer: []
       responses:
         '200':
           description: ''
@@ -1059,6 +1067,8 @@ paths:
         - application/x-www-form-urlencoded
       description: ''
       operationId: PUT_calls-call_uuid
+      security:
+        - Bearer: []
       parameters:
         - default: both
           description: >-
@@ -1134,6 +1144,8 @@ paths:
     post:
       consumes:
         - application/x-www-form-urlencoded
+      security:
+        - Bearer: []
       description: Send DTMF to a live call or leg.
       operationId: POST_calls-call_uuid-dtmf
       parameters:
@@ -1181,6 +1193,8 @@ paths:
       operationId: DELETE_calls-call_uuid-recordings
       produces:
         - application/json
+      security:
+        - Bearer: []
       responses:
         '204':
           description: ''
@@ -1197,6 +1211,8 @@ paths:
     post:
       consumes:
         - application/x-www-form-urlencoded
+      security:
+        - Bearer: []
       description: >
         Start recording a call that is in progress and return parameters to
         `event_url` when the call ends.
@@ -1239,6 +1255,8 @@ paths:
       operationId: DELETE_calls-call_uuid-stream
       produces:
         - application/json
+      security:
+        - Bearer: []
       responses:
         '204':
           description: ''
@@ -1255,6 +1273,8 @@ paths:
     post:
       consumes:
         - application/x-www-form-urlencoded
+      security:
+        - Bearer: []
       description: >-
         Start streaming an audio file to a live call or call leg. Supported
         formats are mp3, wav and ogg.
@@ -1293,6 +1313,8 @@ paths:
       operationId: DELETE_calls-call_uuid-talk
       produces:
         - application/json
+      security:
+        - Bearer: []
       responses:
         '204':
           description: ''
@@ -1311,6 +1333,8 @@ paths:
         - application/x-www-form-urlencoded
       description: Start text to speech to a live call or call leg.
       operationId: POST_calls-call_uuid-talk
+      security:
+        - Bearer: []
       parameters:
         - in: body
           name: body
@@ -3192,6 +3216,19 @@ definitions:
         type: string
     type: object
 securityDefinitions:
+  Bearer:
+    description:  | 
+      For accessing the API a valid JWT token must be passed in all the queries in the 'Authorization' header.
+      
+      You authenticate requests to the Voice API with JSON Web Tokens that you generate from the private_key associated with your app.
+      
+      The following syntax must be used in the 'Authorization' header :
+
+       Bearer: xxxxxx.yyyyyyy.zzzzzz
+
+    type: apiKey
+    name: Authorization
+    in: header
   api_key:
     name: api_key
     type: apiKey
