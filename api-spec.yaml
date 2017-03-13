@@ -2663,12 +2663,6 @@ definitions:
           - continue
           - hangup
         type: string
-      machine_timeout:
-        default: 5
-        description: 'Machine detection analysis timeout in seconds. '
-        maximum: 5000
-        minimum: 2000
-        type: integer
       ringing_timer:
         default: 60
         description: >-
