@@ -189,6 +189,14 @@ The authenticated user can not make this request. This is not an authentication 
 The resource could not be found. If the URI format is correct with the exception of the resource ID, the body should include the same structured error response as any other API error.
 For example: `GET /plans/p125`
 
+##### 409: Conflict
+The request could not be completed due to a conflict with the current state of the resource. The resource exists; however, the action could not be taken. The response MUST contain contain a description of the conflict.
+For example: `PUT /calls/123/talk`
+
+##### 410: Gone
+The requested resource is no longer available at the server. This condition is expected to be considered permanent. Used when the URI is formatted correctly, but the subresource is no long available.
+For example: `PUT /calls/123/talk`
+
 ##### 429: Too Many Requests
 Not in the official spec (rather a part of RFC 6585), response used when request is rate-limited. Used enough to be well understood.
 
