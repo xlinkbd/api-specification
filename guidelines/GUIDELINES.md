@@ -22,7 +22,7 @@ Names and Formats
 - `conference_id`
 
 ### Objects retrieved via webhooks by the API (*Discussion Required*)
-Objects retrieved via webhooks by the API, documents or otherwise are in camelCase. 
+Objects retrieved via webhooks by the API are in camelCase. 
 
 #### For example:
 Nexmo Call Control Objects (NCCO) examples:
