@@ -1,0 +1,365 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://api.nexmo.com/beta'
+info:
+  version: 1.0.0
+  title: Conversation API
+  description: >-
+    Maecenas sed diam eget risus varius blandit sit amet non magna. Donec sed odio dui.
+security:
+  - bearerAuth: []
+paths:
+  /conversations:
+    post:
+      security:
+        - bearerAuth: []
+      x-group: conversation
+      summary: Create a conversation
+      parameters:
+        - name: name
+          in: query
+          description: Conversation name, must be unique but will auto-generated if you do not provide it.
+          required: false
+          schema:
+            type: string
+        - name: display_name
+          in: query
+          description: A personal name of your choosing.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: conversations response
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/Conversation'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+  /conversations/{id}:
+    get:
+      x-group: conversation
+      summary: Retrieve a conversation
+      parameters:
+        - name: id
+          in: path
+          description: ID of the conversation
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: conversations response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConversationFull'
+  /conversations/{id}/members:
+    get:
+      x-group: member
+      summary: Retrieve members of a conversation
+      parameters:
+        - name: id
+          in: path
+          description: ID of the conversation
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: members response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
+    post:
+      x-group: member
+      summary: Add a user to a conversation
+      parameters:
+        - name: id
+          in: path
+          description: tags to filter by
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: members response
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/MemberFull'
+  /users:
+    get:
+      x-group: user
+      summary: Retrieve all users
+      responses:
+        '200':
+          description: users response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserFull'
+    post:
+      x-group: user
+      summary: Create a user
+      parameters:
+        - name: name
+          in: query
+          description: The users name
+          example: Dillon
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: users response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      x-group: user
+      summary: Retrive a user
+      parameters:
+        - name: id
+          in: path
+          description: The users ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: user response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserShow'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    UnauthorizedError:
+      description: Access token is missing or invalid
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - code
+              - description
+            properties:
+              code:
+                type: 'string'
+                example: 'system:error:invalid-token'
+              description:
+                type: string
+                example: 'the token was rejected'
+  schemas:
+    CreatedTimestamp:
+      properties:
+        created:
+          example: "2020-01-01T12:00:00.000Z"
+          type: string
+          description: The time the conversation was created
+    JoinedTimestamp:
+      properties:
+        joined:
+          example: "2020-01-01T12:00:00.000Z"
+          type: string
+    Link:
+      properties:
+        self:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Self'
+    Self:
+      properties:
+        href:
+          example: "http://conversation.local/v1/conversations/CON-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+    Embedded:
+      properties:
+        legs:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Leg'
+    Leg:
+      properties:
+        _links:
+          type: array
+          example: []
+    Channel:
+      properties:
+        type:
+          type: string
+          example: app
+    MemberFull:
+      properties:
+        id:
+          example: "MEM-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+        user_id:
+          example: "USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+        state:
+          example: "JOINED"
+          type: string
+        timestamp:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/JoinedTimestamp'
+        channel:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Channel'
+        href:
+          example: 'http://conversation.local/v1/conversations/CON-aaaaaaaa-bbbb-cccc-dddd-0123456789ab/MEM-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+          type: string
+    Member:
+      properties:
+        user_id:
+          example: "USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+        name:
+          example: "MEM-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+        user_name:
+          example: "Dillon"
+          type: string
+        state:
+          example: "JOINED"
+          type: string
+    ConversationFull:
+      properties:
+        uuid:
+          example: "CON-aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+          type: string
+          description: >-
+            Unique identifier for the conversation
+        name:
+          example: "nexmo-chat"
+          type: string
+          description: >-
+            The name of the conversation
+        display_name:
+          example: "Nexmo Chat"
+          type: string
+          description: >-
+            The display name of the conversation
+        timestamp:
+          type: object
+          items:
+            $ref: '#/components/schemas/CreatedTimestamp'
+        sequence_number:
+          example: 0
+          type: integer
+        numbers:
+          example: {}
+          type: string
+        properties:
+          example: {}
+          type: string
+        members:
+          example: []
+          type: array
+        api_key:
+          example: "abcd1234"
+          type: string
+          description: The API Key of the owner of the conversation
+        _links:
+          example:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Link'
+        _embedded:
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Embedded'
+    Conversation:
+      type: object
+      required:
+        - id
+        - href
+      properties:
+        id:
+          type: string
+          example: 'CON-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+        href:
+          type: string
+          example: 'http://conversation.local/v1/conversations/CON-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+    UserShow:
+      type: object
+      required:
+        - name
+        - id
+        - href
+      properties:
+        id:
+          type: string
+          example: 'USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+        href:
+          type: string
+          example: 'http://conversation.local/v1/users/USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+        name:
+          type: string
+          example: 'Dillon'
+        channels:
+          type: object
+          example: {}
+    User:
+      type: object
+      required:
+        - name
+        - id
+        - href
+      properties:
+        id:
+          type: string
+          example: 'USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+        href:
+          type: string
+          example: 'http://conversation.local/v1/users/USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+    UserFull:
+      type: object
+      required:
+        - name
+        - id
+        - href
+      properties:
+        name:
+          type: string
+          example: 'Dillon'
+        id:
+          type: string
+          example: 'USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+        href:
+          type: string
+          example: 'http://conversation.local/v1/users/USR-aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
+x-groups:
+  conversation:
+    name: "Conversation"
+    order: 1
+    description: >-
+      Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Aenean lacinia bibendum nulla sed consectetur. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    schema:
+      $ref: '#/components/schemas/ConversationFull'
+  user:
+    name: "User"
+    order: 2
+  member:
+    name: "Member"
+    order: 3
