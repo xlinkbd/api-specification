@@ -21,11 +21,11 @@ Names and Formats
 - `call_id`
 - `conference_id`
 
-### Objects consumed by the API
-Objects consumed by the API, documents or otherwise are in camelCase. 
+### Objects retrieved via webhooks by the API (*Discussion Required*)
+Objects retrieved via webhooks by the API are in camelCase. 
 
 #### For example:
-Call Control objects examples:
+Nexmo Call Control Objects (NCCO) examples:
 - `eventUrl`
 - `musicOnHold`
 - `beepOnStart`
