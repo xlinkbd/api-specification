@@ -14,7 +14,7 @@ These definitions provide a single point of truth that can be used end-to-end ca
 
 | API | Definition owner | Contributors |
 | --- | ---------------- | ------------ |
-| SMS | - | - |
+| SMS | - | Adam Butler |
 | Voice | - | - |
 | Verify | - | - |
 | Number Insight | - | - |
