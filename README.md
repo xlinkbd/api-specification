@@ -43,6 +43,32 @@ These definitions provide a single point of truth that can be used end-to-end ca
 - [Swagger Parser](https://github.com/swagger-api/swagger-parser) - Standalone library for parsing OAS3 definitions from Java
 - [Nexmo Developer](https://github.com/Nexmo/nexmo-developer) - Nexmo Developer has it's own OAS3 definition parser and API reference UI.
 
+## Consuming
+
+These API Specifications can be made available as packages. See below for the currently available packages and instructions on how to consume them.
+
+### Ruby
+
+##### Install the Gem
+
+```
+$ gem install nexmo_api_specification
+```
+
+or add it to your GemFile and run `bundle install`
+
+```
+gem 'nexmo_api_specification', '0.1.1'
+```
+
+##### Usage
+
+Get a definition file:
+
+```ruby
+NexmoApiSpecification::Definition.load(:sms)
+```
+
 ## Contributing
 
 Contributions are welcome, please follow [GitHub Flow](https://guides.github.com/introduction/flow/index.html)
