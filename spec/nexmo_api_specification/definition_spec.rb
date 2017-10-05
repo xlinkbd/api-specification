@@ -24,4 +24,23 @@ describe NexmoApiSpecification::Definition do
       }.to raise_error('Definition does not exist')
     end
   end
+
+  describe '#path' do
+    it 'returns the specified definition' do
+      expect(NexmoApiSpecification::Definition.path(:sms)).to include('sms.yml')
+      expect(NexmoApiSpecification::Definition.path(:conversation)).to include('conversation.yml')
+      expect(NexmoApiSpecification::Definition.path(:some_invalid_definition_name)).to include('some_invalid_definition_name.yml')
+    end
+  end
+
+  describe '#exists?' do
+    it 'returns true if the definition exists' do
+      expect(NexmoApiSpecification::Definition.exists?(:sms)).to eq(true)
+      expect(NexmoApiSpecification::Definition.exists?(:conversation)).to eq(true)
+    end
+
+    it 'returns false if the definition does not exist' do
+      expect(NexmoApiSpecification::Definition.load(:some_invalid_definition_name)).to eq(false)
+    end
+  end
 end
