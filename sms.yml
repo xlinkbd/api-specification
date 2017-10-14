@@ -156,7 +156,9 @@ components:
           description: The amount of messages in the request
           example: 1
         messages:
-          $ref: '#/components/schemas/ErrorMessage'
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorMessage'
     ErrorMessage:
       type: object
       properties:
@@ -176,7 +178,9 @@ components:
           description: The amount of messages in the request
           example: 1
         messages:
-          $ref: '#/components/schemas/Message'
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
     Message:
       type: object
       properties:
