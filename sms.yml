@@ -12,6 +12,7 @@ paths:
       x-group: sms
       summary: Send an SMS
       description: Send an outbound SMS from your Nexmo account
+      x-code-example-path: messaging.sms.send
       parameters:
         - name: format
           description: The format of the response
