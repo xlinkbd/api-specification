@@ -63,6 +63,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+      callbacks:
+        delivery-receipt:
+          '{$request.body#/callback}':
+            post:
+              summary: Delivery Receipt
+              description: The following are parameters sent in as a [delivery receipt](/messaging/sms/guides/delivery-receipts) callback. You can subscribe to [webhooks](/concepts/guides/webhooks) to receive notification when the delivery status of an SMS that you have sent with Nexmo changes.
+              requestBody:
+                required: true
+                content:
+                  application/json:
+                    schema:
+                      $ref: '#/components/schemas/DeliveryReceipt'
+              responses:
+                '200':
+                  description: Your server returns this code if it accepts the callback
+
 components:
   schemas:
     NewMessage:
@@ -213,6 +229,51 @@ components:
           type: string
           description: The ID of the network of the recipient
           example: '12345'
+    DeliveryReceipt:
+      type: object
+      properties:
+        msisdn:
+          type: string
+          description: The number the message was sent to
+          example: '447700900000'
+        to:
+          type: string
+          description: The SenderID you set in from in your request
+          example: Acme Inc
+        network-code:
+          type: string
+          description: The Mobile Country Code Mobile Network Code (MCCMNC) of the carrier this phone number is registered with.
+          example: '12345'
+        messageId:
+          type: string
+          description: The Nexmo ID for this message.
+          example: '0A0000001234567B'
+        price:
+          type: string
+          description: The cost of the message
+          example: '0.03330000'
+        status:
+          type: string
+          description: A code that explains where the message is in the delivery process.
+          example: 'delivered'
+          x-possible-values:
+            - delivered
+            - expired
+            - failed
+            - rejected
+            - accepted
+            - buffered
+            - unknown
+        scts:
+          type: string
+          description: When the DLR was recieved from the carrier in the following format `YYMMDDHHMM`. For example, `2001011400` is at `2020-01-01 14:00`
+          example: 2001011400
+        err-code:
+          type: string
+        message-timestamp:
+          description: The time when Nexmo started to push this Delivery Receipt to your webhook endpoint.
+          type: string
+          example: 2020-01-01 12:00:00
 x-groups:
   sms:
     name: "SMS"
