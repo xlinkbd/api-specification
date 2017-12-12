@@ -43,23 +43,6 @@ paths:
         - $ref: '#/components/parameters/country'
         - $ref: '#/components/parameters/cnam'
         - $ref: '#/components/parameters/ip'
-      x-code-samples:
-        - lang: Shell
-          source: |
-            curl "https://api.nexmo.com/ni/:LEVEL/:FORMAT" \
-              -d "api_key=API_KEY" \
-              -d "api_secret=API_SECRET" \
-              -d "number=NUMBER"
-        - lang: Java
-          source: |
-            import com.nexmo.client.NexmoClient;
-            import com.nexmo.client.auth.AuthMethod;
-            import com.nexmo.client.insight.AdvancedInsightResponse;
-
-            AuthMethod auth = new TokenAuthMethod(API_KEY, API_SECRET);
-            NexmoClient client = new NexmoClient(auth);
-
-            AdvancedInsightResponse response = client.getInsightClient().getAdvancedNumberInsight(TO_NUMBER);
       responses:
         '200':
           description: OK
@@ -86,21 +69,6 @@ paths:
         - $ref: '#/components/parameters/country'
         - $ref: '#/components/parameters/cnam'
         - $ref: '#/components/parameters/ip'
-      x-code-samples:
-        - lang: Shell
-          source: |
-            curl "https://api.nexmo.com/ni/advanced/async/json?api_key=API_KEY&api_secret=API_SECRET&number=447700900000&callback=CALLBACK_URL"
-        - lang: PHP
-          source: |
-            <?php
-            require_once __DIR__ . '/../vendor/autoload.php';
-
-            $basic  = new \Nexmo\Client\Credentials\Basic(NEXMO_API_KEY, NEXMO_API_SECRET);
-            $client = new \Nexmo\Client($basic);
-
-            // Async requests do not return the standard payload. Instead, the information is sent
-            // to a webhook at some point in the future
-            $response = $client->insights()->advancedAsync('447700900000', 'https://example.com/my-webhook');
       responses:
         '200':
           description: OK
