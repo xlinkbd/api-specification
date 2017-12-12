@@ -105,7 +105,7 @@ components:
       name: level
       in: path
       required: true
-      description: 'Should be `basic`, `standard` or `advanced`.'
+      description: 'The level of request you wish to make.'
       schema:
         type: string
         enum:
@@ -116,7 +116,7 @@ components:
       name: format
       in: path
       required: true
-      description: 'Should be `json` or `xml`.'
+      description: 'The format of the response'
       schema:
         type: string
         enum:
@@ -125,13 +125,15 @@ components:
     number:
       name: number
       in: query
-      description: 'A single phone number that you need insight about in national or international format. The number may include any or all of the following: `white space`, `-`, `+`, `(`, `)`.'
+      description: 'A single phone number that you need insight about in national or international format.'
+      example: '447700900000'
       schema:
         type: string
         pattern: '^[0-9-+\(\)\s]*$'
     country:
       name: country
       in: query
+      example: 'GB'
       description: 'If a number does not have a country code or is uncertain, set the two-character country code. This code must be in ISO 3166-1 alpha-2 format and in upper case. For example, GB or US. If you set country and number is already in [E.164](https://en.wikipedia.org/wiki/E.164) format, country must match the country code in number.'
       schema:
         type: string
@@ -139,6 +141,7 @@ components:
     cnam:
       name: cnam
       in: query
+      example: true
       description: 'Indicates if the name of the person who owns the phone number should be looked up and returned in the response. Set to true to receive phone number owner name in the response. This features is available for US numbers only and incurs an additional charge.'
       schema:
         type: boolean
@@ -146,6 +149,7 @@ components:
     ip:
       name: ip
       in: query
+      example: '123.0.0.255'
       description: "The IP address of the user. If supplied, we will compare this to the country the user's phone is located in and return an error if it does not match."
       schema:
         type: string
@@ -153,6 +157,7 @@ components:
     callback:
       name: callback
       in: query
+      example: 'https://example.com/callback'
       description: 'The callback URL'
       required: true
       schema:
@@ -227,7 +232,7 @@ components:
                   type: string
                   xml:
                     x-text: true # see https://github.com/OAI/OpenAPI-Specification/issues/630
-    lookup:  
+    lookup:
       type: object
       properties:
         request_id:
@@ -296,7 +301,7 @@ components:
           $ref: '#/components/schemas/niCarrier'
         ported:
           type: string
-          description: 'If the user has changed carrier for `number`. Possible values are: `unknown`, `ported`, `not_ported`, `assumed_not_ported`, `assumed_ported`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
+          description: 'If the user has changed carrier for `number`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
           enum:
             - unknown
             - ported
@@ -342,7 +347,7 @@ components:
                 x-text: true # see https://github.com/OAI/OpenAPI-Specification/issues/630
         reachable:
           type: string
-          description: 'Can you call `number` now. Possible values are: `unknown`, `reachable`, `undeliverable`, `absent`, `bad_number`, `blacklisted`. This is applicable to mobile numbers only.'
+          description: 'Can you call `number` now. This is applicable to mobile numbers only.'
           enum:
             - unknown
             - reachable
@@ -364,10 +369,10 @@ components:
             - no_warning
         ip_match_level:
           type: string
-          description: 'The match status between ip and number parameters. Possible values are. `Country Level` or `Mismatch`. This value is only returned if you set ip in the `request`.'
+          description: 'The match status between ip and number parameters. This value is only returned if you set ip in the `request`.'
           enum:
             - 'Country Level'
-            - Mismatch
+            - 'Mismatch'
         ip_country:
           type: string
           description: 'The country that `ip` is allocated to. This value is only returned if you set ip in the `request`.'
@@ -378,48 +383,61 @@ components:
           $ref: '#/components/schemas/niStatus'
         status_message:
           type: string
+          description: 'The status description of your request.'
+          example: 'Success'
         request_id:
           type: string
           description: 'The unique identifier for your request. This is a alphanumeric string up to 40 characters.'
+          example: 'aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
           maxLength: 40
         international_format_number:
           type: string
-          description: 'The `number` in your request in International format.'
+          description: "The `number` in your request in international format."
+          example: "447700900000"
         national_format_number:
           type: string
-          description: 'The `number` in your request in the format used by the country the number belongs to.'
+          description: "The `number` in your request in the format used by the country the number belongs to."
+          example: "07700 900000"
         country_code:
           type: string
           description: 'Two character country code for `number`. This is in [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format.'
+          example: "GB"
           pattern: '[A-Z]{2}'
         country_code_iso3:
           type: string
           description: 'Three character country code for `number`. This is in [ISO 3166-1 alpha-3](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) format.'
+          example: "GBR"
           pattern: '[A-Z]{3}'
         country_name:
           type: string
           description: 'The full name of the country that `number` is registered in.'
+          example: "United Kingdom"
         country_prefix:
           type: string
           description: 'The numeric prefix for the country that `number` is registered in.'
+          example: '44'
         request_price:
           type: number
           description: 'The amount in EUR charged to your account.'
+          example: "0.04000000"
         refund_price:
           type: number
           description: 'If there is an internal lookup error, the `refund_price` will reflect the lookup price. If `cnam` is requested for a non-US number the `refund_price` will reflect the `cnam` price. If both of these conditions occur, `refund_price` is the sum of the lookup price and `cnam` price.'
         remaining_balance:
           type: number
           description: 'Your account balance in EUR after this request. Not returned with Number Insight Advanced Async API.'
+          example: '1.23456789'
         ported:
           type: string
-          description: 'If the user has changed carrier for `number`. Possible values are: `unknown`, `ported`, `not_ported`, `assumed_not_ported`, `assumed_ported`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
+          description: 'If the user has changed carrier for `number`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
           enum:
             - unknown
             - ported
             - not_ported
             - assumed_not_ported
             - assumed_ported
+          example:
+            - 'not_ported'
         current_carrier:
           description: 'Information about the network `number` is currently connected to.'
           $ref: '#/components/schemas/niCarrier'
@@ -429,12 +447,15 @@ components:
         caller_name:
           type: string
           description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John Smith'
         first_name:
           type: string
           description: 'First name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John'
         last_name:
           type: string
           description: 'Last name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'Smith'
         caller_type:
           type: string
           description: 'The value will be `business` if the owner of a phone number is a business. If the owner is an individual the value will be `consumer`. The value will be `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
@@ -442,6 +463,7 @@ components:
             - business
             - consumer
             - unknown
+          example: 'consumer'
         lookup_outcome:
           type: integer
           description: |
@@ -455,19 +477,21 @@ components:
             - 0
             - 1
             - 2
+          example: '0'
         lookup_outcome_message:
           type: string
           description: 'Shows if all information about a phone number has been returned.'
         valid_number:
           type: string
-          description: 'Does `number` exist. Possible values are `unknown`, `valid`, `not_valid`. This is applicable to mobile numbers only.'
+          description: 'Does `number` exist. This is applicable to mobile numbers only.'
           enum:
             - unknown
             - valid
             - not_valid
+          example: 'valid'
         reachable:
           type: string
-          description: 'Can you call `number` now. Possible values are: `unknown`, `reachable`, `undeliverable`, `absent`, `bad_number`, `blacklisted`. This is applicable to mobile numbers only.'
+          description: 'Can you call `number` now. This is applicable to mobile numbers only.'
           enum:
             - unknown
             - reachable
@@ -475,27 +499,32 @@ components:
             - absent
             - bad_number
             - blacklisted
+          example: 'unknown'
         roaming:
           description: 'Information about the roaming status for `number`. This is applicable to mobile numbers only.'
           $ref: '#/components/schemas/niRoaming'
         ip:
           type: string
           description: 'The ip address you specified in the request. This field is blank if you did not specify `ip`.'
+          example: '123.0.0.255'
         ip_warnings:
           type: string
           description: 'Warning levels for `ip`: `unknown` or `no_warning`'
           enum:
             - unknown
             - no_warning
+          example: 'no_warning'
         ip_match_level:
           type: string
-          description: 'The match status between ip and number parameters. Possible values are. `Country Level` or `Mismatch`. This value is only returned if you set ip in the `request`.'
+          description: 'The match status between ip and number parameters. This value is only returned if you set ip in the `request`.'
           enum:
             - 'Country Level'
-            - Mismatch
+            - 'Mismatch'
+          example: 'Country Level'
         ip_country:
           type: string
           description: 'The country that `ip` is allocated to. This value is only returned if you set ip in the `request`.'
+          example: 'GB'
       required:
         - status
         - status_message
@@ -557,7 +586,7 @@ components:
             attribute: true
         network_type:
           type: string
-          description: 'The type of network that `number` is associated with. Possible values are: `mobile`, `landline`, `landline_premium`, `landline_tollfree`, `virtual`, `unknown` & `pager`'
+          description: 'The type of network that `number` is associated with.'
           enum:
             - mobile
             - landline
@@ -573,7 +602,7 @@ components:
       properties:
         status:
             type: string
-            description: 'Is `number` outside its home carrier network. Possible values are `unknown`, `roaming`, `not_roaming`.'
+            description: 'Is `number` outside its home carrier network.'
             enum:
               - unknown
               - roaming
