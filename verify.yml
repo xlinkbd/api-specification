@@ -108,7 +108,7 @@ paths:
           schema:
             type: string
             maxLength: 18
-          example: MyApp
+          example: Acme Inc
         - name: sender_id
           required: false
           in: query
@@ -311,7 +311,7 @@ paths:
           schema:
             type: string
             maxLength: 32
-          example: aaaaaaaaaaafffffffff0000000099999999
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         - name: code
           required: true
           in: query
@@ -330,7 +330,7 @@ paths:
             customer base. This ultimately benefits all Nexmo customers.
           schema:
             type: string
-          example: 192.168.0.1
+          example: 123.0.0.255
       responses:
         '200':
           description: OK
@@ -360,7 +360,7 @@ paths:
           description: The `request_id` you received in the Verify Request Response.
           schema:
             type: string
-          example: aaaaaaaaaaafffffffff0000000099999999
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         - name: request_ids
           required: false
           in: query
@@ -371,7 +371,7 @@ paths:
             type: array
             items:
               type: string
-              example: aaaaaaaafffffffff0000000099999999
+              example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
             maxItems: 10
           style: form
           explode: true
@@ -403,7 +403,7 @@ paths:
           description: 'The `request_id` you received in the Verify Request Response].'
           schema:
             type: string
-          example: aaaaaaaafffffffff0000000099999999
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         - name: cmd
           required: true
           in: query
@@ -456,7 +456,7 @@ components:
             The unique ID of the Verify request you sent. You use this
             request_id for the Verify Check.
           maxLength: 32
-          example: aaaaaaaafffffffff0000000099999999
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         status:
           type: string
           description: The response code that explains how your request proceeded.
@@ -548,7 +548,7 @@ components:
         event_id:
           type: string
           description: The identifier of the SMS `message-id`.
-          example: aaaaaaaafffffffff0000000099999999
+          example: 0A00000012345678
         status:
           type: string
           description: >-
@@ -579,11 +579,11 @@ components:
           description: >-
             The `request_id` you received in the Verify Request Response and
             used in the Verify Search request.
-          example: aaaaaaaaaaafffffffff0000000099999999
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         account_id:
           type: string
           description: The Account ID the request was for.
-          example: accountId
+          example: abcdef01
         status:
           type: string
           description: The status of the Verify Request.
@@ -626,7 +626,8 @@ components:
         sender_id:
           type: string
           description: The sender_id you provided in the _Verify Request_.
-          example: senderId
+          default: verify
+          example: mySenderId
         date_submitted:
           type: string
           description: >-
@@ -673,7 +674,7 @@ components:
                   - INVALID
               ip_address:
                 type: string
-                example: 192.168.0.1
+                example: 123.0.0.255
         error_text:
           type: string
           description: 'If `status` is not _SUCCESS_, this message explains the issue.'
