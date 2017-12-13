@@ -183,6 +183,37 @@ components:
     format:
       type: object
       properties:
+        lookup_outcome:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: |
+                Shows if all information about a phone number has been returned. Possible values:
+                Code | Text
+                -- | --
+                0 | Success
+                1 | Partial success - some fields populated
+                2 | Failed
+              enum:
+                - 0
+                - 1
+                - 2
+        lookup_outcome_message:
+          type: string
+          description: 'Shows if all information about a phone number has been returned.'
+          xml:
+            x-text: true # see https://github.com/OAI/OpenAPI-Specification/issues/630
+        reachable:
+          type: string
+          description: 'Can you call `number` now. This is applicable to mobile numbers only.'
+          enum:
+            - unknown
+            - reachable
+            - undeliverable
+            - absent
+            - bad_number
+            - blacklisted
         request_id:
           type: string
           description: 'The unique identifier for your request. This is a alphanumeric string up to 40 characters.'
@@ -324,37 +355,6 @@ components:
             - business
             - consumer
             - unknown
-        lookup_outcome:
-          type: object
-          properties:
-            code:
-              type: integer
-              description: |
-                Shows if all information about a phone number has been returned. Possible values:
-                Code | Text
-                -- | --
-                0 | Success
-                1 | Partial success - some fields populated
-                2 | Failed
-              enum:
-                - 0
-                - 1
-                - 2
-            lookup_outcome_message:
-              type: string
-              description: 'Shows if all information about a phone number has been returned.'
-              xml:
-                x-text: true # see https://github.com/OAI/OpenAPI-Specification/issues/630
-        reachable:
-          type: string
-          description: 'Can you call `number` now. This is applicable to mobile numbers only.'
-          enum:
-            - unknown
-            - reachable
-            - undeliverable
-            - absent
-            - bad_number
-            - blacklisted
         roaming:
           description: 'Information about the roaming status for `number`. This is applicable to mobile numbers only.'
           $ref: '#/components/schemas/niRoaming'
@@ -384,6 +384,24 @@ components:
         status_message:
           type: string
           description: 'The status description of your request.'
+          example: 'Success'
+        lookup_outcome:
+          type: integer
+          description: |
+            Shows if all information about a phone number has been returned. Possible values:
+            Code | Text
+            -- | --
+            0 | Success
+            1 | Partial success - some fields populated
+            2 | Failed
+          enum:
+            - 0
+            - 1
+            - 2
+          example: '0'
+        lookup_outcome_message:
+          type: string
+          description: 'Shows if all information about a phone number has been returned.'
           example: 'Success'
         request_id:
           type: string
@@ -423,64 +441,17 @@ components:
         refund_price:
           type: number
           description: 'If there is an internal lookup error, the `refund_price` will reflect the lookup price. If `cnam` is requested for a non-US number the `refund_price` will reflect the `cnam` price. If both of these conditions occur, `refund_price` is the sum of the lookup price and `cnam` price.'
+          example: '0.01'
         remaining_balance:
           type: number
           description: 'Your account balance in EUR after this request. Not returned with Number Insight Advanced Async API.'
           example: '1.23456789'
-        ported:
-          type: string
-          description: 'If the user has changed carrier for `number`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
-          enum:
-            - unknown
-            - ported
-            - not_ported
-            - assumed_not_ported
-            - assumed_ported
-          example:
-            - 'not_ported'
         current_carrier:
           description: 'Information about the network `number` is currently connected to.'
           $ref: '#/components/schemas/niCarrier'
         original_carrier:
           description: 'Information about the network `number` was initially connected to.'
           $ref: '#/components/schemas/niCarrier'
-        caller_name:
-          type: string
-          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
-          example: 'John Smith'
-        first_name:
-          type: string
-          description: 'First name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
-          example: 'John'
-        last_name:
-          type: string
-          description: 'Last name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
-          example: 'Smith'
-        caller_type:
-          type: string
-          description: 'The value will be `business` if the owner of a phone number is a business. If the owner is an individual the value will be `consumer`. The value will be `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
-          enum:
-            - business
-            - consumer
-            - unknown
-          example: 'consumer'
-        lookup_outcome:
-          type: integer
-          description: |
-            Shows if all information about a phone number has been returned. Possible values:
-            Code | Text
-            -- | --
-            0 | Success
-            1 | Partial success - some fields populated
-            2 | Failed
-          enum:
-            - 0
-            - 1
-            - 2
-          example: '0'
-        lookup_outcome_message:
-          type: string
-          description: 'Shows if all information about a phone number has been returned.'
         valid_number:
           type: string
           description: 'Does `number` exist. This is applicable to mobile numbers only.'
@@ -499,32 +470,55 @@ components:
             - absent
             - bad_number
             - blacklisted
-          example: 'unknown'
+          example: 'reachable'
+        ported:
+          type: string
+          description: 'If the user has changed carrier for `number`. The assumed status means that the information supplier has replied to the request but has not said explicitly that the number is ported.'
+          enum:
+            - unknown
+            - ported
+            - not_ported
+            - assumed_not_ported
+            - assumed_ported
+          example:
+            - 'not_ported'
         roaming:
           description: 'Information about the roaming status for `number`. This is applicable to mobile numbers only.'
           $ref: '#/components/schemas/niRoaming'
         ip:
-          type: string
-          description: 'The ip address you specified in the request. This field is blank if you did not specify `ip`.'
-          example: '123.0.0.255'
+          description: 'Information about the provided IP address'
+          $ref: '#/components/schemas/niIP'
         ip_warnings:
           type: string
-          description: 'Warning levels for `ip`: `unknown` or `no_warning`'
+          description: 'Warning levels for `ip`'
           enum:
             - unknown
             - no_warning
           example: 'no_warning'
-        ip_match_level:
+        caller_identity:
+          description: 'Information about the roaming status for `number`. This is applicable to mobile numbers only.'
+          $ref: '#/components/schemas/niCallerIdentity'
+        # END
+        caller_name:
           type: string
-          description: 'The match status between ip and number parameters. This value is only returned if you set ip in the `request`.'
+          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John Smith'
+        last_name:
+          type: string
+          description: 'Last name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'Smith'
+        first_name:
+          type: string
+          description: 'First name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John'
+        caller_type:
+          type: string
+          description: 'The value will be `business` if the owner of a phone number is a business. If the owner is an individual the value will be `consumer`. The value will be `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
           enum:
-            - 'Country Level'
-            - 'Mismatch'
-          example: 'Country Level'
-        ip_country:
-          type: string
-          description: 'The country that `ip` is allocated to. This value is only returned if you set ip in the `request`.'
-          example: 'GB'
+            - business
+            - consumer
+            - unknown
+          example: 'consumer'
       required:
         - status
         - status_message
@@ -574,16 +568,19 @@ components:
           description: 'The [https://en.wikipedia.org/wiki/Mobile_country_code](https://en.wikipedia.org/wiki/Mobile_country_code) for the carrier`number` is associated with. Unreal numbers are marked as`unknown` and the request is rejected altogether if the number is impossible according to the [E.164](https://en.wikipedia.org/wiki/E.164) guidelines.'
           xml:
             attribute: true
+          example: '12345'
         name:
           type: string
           description: 'The full name of the carrier that `number` is associated with.'
           xml:
             attribute: true
+          example: 'Acme Inc'
         country:
           type: string
           description: 'The country that `number` is associated with. This is in ISO 3166-1 alpha-2 format.'
           xml:
             attribute: true
+          example: 'GB'
         network_type:
           type: string
           description: 'The type of network that `number` is associated with.'
@@ -597,6 +594,7 @@ components:
             - pager
           xml:
             attribute: true
+          example: 'mobile'
     niRoaming:
       type: object
       properties:
@@ -609,7 +607,7 @@ components:
               - not_roaming
             xml:
               attribute: true
-        roamin_country_code:
+        roaming_country_code:
             type: string
             description: 'If `number` is `roaming`, this is the [code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country `number` is roaming in.'
             xml:
@@ -624,6 +622,56 @@ components:
             description: 'If `number` is `roaming`, this is the name of the carrier network `number` is roaming in.'
             xml:
               attribute: true
+    niIP:
+      type: object
+      properties:
+        address:
+          type: string
+          description: 'The ip address you specified in the request.'
+          example: '123.0.0.255'
+        ip_match_level:
+          type: string
+          description: 'The match status between ip and number parameters.'
+          enum:
+            - 'country'
+            - 'mismatch'
+          example: 'country'
+        ip_country:
+          type: string
+          description: 'The country that `ip` is allocated to.'
+          example: 'GB'
+        ip_city:
+          type: string
+          description: 'The city that `ip` is allocated to.'
+          example: 'London'
+    niCallerIdentity:
+      type: object
+      properties:
+        caller_type:
+          type: string
+          description: 'The value will be `business` if the owner of a phone number is a business. If the owner is an individual the value will be `consumer`. The value will be `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          enum:
+            - business
+            - consumer
+            - unknown
+          example: 'consumer'
+        caller_name:
+          type: string
+          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John Smith'
+        first_name:
+          type: string
+          description: 'First name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'John'
+        last_name:
+          type: string
+          description: 'Last name of the person who owns the phone number if the owner is an individual. This parameter is only present if `cnam` had a value of `true` within the request.'
+          example: 'Smith'
+        subscription_type:
+          type: string
+          # @TODO: description: ''
+          example: 'unknown'
+
   securitySchemes:
     apiKey:
       type: apiKey
