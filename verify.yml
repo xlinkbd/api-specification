@@ -545,6 +545,12 @@ components:
     checkResponse:
       type: object
       properties:
+        request_id:
+          type: string
+          description: >-
+            The `request_id` you received in the Verify Request Response and
+            used in the Verify Search request.
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
         event_id:
           type: string
           description: The identifier of the SMS `message-id`.
@@ -710,6 +716,10 @@ components:
           type: string
           description: The `cmd` you sent in the request.
           example: cancel
+        error_text:
+          type: string
+          description: 'If status is not 0, this explains the error encountered.'
+          example: error
   securitySchemes:
     apiKey:
       type: apiKey
