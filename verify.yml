@@ -229,7 +229,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/requestResponse'
-            text/xml:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/requestResponse'
   '/check/{format}':
@@ -284,7 +284,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/checkResponse'
-            text/xml:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/checkResponse'
   '/search/{format}':
@@ -327,7 +327,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/searchResponse'
-            text/xml:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/searchResponse'
   '/control/{format}':
@@ -369,7 +369,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/controlResponse'
-            text/xml:
+            text/plain:
               schema:
                 $ref: '#/components/schemas/controlResponse'
 components:
