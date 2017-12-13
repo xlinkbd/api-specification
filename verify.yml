@@ -318,6 +318,7 @@ paths:
             items:
               type: string
               example: aaaaaaaafffffffff0000000099999999
+            maxItems: 10
           style: form
           explode: true
       responses:
