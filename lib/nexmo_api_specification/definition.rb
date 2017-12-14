@@ -10,7 +10,7 @@ module NexmoApiSpecification
     end
 
     def self.path(definition)
-      File.join NexmoApiSpecification.root, "#{definition}.yml"
+      File.join NexmoApiSpecification.root, 'definitions', "#{definition}.yml"
     end
 
     def self.exists?(definition)

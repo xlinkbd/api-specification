@@ -58,7 +58,7 @@ $ gem install nexmo_api_specification
 or add it to your GemFile and run `bundle install`
 
 ```
-gem 'nexmo_api_specification', '0.1.1'
+gem 'nexmo_api_specification'
 ```
 
 ##### Usage
