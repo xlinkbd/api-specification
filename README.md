@@ -16,8 +16,8 @@ These definitions provide a single point of truth that can be used end-to-end ca
 | --- | ---------------- | ------------ |
 | SMS | - | Adam Butler |
 | Voice | - | - |
-| Verify | - | - |
-| Number Insight | - | - |
+| Verify | - | Adam Butler, @MikeRalphson |
+| Number Insight | - | Adam Butler, @MikeRalphson |
 | Conversation | Neil Stratford | Adam Butler |
 | Olympus | Hugh Hopkins |
 | Account | - | - |
