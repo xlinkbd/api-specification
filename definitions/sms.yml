@@ -172,7 +172,7 @@ components:
         client-ref:
           description: '**Advanced**: You can optionally include your own reference of up to 40 characters.'
           type: string
-          example: my-personal-reference'
+          example: my-personal-reference
     Error:
       type: object
       properties:
