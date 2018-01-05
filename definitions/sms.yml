@@ -9,6 +9,7 @@ paths:
   /sms/{format}:
     post:
       x-group: sms
+      operationId: send-an-sms
       summary: Send an SMS
       description: Send an outbound SMS from your Nexmo account
       x-code-example-path: messaging.sms.send
@@ -68,6 +69,8 @@ paths:
           '{$request.body#/callback}':
             post:
               summary: Delivery Receipt
+              operationId: delivery-receipt
+              x-example-path: '/webhooks/delivery-receipt'
               description: The following are parameters sent in as a [delivery receipt](/messaging/sms/guides/delivery-receipts) callback. You can subscribe to [webhooks](/concepts/guides/webhooks) to receive notification when the delivery status of an SMS that you have sent with Nexmo changes.
               requestBody:
                 required: true
