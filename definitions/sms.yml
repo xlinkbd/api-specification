@@ -114,8 +114,8 @@ components:
         status-report-req:
           description: '**Advanced**: Boolean indicating if you like to receive a [Delivery Receipt](/messaging/sms/building-blocks/receive-a-delivery-receipt).'
           type: boolean
-          example: 'false'
-          default: 'true'
+          example: false
+          default: true
         callback:
           description: '**Advanced**: The webhook endpoint the delivery receipt for this sms is sent to. This parameter overrides the webhook endpoint you set in Dashboard.'
           type: string
