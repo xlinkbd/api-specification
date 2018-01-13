@@ -157,7 +157,7 @@ components:
             - wappush
             - unicode
             - vcal
-            - vard
+            - vcard
           example: text
           default: text
         vcard:
