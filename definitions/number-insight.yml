@@ -3,10 +3,10 @@ openapi: 3.0.0
 servers:
   - url: 'https://api.nexmo.com/ni'
 info:
-  title: Nexmo Number Insight API
+  title: Number Insight API
   version: 1.0.0
   description: >-
-    Nexmo's Number Insight API provides details about the validity, reachability and roaming status of a phone number, as well as giving you details on how to format the number properly in your application. There are three levels of Number Insight API available: Basic, Standard and Advanced. The advanced API is available asynchronously as well as synchronously. Getting information about a number with Nexmo's Number Insight API is easy. Simply [sign up for an account](https://dashboard.nexmo.com/sign-up).
+    Nexmo's Number Insight API provides details about the validity, reachability and roaming status of a phone number, as well as giving you details on how to format the number properly in your application. There are three levels of Number Insight API available: Basic, Standard and Advanced. The advanced API is available asynchronously as well as synchronously.
   contact:
     name: Nexmo.com
     email: devrel@nexmo.com
@@ -35,7 +35,7 @@ paths:
       - $ref: '#/components/parameters/format'
     get:
       operationId: getNumberInsight
-      summary: ask for information about a phone number
+      summary: Synchronously get information about a phone number
       tags:
         - Request
       parameters:
@@ -60,7 +60,7 @@ paths:
       - $ref: '#/components/parameters/format'
     get:
       operationId: getNumberInsightAsync
-      summary: Ask for information about a phone number
+      summary: Asynchronously get information about a phone number
       tags:
         - Request
       parameters:
@@ -86,7 +86,7 @@ paths:
           '{$request.query.callback}':
             post:
               operationId: asyncCallback
-              summary: The requested WebHook response
+              summary: Asynchronous response
               requestBody:
                 description: Async response payload
                 content:
@@ -175,7 +175,7 @@ components:
             name: 'lookup'
     niResponseXmlFormat:
       type: object
-      description: 'The Number-Insight response for basic lookups, in XML format'
+      description: Basic
       properties:
         request_id:
           type: string
@@ -236,7 +236,7 @@ components:
                 x-text: true # see https://github.com/OAI/OpenAPI-Specification/issues/630
     niResponseXmlLookup:
       type: object
-      description: 'The Number-Insight response for standard and advanced lookups, in XML format'
+      description: 'Standard'
       allOf:
         - $ref: '#/components/schemas/niResponseXmlFormat'
         - properties:
