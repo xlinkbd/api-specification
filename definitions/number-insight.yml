@@ -53,8 +53,6 @@ paths:
             'text/xml':
               schema:
                 $ref: '#/components/schemas/niResponseXml'
-        '401':
-          description: Unauthorised
   '/advanced/async/{format}':
     parameters:
       - $ref: '#/components/parameters/format'
@@ -79,8 +77,6 @@ paths:
             'text/xml':
               schema:
                 $ref: '#/components/schemas/niResponseXml'
-        '401':
-          description: Unauthorised
       callbacks:
         onData:
           '{$request.query.callback}':
