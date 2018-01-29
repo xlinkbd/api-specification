@@ -36,6 +36,7 @@ paths:
     get:
       operationId: getNumberInsight
       summary: Synchronously get information about a phone number
+      x-code-example-path: number_insight.standard
       x-group: number-insight
       tags:
         - Request
@@ -60,6 +61,7 @@ paths:
     get:
       operationId: getNumberInsightAsync
       summary: Asynchronously get information about a phone number
+      x-code-example-path: number_insight.async
       x-group: number-insight
       tags:
         - Request
