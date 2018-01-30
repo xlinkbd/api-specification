@@ -130,7 +130,7 @@ paths:
             "application/octet-stream":
               schema:
                 type: string
-              description: "CSV data of your report"
+              description: "ZIP file containing data of your report"
 
 components:
   schemas:
