@@ -269,6 +269,13 @@ components:
             - NUMBER-VERIFY   # should become 'verify-api'
             - HLR-LOOKUP      # should become 'number-insight'
             - VERIFY-SDK      # to be deprecated
+        sms_type:
+          type: string
+          description: "For SMS reports, this is required. MT returns 'Mobile Terminating' requests - outgoing messages. MO returns 'Mobile Originating' requests - incoming messages."
+          example: MT
+          enum:
+            - MT
+            - MO
         callback_url:
           type: string
           description: URL where a callback will be sent once the report has been completed.
