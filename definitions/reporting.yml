@@ -138,13 +138,13 @@ components:
       properties:
         product:
           type: string
-          example: sms
+          example: SMS
           enum:
-            - sms
-            - voice-call
-            - verify-api
-            - number-insight
-            - verify-sdk
+            - SMS             # should become 'sms'
+            - VOICE-CALL      # should become 'voice-call'
+            - NUMBER-VERIFY   # should become 'verify-api'
+            - HLR-LOOKUP      # should become 'number-insight'
+            - VERIFY-SDK      # to be deprecated
         sms_type:
           type: string
           description: "For SMS reports, this is required. MT returns 'Mobile Terminating' requests - outgoing messages. MO returns 'Mobile Originating' requests - incoming messages."
@@ -212,20 +212,21 @@ components:
           description: UUID for the request.
         status:
           type: string
-          description: The current status of the request
+          description: The current status of the request.
           enum:
             - PENDING
+            - PROCESSING
             - SUCCESS
             - FAILED
         product:
           type: string
-          example: sms
+          example: SMS
           enum:
-            - sms
-            - voice-call
-            - verify-api
-            - number-insight
-            - verify-sdk
+            - SMS             # should become 'sms'
+            - VOICE-CALL      # should become 'voice-call'
+            - NUMBER-VERIFY   # should become 'verify-api'
+            - HLR-LOOKUP      # should become 'number-insight'
+            - VERIFY-SDK      # to be deprecated
         callback_url:
           type: string
           description: URL where a callback will be sent once the report has been completed.
