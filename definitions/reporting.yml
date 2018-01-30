@@ -43,6 +43,14 @@ paths:
             type: string
             minLength: 16
             maxLength: 16
+        - name: sig
+          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](/concepts/guides/signing-messages) for more details.
+          required: false
+          in: query
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 16
       requestBody:
         required: true
         content:
@@ -75,6 +83,14 @@ paths:
           required: false
           in: query
           example: abcdef0123456789
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 16
+        - name: sig
+          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](/concepts/guides/signing-messages) for more details.
+          required: false
+          in: query
           schema:
             type: string
             minLength: 16
