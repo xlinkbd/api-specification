@@ -251,7 +251,7 @@ components:
             - false
         conversation_uuid:
           type: string
-          description: The Conversation which the report contains details of.
+          description: For voice call data, this is used to filter the report to only contain calls belonging to a particular conversation.
         url:
           type: string
           description: The URI from which the report can be downloaded. Only appears once report status has changed to SUCCESS.
