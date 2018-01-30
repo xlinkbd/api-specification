@@ -285,19 +285,33 @@ components:
           type: string
           format: date
           description: "ISO 8601 formatted date for when reports should begin."
+          example: "2017-12-24:00:00+0000"
         end_date:
           type: string
           format: date
           description: "ISO 8601 formatted date for when report should end."
+          example: "2017-12-31:00:00+0000"
+        client_ref:
+          type: string
+          description: For MT SMS reports - search only for messages with this `client_ref`.
+          maxLength: 40
+          example: myref
+        account_ref:
+          type: string
+          description: For MT SMS reports - search only for messages with this `account_ref`.
+          maxLength: 40
+          example: myaccountref
         account_id:
           type: string
           description: Account ID for the report.
+          example: abcde
         include_subaccounts:
           type: string
           description: Whether to include subaccounts. Defaults to false.
           enum:
             - true
             - false
+          example: false
         conversation_uuid:
           type: string
           description: For voice call data, this is used to filter the report to only contain calls belonging to a particular conversation.
@@ -307,7 +321,8 @@ components:
         receive_time:
           type: string
           format: date
-          description: When the request for the report was receieved by Nexmo.
+          description: The date and time when the request for the report was receieved by Nexmo.
+          example: "2018-01-01T00:00:00Z"
         _links:
           $ref: '#/components/schemas/SelfOnlyLinkObject'
         items_count:
