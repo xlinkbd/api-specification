@@ -120,7 +120,7 @@ paths:
   "/v3/media/{file_id}":
     get:
       summary: Get report data
-      description: Download CSV data of the file.
+      description: Download a zipped archive of the rendered report.
       parameters:
         - name: api_key
           description: Your API key
