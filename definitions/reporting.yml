@@ -2,7 +2,21 @@ openapi: "3.0.0"
 info:
   version: 1.0.0
   title: Nexmo Reporting API
-  description: Allows you to retrieve information about your account's use of Nexmo APIs.
+  description: >
+    Nexmo's Reporting API allows you to request a report of activity on your
+    Nexmo account.
+  contact:
+    name: Nexmo.com
+    email: devrel@nexmo.com
+    url: 'https://developer.nexmo.com/'
+    x-twitter: Nexmo
+  termsOfService: 'https://www.nexmo.com/terms-of-use'
+  license:
+    name: The MIT License (MIT)
+    url: 'https://opensource.org/licenses/MIT'
+  x-logo:
+    url: 'https://twitter.com/Nexmo/profile_image?size=original'
+  x-apiClientRegistration: 'https://dashboard.nexmo.com/sign-up'
 servers:
   - url: https://api.nexmo.com
 paths:
