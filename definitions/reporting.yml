@@ -343,6 +343,7 @@ components:
           type: string
           format: uri
           description: URI of this document.
+          example: "https://api.nexmo.com/reports/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
       required:
         - request_id
         - status
@@ -392,4 +393,5 @@ components:
               type: string
               format: uri
               description: URI of this document.
+              example: "https://api.nexmo.com/reports/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
  
