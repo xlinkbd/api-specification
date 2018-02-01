@@ -72,6 +72,10 @@ paths:
                 $ref: '#/components/schemas/NewReportErrorResp'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewReportUnauthorizedResp'
         '403':
           description: Forbidden
         '500':
@@ -354,6 +358,19 @@ components:
           items:
             type: string
             example: "Unexpected token (END_OBJECT), expected FIELD_NAME: missing property 'product' that is to contain type id"
+    NewReportUnauthorizedResp:
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - "UNAUTHORIZED"
+          example: "UNAUTHORIZED"
+        error_title:
+          type: string
+          enum:
+            - "Unauthorized"
+          example: "Unauthorized"
     SelfOnlyLinkObject:
       type: object
       properties:
