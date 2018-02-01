@@ -177,8 +177,8 @@ paths:
 components:
   schemas:
     NewReportReq:
+      type: object
       properties:
-        type: object
         product:
           type: string
           example: SMS
