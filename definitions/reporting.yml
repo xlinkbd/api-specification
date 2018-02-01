@@ -203,7 +203,8 @@ components:
             - outbound
         account_id:
           type: string
-          description: The account ID you wish to search for (especially useful for searching for subaccounts),
+          description: The account ID or IDs (comma-separated) you wish to search for (especially useful for searching for subaccounts),
+          example: "abcdef01"
         include_subaccounts:
           type: boolean
           description: Whether to include subaccounts. Defaults to false.
