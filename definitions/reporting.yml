@@ -181,6 +181,7 @@ components:
       properties:
         product:
           type: string
+          description: Which product you wish to produce a report for.
           example: SMS
           enum:
             - SMS             # should become 'sms'
@@ -197,7 +198,7 @@ components:
             - MO
         direction:
           type: string
-          description: "For voice call reports: direction of the request."
+          description: "For voice call reports: direction of the request. If unspecified, both will be returned."
           enum:
             - inbound
             - outbound
@@ -273,6 +274,7 @@ components:
             - FAILED
         product:
           type: string
+          description: Specifies which product you are producing a report for.
           example: SMS
           enum:
             - SMS             # should become 'sms'
