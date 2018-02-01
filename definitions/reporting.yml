@@ -308,7 +308,7 @@ components:
         account_id:
           type: string
           description: Account ID for the report.
-          example: abcde
+          example: abcdef01
         include_subaccounts:
           type: string
           description: Whether to include subaccounts. Defaults to false.
