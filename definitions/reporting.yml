@@ -130,7 +130,7 @@ paths:
   "/v3/media/{file_id}":
     get:
       summary: Get report data
-      description: Download a zipped archive of the rendered report.
+      description: Download a zipped archive of the rendered report. The file is available for download for 72 hours.
       parameters:
         - name: api_key
           description: Your API key
