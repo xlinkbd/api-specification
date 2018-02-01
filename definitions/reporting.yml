@@ -44,7 +44,7 @@ paths:
             minLength: 16
             maxLength: 16
         - name: sig
-          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](/concepts/guides/signing-messages) for more details.
+          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](https://developer.nexmo.com/concepts/guides/signing-messages) for more details.
           required: false
           in: query
           schema:
@@ -100,7 +100,7 @@ paths:
             minLength: 16
             maxLength: 16
         - name: sig
-          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](/concepts/guides/signing-messages) for more details.
+          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](https://developer.nexmo.com/concepts/guides/signing-messages) for more details.
           required: false
           in: query
           schema:
@@ -145,7 +145,7 @@ paths:
             minLength: 16
             maxLength: 16
         - name: sig
-          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](/concepts/guides/signing-messages) for more details.
+          description: The hash of the request parameters in alphabetical order, a timestamp and the signature secret. See [Signing Requests](https://developer.nexmo.com/concepts/guides/signing-messages) for more details.
           required: false
           in: query
           schema:
