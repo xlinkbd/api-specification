@@ -78,6 +78,10 @@ paths:
                 $ref: '#/components/schemas/NewReportUnauthorizedResp'
         '403':
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewReportForbiddenResp'
         '500':
           description: Server error
   "/v1/reports/{report_id}":
@@ -371,6 +375,14 @@ components:
           enum:
             - "Unauthorized"
           example: "Unauthorized"
+    NewReportForbiddenResp:
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "User not authorized to query the requested data"
+          example: "User not authorized to query the requested data"
     SelfOnlyLinkObject:
       type: object
       properties:
