@@ -66,6 +66,10 @@ paths:
                 $ref: '#/components/schemas/NewReportResp'
         '400':
           description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewReportErrorResp'
         '401':
           description: Unauthorized
         '403':
@@ -342,6 +346,14 @@ components:
         - url
         - receive_time
         - _links
+    NewReportErrorResp:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: string
+            example: "Unexpected token (END_OBJECT), expected FIELD_NAME: missing property 'product' that is to contain type id"
     SelfOnlyLinkObject:
       type: object
       properties:
