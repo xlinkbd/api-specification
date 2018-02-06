@@ -356,7 +356,8 @@ x-groups:
     description: >-
       A conversation is a shared core component that Nexmo APIs rely on. Conversations happen over multiple mediums and and can have associated Users through Memberships.
     schema:
-      $ref: '#/components/schemas/ConversationFull'
+      application/json:
+        $ref: '#/components/schemas/ConversationFull'
   user:
     name: "User"
     order: 2
