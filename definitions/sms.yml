@@ -405,4 +405,5 @@ x-groups:
     order: 1
     description: The SMS object contains information about the request and details of the message information.
     schema:
-      $ref: '#/components/schemas/SMS'
+      application/json:
+        $ref: '#/components/schemas/SMS'
