@@ -470,6 +470,7 @@ components:
                 code:
                   description: |
                     Shows if all information about a phone number has been returned. Possible values:
+
                     Code | Text
                     -- | --
                     0 | Success
@@ -764,8 +765,9 @@ components:
           type: integer
           description: |
             Shows if all information about a phone number has been returned. Possible values:
+
             Code | Text
-            -- | --
+            --- | ---
             0 | Success
             1 | Partial success - some fields populated
             2 | Failed
