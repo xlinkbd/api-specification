@@ -87,7 +87,7 @@ paths:
             post:
               operationId: asyncCallback
               summary: Asynchronous response
-              description: The resonse made back to your callback URL
+              description: Contains the response to your
               requestBody:
                 content:
                   application/json:
