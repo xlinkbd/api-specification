@@ -965,7 +965,7 @@ components:
         5 | Internal Error - the format of the recipient address is not valid.
         9 | Partner quota exceeded - your Nexmo account does not have sufficient credit to process this request.
 
-        ## Standard and Advanced only
+        #### Standard and Advanced only
 
         Code | Text
         -- | --
@@ -974,12 +974,12 @@ components:
         999 | Request unparseable.
   securitySchemes:
     apiKey:
-      type: apiKey
+      type: string
       name: api_key
       in: query
       description: 'You can find your API key in your [account overview](https://dashboard.nexmo.com/account-overview)'
     apiSecret:
-      type: apiKey
+      type: string
       name: api_secret
       in: query
       description: 'You can find your API secret in your [account overview](https://dashboard.nexmo.com/account-overview)'
