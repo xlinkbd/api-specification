@@ -1,0 +1,150 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Nexmo Audit API
+  description: >
+    Nexmo's Audit API allows you to view details of changes to your account.
+  contact:
+    name: Nexmo.com
+    email: devrel@nexmo.com
+    url: 'https://developer.nexmo.com/'
+    x-twitter: Nexmo
+  termsOfService: 'https://www.nexmo.com/terms-of-use'
+  license:
+    name: The MIT License (MIT)
+    url: 'https://opensource.org/licenses/MIT'
+  x-logo:
+    url: 'https://twitter.com/Nexmo/profile_image?size=original'
+  x-apiClientRegistration: 'https://dashboard.nexmo.com/sign-up'
+servers:
+  - url: https://api.nexmo.com
+paths:
+  '/beta/audit/events':
+    get:
+      summary: Retrieve audit events
+      description: >
+        Get a series of audit log events describing changes made to your
+        Nexmo account over time.
+      parameters:
+        - name: api_key
+          description: Your API key
+          required: true
+          in: query
+          example: abcd1234
+          schema:
+            type: string
+            minLength: 8
+            maxLength: 8
+        - name: api_secret
+          description: Your API secret.
+          required: true
+          in: query
+          example: abcdef0123456789
+          schema:
+            type: string
+            minLength: 16
+            maxLength: 16
+          # TODO: confirm whether sig works in PROD. if it does, add in sig
+          # and remove required: true on api_secret
+        - name: event_type
+          description: Filter results by this event type.
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/EventTypes'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditResp'
+
+
+components:
+  schemas:
+    EventTypes:
+      type: string
+      enum:
+        - APP_CREATE
+        - NUMBER_ASSIGN
+        - NUMBER_LINKED
+        - NUMBER_UNLINKED
+        - NUMBER_UPDATED
+      example: APP_CREATE
+    AuditResp:
+      type: object
+      properties:
+        _embedded:
+          type: object
+          properties:
+            events:
+              type: array
+              items:
+                $ref: '#/components/schemas/AuditEvent'
+    AuditEvent:
+      type: object
+      properties:
+        id:
+          type: string
+          description: "UUID of the event"
+          example: "aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+        event_type:
+          $ref: '#/components/schemas/EventTypes'
+        event_type_description:
+          type: string
+          description: "A description of the event type"
+          example: "Application created"
+        created_at:
+          type: string
+          format: date
+        user_email:
+          type: string
+          format: email
+          example: user@example.org
+        user_id:
+          type: integer
+          example: 123456
+        account_id:
+          type: string
+          example: "abcdef01"
+        source:
+          type: string
+          description: >
+            The source of the event.
+
+            CD: Customer Dashboard
+            DEVAPI: via Developer API
+          enum:
+            - CD
+            - DEVAPI
+          example: CD
+        source_ip:
+          type: string
+          format: ipv4
+          description: The IP address used to make the account change.
+          example: "192.0.2.0"
+        source_description:
+          type: string
+          format: A human readable description of the `source`.
+          enum:
+            - Customer dashboard
+            - Developer API
+          example: Customer dashboard
+        source_country:
+          type: string
+          description: ISO country code recorded for the event.
+          example: GB
+        _links:
+          $ref: '#/components/schemas/EventSelfLinkObject'
+    EventSelfLinkObject:
+      type: object
+      properties:
+        self:
+          type: object
+          properties:
+            href:
+              type: string
+              format: uri
+              description: URI of this document.
+              example: "https://api.nexmo.com/beta/audit/events/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
