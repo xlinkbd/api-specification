@@ -536,7 +536,7 @@ components:
           $ref: '#/components/schemas/niStatus'
         status_message:
           type: string
-          description: 'The status description of your request. Returned when status is 0 or 1'
+          description: 'The status description of your request.'
           example: 'Success'
         request_id:
           type: string
@@ -577,7 +577,7 @@ components:
           $ref: '#/components/schemas/niStatus'
         status_message:
           type: string
-          description: 'The status description of your request. Returned when status is 0 or 1'
+          description: 'The status description of your request.'
           example: 'Success'
         request_id:
           type: string
@@ -672,7 +672,7 @@ components:
           $ref: '#/components/schemas/niStatus'
         status_message:
           type: string
-          description: 'The status description of your request. Returned when status is 0 or 1'
+          description: 'The status description of your request.'
           example: 'Success'
         request_id:
           type: string
