@@ -138,6 +138,12 @@ components:
               type: array
               items:
                 $ref: '#/components/schemas/AuditEvent'
+        _links:
+          type: object
+          $ref: '#/components/schemas/PaginationLinks'
+        page:
+          type: object
+          $ref: '#/components/schemas/PaginationData'
     AuditEvent:
       type: object
       properties:
@@ -221,6 +227,33 @@ components:
               format: uri
               description: URI of this document.
               example: "https://api.nexmo.com/beta/audit/events/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+    PaginationLinks:
+      type: object
+      properties:
+        self:
+          type: object
+          properties:
+            href:
+              type: string
+              format: uri
+              description: URI of this document.
+              example: "http://api.nexmo.com/beta/audit/events"
+        next:
+          type: object
+          properties:
+            href:
+              type: string
+              format: uri
+              description: URI of the next document.
+              example: "http://api.nexmo.com/beta/audit/events?page=2&size=30"
+        last:
+          type: object
+          properties:
+            href:
+              type: string
+              format: uri
+              description: URI of the last document in the sequence.
+              example: "http://api.nexmo.com/beta/audit/events?page=2&size=30"
     PaginationData:
       type: object
       properties:
