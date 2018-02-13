@@ -193,6 +193,23 @@ components:
           example: GB
         _links:
           $ref: '#/components/schemas/EventSelfLinkObject'
+        context:
+          oneOf:
+            - $ref: '#/components/schemas/ContextAppCreate'
+            - $ref: '#/components/schemas/ContextNumberLinking'
+            - $ref: '#/components/schemas/ContextNumberUpdate'
+          example:
+            created:
+              accountId: "abcdef01"
+              appId: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
+              name: My voice app
+              answer_url:
+                method: GET
+                url: https://example.org/call
+              type: voice
+              event_url:
+                method: POST
+                url: https://example.org/event
     EventSelfLinkObject:
       type: object
       properties:
@@ -204,3 +221,140 @@ components:
               format: uri
               description: URI of this document.
               example: "https://api.nexmo.com/beta/audit/events/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+    PaginationData:
+      type: object
+      properties:
+        size:
+          type: integer
+          example: 30
+          description: The total number of items in this response.
+        totalElements:
+          type: integer
+          example: 40
+          description: The total number of items across all pages.
+        totalPages:
+          type: integer
+          example: 2
+          description: The number of pages of data in the response.
+        number:
+          type: integer
+          example: 1
+          description: Which page of the pagination sequence you are looking at.
+    CallbackUrl:
+      type: object
+      properties:
+        method:
+          type: string
+          example: GET
+          enum:
+            - GET
+            - POST
+          description: "The HTTP method used to make a callback to your application"
+        url:
+          type: string
+          example: "https://example.org/my-app-callback"
+          format: url
+          description: "The URL used for a callback to your application"
+    ContextAppCreate:
+      type: object
+      properties:
+        created:
+          type: object
+          properties:
+            accountId:
+              type: string
+              example: "abcdef01"
+              description: "Which account the app is associated with"
+            appId:
+              type: string
+              description: "UUID of the app that was created"
+              example: "aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+            name:
+              type: string
+              description: "The name of the application created"
+              example: "My Voice App"
+            answer_url:
+              $ref: '#/components/schemas/CallbackUrl'
+            event_url:
+              $ref: '#/components/schemas/CallbackUrl'
+            type:
+              type: string
+              example: "voice"
+              description: "The type of application created"
+    ContextNumberLinking:
+      type: object
+      properties:
+        country:
+          type: string
+          description: "The country of the number"
+          example: "GB"
+        account:
+          type: string
+          description: "Which account the number is associated with"
+          example: "abcdef01"
+        msisdn:
+          type: string
+          description: "The phone number linked/unlinked to your application"
+          example: "447000123456"
+        applicationId:
+          type: string
+          description: "UUID of the app the number is being linked/unlinked to"
+          example: "aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+    ContextNumberUpdate:
+      type: object
+      properties:
+        country:
+          type: string
+          description: "The country of the number"
+        msisdn:
+          type: string
+          description: "The phone number linked/unlinked to your application"
+          example: "447000123456"
+        voice-type:
+          type: string
+          enum:
+            - tel
+            - sip
+            - vxml
+            - app
+          example: "app"
+          description: "The type of endpoint the number has been forwarded to"
+        voice-value:
+          type: string
+          description: "The value of the endpoint the number has been forwarded to"
+          example: "aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
+        http:
+          type: string
+          format: url
+          description: "The URL of the endpoint the number has been forwarded to"
+          example: "https://example.org/my-app-callback"
+    ErrorUnauthorized:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 401
+          description: The HTTP Status code of the error
+        error:
+          type: string
+          example: Unauthorized
+          description: A human readable description of the error
+        message:
+          type: string
+          example: "Full authentication is required. JWT was not found in \"Authorization\" HTTP header."
+          description: A longer description of the error
+    ErrorIndividualNotFound:
+      type: object
+      properties:
+        status:
+          type: integer
+          example: 404
+          description: The HTTP Status code of the error
+        error:
+          type: string
+          example: "Not Found"
+          description: A human readable description of the ErrorUnauthorized
+        message:
+          type: string
+          example: "Event with provided id: aaaaaaaa-bbbb-cccc-dddd-0123456789ab was not found"
+          description: A longer description of the error
