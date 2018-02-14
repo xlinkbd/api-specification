@@ -184,10 +184,10 @@ components:
           description: Which product you wish to produce a report for.
           example: SMS
           enum:
-            - SMS             # should become 'sms'
-            - VOICE-CALL      # should become 'voice-call'
-            - NUMBER-VERIFY   # should become 'verify-api'
-            - HLR-LOOKUP      # should become 'number-insight'
+            - SMS
+            - VOICE-CALL
+            - VERIFY-API
+            - NUMBER-INSIGHT
             - VERIFY-SDK      # to be deprecated
         sms_type:
           type: string
@@ -277,10 +277,10 @@ components:
           description: Specifies which product you are producing a report for.
           example: SMS
           enum:
-            - SMS             # should become 'sms'
-            - VOICE-CALL      # should become 'voice-call'
-            - NUMBER-VERIFY   # should become 'verify-api'
-            - HLR-LOOKUP      # should become 'number-insight'
+            - SMS
+            - VOICE-CALL
+            - VERIFY-API
+            - NUMBER-INSIGHT
             - VERIFY-SDK      # to be deprecated
         sms_type:
           type: string
