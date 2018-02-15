@@ -191,7 +191,7 @@ components:
         validity:
           description: '**Advanced**: The availability for an SMS in milliseconds. Depends on `type` parameter having the value `wappush`.'
           type: string
-          example: https://example.com
+          example: 300000
         client-ref:
           description: '**Advanced**: You can optionally include your own reference of up to 40 characters.'
           type: string
