@@ -331,7 +331,7 @@ components:
                     attribute: true
                 caller-name:
                   type: string
-                  description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+                  description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
                   example: 'John Smith'
                   xml:
                     attribute: true
@@ -353,7 +353,7 @@ components:
                     attribute: true
             caller_name:
               type: string
-              description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+              description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
               example: 'John Smith'
             last_name:
               type: string
@@ -422,7 +422,7 @@ components:
                     attribute: true
                 caller-name:
                   type: string
-                  description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+                  description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
                   example: 'John Smith'
                   xml:
                     attribute: true
@@ -444,7 +444,7 @@ components:
                     attribute: true
             caller_name:
               type: string
-              description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+              description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
               example: 'John Smith'
             last_name:
               type: string
@@ -646,7 +646,7 @@ components:
           $ref: '#/components/schemas/niCallerIdentity'
         caller_name:
           type: string
-          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
           example: 'John Smith'
         last_name:
           type: string
@@ -741,7 +741,7 @@ components:
           $ref: '#/components/schemas/niCallerIdentity'
         caller_name:
           type: string
-          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
           example: 'John Smith'
         last_name:
           type: string
@@ -926,7 +926,7 @@ components:
           example: 'consumer'
         caller_name:
           type: string
-          description: 'Full name of the person who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
+          description: 'Full name of the person or business who owns the phone number. `unknown` if this information is not available. This parameter is only present if `cnam` had a value of `true` within the request.'
           example: 'John Smith'
         first_name:
           type: string
