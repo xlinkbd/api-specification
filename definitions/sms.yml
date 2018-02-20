@@ -24,7 +24,6 @@ paths:
             enum:
               - json
               - xml
-            default: json
         - name: api_key
           description: Your API key
           required: true
@@ -64,6 +63,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Message'
+            text/xml:
+              schema:
+                $ref: '#/components/schemas/MessageXmlWrapper'
+
       callbacks:
         delivery-receipt:
           '{$request.body#/callback}':
@@ -314,6 +317,8 @@ components:
           type: string
           description: The ID of the message
           example: 0A0000000123ABCD1
+          xml:
+            name: messageId
         status:
           type: string
           description: The status of the message
@@ -322,14 +327,33 @@ components:
           type: string
           description: Your remaining balance
           example: '3.14159265'
+          xml:
+            name: remainingBalance
         message-price:
           type: string
           description: The cost of the message
           example: '0.03330000'
+          xml:
+            name: messagePrice
         network:
           type: string
           description: The ID of the network of the recipient
           example: '12345'
+    MessageXmlWrapper:
+      type: object
+      xml:
+        name: mt-submission-response
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: '#/components/schemas/Message'
+          properties:
+            count:
+              type: integer
+              example: 1
+              xml:
+                attribute: true
     DeliveryReceipt:
       type: object
       properties:
@@ -368,7 +392,7 @@ components:
         scts:
           type: string
           description: When the DLR was recieved from the carrier in the following format `YYMMDDHHMM`. For example, `2001011400` is at `2020-01-01 14:00`
-          example: 2001011400
+          example: '2001011400'
         err-code:
           type: string
           description: |
@@ -407,3 +431,5 @@ x-groups:
     schema:
       application/json:
         $ref: '#/components/schemas/SMS'
+      text/xml:
+        $ref: '#/components/schemas/MessageXmlWrapper'
