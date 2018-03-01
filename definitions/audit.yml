@@ -26,32 +26,14 @@ paths:
         Get a series of audit log events describing changes made to your
         Nexmo account over time.
       parameters:
-        - name: api_key
-          description: Your API key
-          required: true
-          in: query
-          example: abcd1234
-          schema:
-            type: string
-            minLength: 8
-            maxLength: 8
-        - name: api_secret
-          description: Your API secret.
-          required: true
-          in: query
-          example: abcdef0123456789
-          schema:
-            type: string
-            minLength: 16
-            maxLength: 16
-          # TODO: confirm whether sig works in PROD. if it does, add in sig
-          # and remove required: true on api_secret
         - name: event_type
           description: Filter results by this event type.
           in: query
           required: false
           schema:
             $ref: '#/components/schemas/EventTypes'
+      security:
+        - basicAuth: []
       responses:
         '200':
           description: OK
@@ -72,26 +54,6 @@ paths:
         Get a series of audit log events describing changes made to your
         Nexmo account over time.
       parameters:
-        - name: api_key
-          description: Your API key
-          required: true
-          in: query
-          example: abcd1234
-          schema:
-            type: string
-            minLength: 8
-            maxLength: 8
-        - name: api_secret
-          description: Your API secret.
-          required: true
-          in: query
-          example: abcdef0123456789
-          schema:
-            type: string
-            minLength: 16
-            maxLength: 16
-          # TODO: confirm whether sig works in PROD. if it does, add in sig
-          # and remove required: true on api_secret
         - name: id
           description: The UUID of the event
           in: path
@@ -391,3 +353,7 @@ components:
           type: string
           example: "Event with provided id: aaaaaaaa-bbbb-cccc-dddd-0123456789ab was not found"
           description: A longer description of the error
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
