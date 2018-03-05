@@ -371,7 +371,7 @@ components:
           description: A human readable description of the error
         message:
           type: string
-          example: "Full authentication is required. JWT was not found in \"Authorization\" HTTP header."
+          example: "Missing credentials"
           description: A longer description of the error
     ErrorIndividualNotFound:
       type: object
