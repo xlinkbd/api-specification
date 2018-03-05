@@ -1,7 +1,7 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Nexmo Audit API
+  title: Audit API
   description: >
     Nexmo's Audit API allows you to view details of changes to your account.
   contact:
@@ -21,13 +21,16 @@ servers:
 paths:
   '/beta/audit/events':
     get:
+      operationId: list-events
       summary: Retrieve audit events
       description: >
         Get a series of audit log events describing changes made to your
         Nexmo account over time.
       parameters:
         - name: event_type
-          description: Filter results by this event type.
+          description: >
+            Filter results by event type. This can either be a single event
+            type, or multiple event types comma separated.
           in: query
           required: false
           schema:
@@ -47,8 +50,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorized'
+    options:
+      operationId: list-types
+      summary: List event types
+      description: Get a list of event types used in the Audit API.
+      security:
+        - basicAuth: []
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+
   '/beta/audit/events/{id}':
     get:
+      operationId: single-event
       summary: Retrieve individual audit event
       description: >
         Get a series of audit log events describing changes made to your
