@@ -10,6 +10,7 @@ info:
     name: Nexmo Support
     url: 'https://developer.nexmo.com/'
     email: ea-support@nexmo.com
+  x-label: Developer Preview
 paths:
   /conversations:
     post:
