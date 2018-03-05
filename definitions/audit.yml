@@ -59,8 +59,16 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionsResp'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorUnauthorized'
 
   '/beta/audit/events/{id}':
     get:
@@ -388,6 +396,22 @@ components:
           type: string
           example: "Event with provided id: aaaaaaaa-bbbb-cccc-dddd-0123456789ab was not found"
           description: A longer description of the error
+    OptionsResp:
+      type: object
+      properties:
+        eventTypes:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                example: "USER_STATUS"
+                description: "The type name"
+              description:
+                type: string
+                example: "User status updated"
+                description: "English description of type"
   securitySchemes:
     basicAuth:
       type: http
