@@ -35,6 +35,22 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/EventTypes'
+        - name: date_from
+          description: Filter events after this date.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: "2018-01-01T00:00:00Z"
+        - name: date_to
+          description: Filter events before this date.
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+            example: "2018-03-01T00:00:00Z"
       security:
         - basicAuth: []
       responses:
