@@ -84,11 +84,30 @@ components:
     EventTypes:
       type: string
       enum:
-        - APP_CREATE
+        - USER_STATUS
+        - USER_UPDATE
+        - USER_BILLING_UPDATE
+        - USER_CREATE
+        - USER_LOGIN
+        - USER_LOGOUT
+        - USER_API_KEYS_UPDATE
+        - ACCOUNT_UPDATE_SPAMMER
+        - ACCOUNT_UPDATE_SETTINGS_API
         - NUMBER_ASSIGN
+        - NUMBER_UPDATED
+        - NUMBER_RELEASE
         - NUMBER_LINKED
         - NUMBER_UNLINKED
-        - NUMBER_UPDATED
+        - APP_CREATE
+        - APP_UPDATE
+        - APP_DELETE
+        - APP_DISABLE
+        - APP_ENABLE
+        - IP_WHITELIST_CREATE
+        - IP_WHITELIST_DELETE
+        - AUTORELOAD_ENABLE
+        - AUTORELOAD_UPDATE
+        - AUTORELOAD_DISABLE
       example: APP_CREATE
     AuditResp:
       type: object
