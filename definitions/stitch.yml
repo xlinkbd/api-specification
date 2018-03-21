@@ -532,22 +532,8 @@ components:
             not provided, one will be automatically generated.
         display_name:
           type: string
-        image_url:
-          type: string
-        numbers:
-          type: object
-          properties:
-            pstn:
-              type: string
-            sms:
-              type: string
-            sip:
-              type: string
-        properties:
-          type: object
-          properties:
-            ttl:
-              type: string
+          description: The display name of the conversation
+
       required:
         - display_name
         - image_url
@@ -579,22 +565,7 @@ components:
             not provided, one will be automatically generated.
         display_name:
           type: string
-        image_url:
-          type: string
-        numbers:
-          type: object
-          properties:
-            pstn:
-              type: string
-            sms:
-              type: string
-            sip:
-              type: string
-        properties:
-          type: object
-          properties:
-            ttl:
-              type: string
+
     Conversation:
       discriminator:
         propertyName: Conversation
@@ -609,30 +580,14 @@ components:
           description: Conversation Name
         display_name:
           type: string
-          description: Display Name
-        image_url:
-          type: string
-          description: Display Name
+          description: The display name of the conversation
         timestamp:
           type: string
-          description: Display Name
+          description: time when conversation was created
         sequence_number:
           type: string
-          description: Display Name
-        numbers:
-          type: object
-          properties:
-            pstn:
-              type: string
-            sms:
-              type: string
-            sip:
-              type: string
-        properties:
-          type: object
-          properties:
-            ttl:
-              type: string
+          description: the last event id
+
         members:
           type: array
           items:
@@ -667,12 +622,15 @@ components:
       properties:
         name:
           type: string
+          description: Unique name (within the same application) for the conversation.
         date_start:
           type: string
           format: dateTime
+          description: Return the records that occurred after this point in time.
         date_end:
           type: string
           format: dateTime
+          description: Return the records that occurred at this point in time.
         page_size:
           type: number
           minimum: 1
@@ -682,6 +640,7 @@ components:
           minimum: 0
         order:
           type: string
+          description: Return the records that in ascending or descending order. 
           enum:
             - asc
             - desc
@@ -691,16 +650,21 @@ components:
       discriminator:
         propertyName: ConversationsListed
       type: object
-      description: List Conversations Response Payload Object
+      description: List Conversations Response Payload Object.
       properties:
         count:
           type: number
+          description: The total number of records returned by your request.
         page_size:
           type: number
+          description: The amount of records returned in this response.
+
         record_index:
           type: number
+          description: Return page_size calls from this index in the response. That is, if your request returns 300 concersations, set record_index to 5 in order to return calls 50 to 59. The default value is 0. That is, the first page_size calls.
         _links:
           type: object
+          description: A series of links between resources in this API in the http://stateless.co/hal_specification.html.
           properties:
             self:
               type: object
@@ -792,6 +756,7 @@ components:
           description: Event ID
         timestamp:
           type: string
+          description: time when event was created
         href:
           type: string
     EventRetrieved:
