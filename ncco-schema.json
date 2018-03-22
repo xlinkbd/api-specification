@@ -301,6 +301,11 @@
                 "wav"
               ]
             },
+             "split": {
+              "enum" : [
+                  "conversation"                
+              ]
+            },
             "endOnSilence": {
               "type": "integer",
               "minimum": 3,
