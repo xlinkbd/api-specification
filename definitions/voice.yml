@@ -21,16 +21,18 @@ paths:
               properties:
                 to:
                     type: array
-                    oneOf:
-                      - $ref: '#/components/schemas/endpoints/phone'
-                      - $ref: '#/components/schemas/endpoints/sip'
-                      - $ref: '#/components/schemas/endpoint/swebsocket'
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/endpoints/properties/phone'
+                      - $ref: '#/components/schemas/endpoints/properties/sip'
+                      - $ref: '#/components/schemas/endpoints/properties/websocket'
                 from:
                     type: array
-                    oneOf:
-                      - $ref: '#/components/schemas/endpoints/phone'
-                      - $ref: '#/components/schemas/endpoints/sip'
-                      - $ref: '#/components/schemas//endpointswebsocket'
+                    items:
+                      oneOf:
+                      - $ref: '#/components/schemas/endpoints/properties/phone'
+                      - $ref: '#/components/schemas/endpoints/properties/sip'
+                      - $ref: '#/components/schemas/endpoints/properties/websocket'
                 answer_url:
                         description: 'The webhook endpoint where you provide the Nexmo Call Control Object that governs this call.'
                         type: array
@@ -55,7 +57,7 @@ paths:
                 event_method: 
                       description: 'The HTTP method used to send event information to event_url.'
                       type: string
-                      deafult: POST
+                      default: POST
                       enum: 
                           - POST
                           - GET
@@ -88,20 +90,20 @@ paths:
             application/json:
               schema:
                 properties:
-                    uuid:
+                  uuid:
                         type: string
                         format: uuid 
                         example: "f972836a-550f-45fa-956c-12a2ab5b7d22"   
-                status:
+                  status:
                     type: string
                     enum:
                         - started 
-                direction:
+                  direction:
                     type: string
                     enum:
                         - outbound
                         - inbound
-                conversation_uuid:
+                  conversation_uuid:
                     type: string
                     format: uuid
                     example: "CON-f972836a-550f-45fa-956c-12a2ab5b7d22"
@@ -109,19 +111,19 @@ paths:
           description: Bad Request
           content:
             application/json:
-              schema:
-                properties:
-                    type: integer
-                    title: string,
-                    invalid_parameters: 
-                      type: array
-                      items:
-                        - type: object
-                          properties:
-                            reason: 
-                              type: string
-                            name: 
-                              type: string
+              schema: {}
+                #properties:
+                    #type: integer # unsure of intent here, MER
+                    #title: string
+                    #invalid_parameters: 
+                    #  type: array
+                    #  items:
+                    #    - type: object
+                    #      properties:
+                    #        reason: 
+                    #          type: string
+                    #        name: 
+                    #          type: string
     get:
       security:
         - bearerAuth: []
@@ -134,16 +136,16 @@ paths:
             schema:
                 type: string
                 enum:
-              - started
-              - ringing
-              - answered
-              - machine
-              - completed
-              - timeout
-              - failed
-              - rejected
-              - cancelled
-              - busy
+                - started
+                - ringing
+                - answered
+                - machine
+                - completed
+                - timeout
+                - failed
+                - rejected
+                - cancelled
+                - busy
           - name: date_start
             in: query
             description: "Return the records that occurred after this point in time"
@@ -183,7 +185,8 @@ paths:
             in: query
             description: "Return all the records associated with a specific conversation."
             schema:
-                type: uuid
+                type: string
+                format: uuid
       responses:
           '200':
               description: Ok
@@ -192,7 +195,7 @@ paths:
                       schema:
                           {
                             "type": "object",
-                            "definitions": {},
+                            #"definitions": {},
                             "properties": {
                               "count": {
                                 "type": "integer",
@@ -242,24 +245,24 @@ paths:
                                                   "type": "string",
                                                   "title": "The Link to the Call Object",
                                                   "default": "",
-                                                  "examples": [
-                                                    "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
-                                                  ]
+                                                  "example": "/calls/63f61863-4a51-4f6b-86e1-46edebcf9356"
                                                 }
                                               }
                                             }
                                           }
                                         },
                                         "uuid": {
-                                          "type": "uuid",
+                                          "type": "string",
+                                          "format": "uuid",
                                           "title": "The Uuid of the Call ",
                                           "example": "63f61863-4a51-4f6b-86e1-46edebcf9356"
                                         },
                                         "conversation_uuid": {
-                                          "type": "uuid",
+                                          "type": "string",
+                                          "format": "uuid",
                                           "title": "The UUID of the Conversation",
                                           "default": "",
-                                          "examples": "63f61863-4a51-4f6b-86e1-46edebio0123"
+                                          "example": "63f61863-4a51-4f6b-86e1-46edebio0123"
                                         },
                                         "to": {
                                           "type": "array",
@@ -269,12 +272,12 @@ paths:
                                               "type": {
                                                 "type": "string",
                                                 "title": "The Type of Endpoint Called ",
-                                                "examples": "phone"
+                                                "example": "phone"
                                               },
                                               "number": {
                                                 "type": "string",
                                                 "title": "The number Of the endpoint called ",
-                                                "examples": "447700900000"
+                                                "example": "447700900000"
                                               }
                                             }
                                           }
@@ -320,20 +323,22 @@ paths:
                                           "example":  "60"
                                         },
                                         "start_time": {
-                                          "type": "timestamp",
+                                          "type": "string",
+                                          "format": "timestamp",
                                           "title": "The Start Time of the call ",
                                           "default": "",
                                           "example": "2015-02-04T22:45:00Z"
                                         },
                                         "end_time": {
-                                          "type": "timestamp",
+                                          "type": "string",
+                                          "format": "timestamp",
                                           "title": "The end time of the call",
                                           "example": "2015-02-04T23:45:00Z"
                                         },
                                         "network": {
                                           "type": "string",
                                           "title": "The Network ID of the destination ",
-                                          "examples": "65512"
+                                          "example": "65512"
                                         }
                                       }
                                     }
@@ -343,10 +348,18 @@ paths:
                             }
                           }                                
   /calls/{uuid}:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: UUID of the Call
       get:
+        
         security:
           - bearerAuth: []
-        description: Get detail of a specifi call
+        description: Get detail of a specific call
         operationId: getCall
         responses:
             '200':
@@ -373,15 +386,17 @@ paths:
                                   }
                                 },
                                 "uuid": {
-                                  "type": "uuid",
+                                  "type": "string",
+                                  "format": "uuid",
                                   "title": "The Uuid of the Call ",
                                   "example": "63f61863-4a51-4f6b-86e1-46edebcf9356"
                                 },
                                 "conversation_uuid": {
-                                  "type": "uuid",
+                                  "type": "string",
+                                  "format": "uuid",
                                   "title": "The UUID of the Conversation",
                                   "default": "",
-                                  "examples": "63f61863-4a51-4f6b-86e1-46edebio0123"
+                                  "example": "63f61863-4a51-4f6b-86e1-46edebio0123"
                                 },
                                 "to": {
                                   "type": "array",
@@ -391,12 +406,12 @@ paths:
                                       "type": {
                                         "type": "string",
                                         "title": "The Type of Endpoint Called ",
-                                        "examples": "phone"
+                                        "example": "phone"
                                       },
                                       "number": {
                                         "type": "string",
                                         "title": "The number Of the endpoint called ",
-                                        "examples": "447700900000"
+                                        "example": "447700900000"
                                       }
                                     }
                                   }
@@ -442,20 +457,22 @@ paths:
                                   "example":  "60"
                                 },
                                 "start_time": {
-                                  "type": "timestamp",
+                                  "type": "string",
+                                  "format": "timestamp",
                                   "title": "The Start Time of the call ",
                                   "default": "",
                                   "example": "2015-02-04T22:45:00Z"
                                 },
                                 "end_time": {
-                                  "type": "timestamp",
+                                  "type": "string",
+                                  "format": "timestamp",
                                   "title": "The end time of the call",
                                   "example": "2015-02-04T23:45:00Z"
                                 },
                                 "network": {
                                   "type": "string",
                                   "title": "The Network ID of the destination ",
-                                  "examples": "65512"
+                                  "example": "65512"
                                 }
                               }
                             }
@@ -472,22 +489,22 @@ paths:
               schema:
                 properties:
                   action:
-                      type: string,
+                      type: string
                       enum:
                           - hangup
-                              description: "End the Call"
+                              #description: "End the Call"
                           - mute
-                              description: "Mute the call, the callers mic will be disabled but they will still hear audio"
+                              #description: "Mute the call, the callers mic will be disabled but they will still hear audio"
                           - unmute
-                              description: "Unmute a previously muted caller"
+                              #description: "Unmute a previously muted caller"
                           - earmuff
-                              description: "Earmuff a call, the caller won't hear any audio but their mic will still be active"
+                              #description: "Earmuff a call, the caller won't hear any audio but their mic will still be active"
                           - unearmuff
-                              description: "remove earmuff from a call"
+                              #description: "remove earmuff from a call"
                           - transfer
-                              description: "Replace the NCCO that is running in the call with a new one"
+                              #description: "Replace the NCCO that is running in the call with a new one"
                   destination:
-                      type: object,
+                      type: object
                       properties:
                         type:
                           type: string
@@ -500,22 +517,29 @@ paths:
                               type: string
                               format: url
                               description: "The url of the new NCCO"
-        response:
+        responses:
             '204':
                 description: "No Content"
             '400':
               description: Bad Request
               content:
                 application/json:
-                  schema:
-                    properties:
-                        type: integer
-                        title: string,
-                        invalid_parameters: array
-                            items:
-                                reason: string
-                                name: string                                        
+                  schema: {}
+                    #properties:
+                        #type: integer # unsure of intent here, MER
+                        #title: string
+                        #invalid_parameters: array
+                        #items:
+                        #  reason: string
+                        #  name: string                                        
   /calls/{uuid}/stream:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: UUID of the Call
       put:
           security:
             - bearerAuth: []
@@ -538,7 +562,7 @@ paths:
                           type: integer
                           description: "the number of times to play the file, 0 for infinite"
                           default: 1
-          response:
+          responses:
               '200':
                   description: Ok
                   content:
@@ -546,14 +570,15 @@ paths:
                           schema:
                               {
                                 "type": "object",
-                                "definitions": {},
+                                #"definitions": {},
                                 "properties": {
                                   "message": {
                                     "type": "string",
-                                    "default" "Stream started"
+                                    "default": "Stream started"
                                   },
                                   "uuid": {
-                                    "type": "uuid",
+                                    "type": "string",
+                                    "format": "uuid",
                                     "title": "The UUID of this request",
                                   }
                                 }
@@ -562,8 +587,8 @@ paths:
           security:
             - bearerAuth: []
           description: Play an audio file into a call
-          operationId: startStream
-          response:
+          operationId: startStream2 # operationIds must be unique
+          responses:
               '200':
                   description: Ok
                   content:
@@ -571,19 +596,27 @@ paths:
                           schema:
                               {
                                 "type": "object",
-                                "definitions": {},
+                                #"definitions": {},
                                 "properties": {
                                   "message": {
                                     "type": "string",
-                                    "default" "Stream stopped"
+                                    "default": "Stream stopped"
                                   },
                                   "uuid": {
-                                    "type": "uuid",
+                                    "type": "string",
+                                    "format": "uuid",
                                     "title": "The UUID of this request",
                                   }
                                 }
                             }
   /calls/{uuid}/talk:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: UUID of the Call
       put:
           security:
             - bearerAuth: []
@@ -606,7 +639,7 @@ paths:
                           type: integer
                           description: "the number of times to repeeat the text the file, 0 for infinite"
                           default: 1
-          response:
+          responses:
               '200':
                   description: Ok
                   content:
@@ -614,14 +647,15 @@ paths:
                           schema:
                               {
                                 "type": "object",
-                                "definitions": {},
+                                #"definitions": {},
                                 "properties": {
                                   "message": {
                                     "type": "string",
-                                    "default" "Talk started"
+                                    "default": "Talk started"
                                   },
                                   "uuid": {
-                                    "type": "uuid",
+                                    "type": "string",
+                                    "format": "uuid",
                                     "title": "The UUID of this request",
                                   }
                                 }
@@ -631,7 +665,7 @@ paths:
             - bearerAuth: []
           description: Stop text to speech in a call
           operationId: stopTalk
-          response:
+          responses:
               '200':
                   description: Ok
                   content:
@@ -639,19 +673,27 @@ paths:
                           schema:
                               {
                                 "type": "object",
-                                "definitions": {},
+                                #"definitions": {},
                                 "properties": {
                                   "message": {
                                     "type": "string",
-                                    "default" "Talk stopped"
+                                    "default": "Talk stopped"
                                   },
                                   "uuid": {
-                                    "type": "uuid",
+                                    "type": "string",
+                                    "format": "uuid",
                                     "title": "The UUID of this request",
                                   }
                                 }
                             }                                      
   /calls/{uuid}/dtmf:
+      parameters:
+        - in: path
+          name: uuid
+          schema:
+            type: string
+          required: true
+          description: UUID of the Call
       put:
           security:
             - bearerAuth: []
@@ -668,7 +710,7 @@ paths:
                           type: string
                           description: "The digits to send "
 
-          response:
+          responses:
               '200':
                   description: Ok
                   content:
@@ -676,14 +718,15 @@ paths:
                           schema:
                               {
                                 "type": "object",
-                                "definitions": {},
+                                #"definitions": {},
                                 "properties": {
                                   "message": {
                                     "type": "string",
-                                    "default" "DTMF sent"
+                                    "default": "DTMF sent"
                                   },
                                   "uuid": {
-                                    "type": "uuid",
+                                    "type": "string",
+                                    "format": "uuid",
                                     "title": "The UUID of this request",
                                   }
                                 }
@@ -697,55 +740,59 @@ components:
       bearerFormat: JWT
   schemas:
     endpoints:
-      phone:
-        summary: Phone 
-        type: object
-        description: Phone number you want to call
-        properties:
-          type:
-            type: string
-            example: 'phone'
-            enum:
-              - 'phone'
-          number:
-            $ref: "#/components/schemas/addresses/e164"
-          dtmfAnswer:
-            type: string
-            example: "p*123#"      
-      websocket:
-        summary: Websocket
-        type: object
-        description: Details of the Websocket you want to connect to
-        properties:
-          type:
-            type: string
-            example: 'websocket'
-            enum:
-              - 'websocket'
-          uri:
-            $ref: "#/components/schemas/addresses/wsurl"
-          content-type:
-            type: string
-            example: 'audio/l16;rate=16000'
-            enum:
-              - 'audio/l16;rate=16000'
-          headers:
-              summary: "Custom metadata you want to pass to the websocket"
-              type: object
-              example: {'customerID'}
-      sip:
-        summary: SIP 
-        type: object
-        description: phone
-        properties:
-          type:
-            type: string
-            example: 'sip'
-            enum:
-              - 'sip'
-          uri:
-            $ref: "#/components/schemas/addresses/sipuri"
+      type: object
+      properties:
+        phone:
+          #summary: Phone 
+          type: object
+          description: Phone number you want to call
+          properties:
+            type:
+              type: string
+              example: 'phone'
+              enum:
+                - 'phone'
+            number:
+              $ref: "#/components/schemas/addresses/properties/e164"
+            dtmfAnswer:
+              type: string
+              example: "p*123#"      
+        websocket:
+          #summary: Websocket
+          type: object
+          description: Details of the Websocket you want to connect to
+          properties:
+            type:
+              type: string
+              example: 'websocket'
+              enum:
+                - 'websocket'
+            uri:
+              $ref: "#/components/schemas/addresses/properties/wsurl"
+            content-type:
+              type: string
+              example: 'audio/l16;rate=16000'
+              enum:
+                - 'audio/l16;rate=16000'
+            headers:
+                description: "Custom metadata you want to pass to the websocket"
+                type: object
+                example: {'customerID'}
+        sip:
+          #summary: SIP 
+          type: object
+          description: phone
+          properties:
+            type:
+              type: string
+              example: 'sip'
+              enum:
+                - 'sip'
+            uri:
+              $ref: "#/components/schemas/addresses/properties/sipuri"
     addresses:
+      type: object
+      properties:
         e164:
             type: string
             minLength: 7
@@ -774,7 +821,8 @@ components:
       properties:
         conversation_uuid:
             description: 'The UUID of the Converstion that the event relates to'
-            type: uuid
+            type: string
+            format: uuid
             example: 'CON-171b3991-49b0-4dfa-badd-2bc6e68b57b4'
         to:
           description: 'The number or address that has been called'
@@ -784,7 +832,8 @@ components:
           type: string
         uuid:
             description: 'The UUID of the call leg that the event relates to'
-            type: uuid
+            type: string
+            format: uuid
             example: '161b3991-49b0-4dfa-badd-2bc6e68b57a4'
         timestamp:
           type: string
@@ -812,149 +861,149 @@ components:
        type: string
        enum:
            - Salli
-               language: en-US 
-               geneder: female
+               #language: en-US 
+               #gender: female
            - Joey 
-               language: en-US 
-               geneder: male
-           - Naja 	
-               language: da-DK 
-               geneder: female
+               #language: en-US 
+               #gender: male
+           - Naja   
+               #language: da-DK 
+               #gender: female
            - Mads 
-               language: da-DK 
-               geneder: male
-           - Marlene 	 	
-               language: de-DE 
-               geneder: female
-           - Hans 	 	
-               language: de-DE 
-               geneder: male
-           - Nicole 	
-               language: en-AU 
-               geneder: female
+               #language: da-DK 
+               #gender: male
+           - Marlene      
+               #language: de-DE 
+               #gender: female
+           - Hans      
+               #language: de-DE 
+               #gender: male
+           - Nicole   
+               #language: en-AU 
+               #gender: female
            - Russell
-               language: en-AU 
-               geneder: male
-           - Amy 	
-               language: en-GB 
-               geneder: female
-           - Brian 	
-               language: en-GB 
-               geneder: male
+               #language: en-AU 
+               #gender: male
+           - Amy   
+               #language: en-GB 
+               #gender: female
+           - Brian   
+               #language: en-GB 
+               #gender: male
            - Emma
-               language: en-GB 
-               geneder: female
-           - Geraint 	 
-               language: en-GB,WLS
-               geneder: male
-           - Gwyneth 	 
-               language: cy-GB,WLS
-               geneder: female
-           - Raveena 	
-               language: en-IN 
-               geneder: female
-           - Chipmunk 	
-               language: en-US 
-               geneder: male
-           - Eric 	
-               language: en-US 
-               geneder: male
-           - Ivy 	
-               language: en-US 
-               geneder: female
-           - Jennifer 	
-               language: en-US 
-               geneder: female
+               #language: en-GB 
+               #gender: female
+           - Geraint    
+               #language: en-GB,WLS
+               #gender: male
+           - Gwyneth    
+               #language: cy-GB,WLS
+               #gender: female
+           - Raveena   
+               #language: en-IN 
+               #gender: female
+           - Chipmunk   
+               #language: en-US 
+               #gender: male
+           - Eric   
+               #language: en-US 
+               #gender: male
+           - Ivy   
+               #language: en-US 
+               #gender: female
+           - Jennifer   
+               #language: en-US 
+               #gender: female
            - Justin
-               language: en-US 
-               geneder: male
-           - Kendra 	
-               language: en-US 
-               geneder: female
-           - Kimberly 	
-               language: en-US 
-               geneder: female
+               #language: en-US 
+               #gender: male
+           - Kendra   
+               #language: en-US 
+               #gender: female
+           - Kimberly   
+               #language: en-US 
+               #gender: female
            - Conchita 
-               language: es-ES 
-               geneder: female
-           - Enrique 	 	
-               language: es-ES 
-               geneder: male
+               #language: es-ES 
+               #gender: female
+           - Enrique      
+               #language: es-ES 
+               #gender: male
            - Penelope
-               language: es-US 
-               geneder: female
-           - Miguel 	 	
-               language: es-US 
-               geneder: male
-           - Chantal 	 	
-               language: fr-CA
-               geneder: female
-           - Celine 	 	
-               language: fr-FR
-               geneder: female
-           - Mathieu 	 	
-               language: fr-FR
-               geneder: mail
-           - Dora 	 	
-               language: is-IS 
-               geneder: female
-           - Karl 	
-               language: is-IS 
-               geneder: male
-           - Carla 	 	
-               language: it-IT
-               geneder: female
-           - Giorgio 	
-               language: it-IT
-               geneder: male
+               #language: es-US 
+               #gender: female
+           - Miguel      
+               #language: es-US 
+               #gender: male
+           - Chantal      
+               #language: fr-CA
+               #gender: female
+           - Celine      
+               #language: fr-FR
+               #gender: female
+           - Mathieu      
+               #language: fr-FR
+               #gender: mail
+           - Dora      
+               #language: is-IS 
+               #gender: female
+           - Karl   
+               #language: is-IS 
+               #gender: male
+           - Carla      
+               #language: it-IT
+               #gender: female
+           - Giorgio   
+               #language: it-IT
+               #gender: male
            - Liv
-               language: nb-NO 
-               geneder: female
-           - Lotte 	 	
-               language: nl-NL 
-               geneder: female
+               #language: nb-NO 
+               #gender: female
+           - Lotte      
+               #language: nl-NL 
+               #gender: female
            - Ruben
-               language: nl-NL 
-               geneder: male
+               #language: nl-NL 
+               #gender: male
            - Agnieszka
-               language: pl-PL 
-               geneder: female
+               #language: pl-PL 
+               #gender: female
            - Jacek 
-               language: pl-PL 
-               geneder: male
+               #language: pl-PL 
+               #gender: male
            - Ewa
-               language: pl-PL
-               geneder: female
+               #language: pl-PL
+               #gender: female
            - Jan
-               language: pl-PL
-               geneder: male
-           - Maja 	 	
-               language: pl-PL 
-               geneder: female
+               #language: pl-PL
+               #gender: male
+           - Maja      
+               #language: pl-PL 
+               #gender: female
            - Vitoria 
-               language: pt-BR
-               geneder: female
+               #language: pt-BR
+               #gender: female
            - Ricardo
-               language: pt-BR 
-               geneder: male
+               #language: pt-BR 
+               #gender: male
            - Cristiano
-               language: pt-PT 
-               geneder: male
+               #language: pt-PT 
+               #gender: male
            - Ines
-               language: pt-PT 
-               geneder: female
+               #language: pt-PT 
+               #gender: female
            - Carmen
-               language: ro-RO
-               geneder: female
+               #language: ro-RO
+               #gender: female
            - Maxim
-               language: ru-RU
-               geneder: male
+               #language: ru-RU
+               #gender: male
            - Tatyana
-               language: ru-RU
-               geneder: female
+               #language: ru-RU
+               #gender: female
            - Astrid
-               language: sv-SE 
-               geneder: female
+               #language: sv-SE 
+               #gender: female
            - Filiz
-               language: tr-TR 
-               geneder: female                
+               #language: tr-TR 
+               #gender: female                
