@@ -12,6 +12,35 @@ info:
     email: ea-support@nexmo.com
   x-label: Developer Preview
 paths:
+  /legs:
+    get:
+      x-swagger-router-controller: listLegs
+      operationId: listLegs
+      x-group: leg
+      summary: List legs
+      responses:
+        '200':
+          $ref: '#/components/responses/LegsListed'
+        '400':
+          $ref: '#/components/responses/ValidationError'
+  '/legs/{leg_id}':
+    parameters:
+      - name: leg_id
+        in: path
+        required: true
+        description: Leg ID
+        schema:
+          type: string
+    delete:
+      x-swagger-router-controller: deleteLeg
+      operationId: deleteLeg
+      x-group: leg
+      summary: Delete a leg
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '400':
+          $ref: '#/components/responses/ClientError'
   /conversations:
     post:
       x-swagger-router-controller: createConversation
@@ -332,6 +361,12 @@ paths:
           $ref: '#/components/responses/FoundList'
 components:
   responses:
+    LegsListed:
+      description: List Legs Succesfully
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LegsListed'
     ConversationUpdated:
       description: Create / Update Conversation Successfully
       content:
@@ -519,6 +554,86 @@ components:
           schema:
             $ref: '#/components/schemas/UserDetails'
   schemas:
+    Leg:
+      discriminator:
+        propertyName: Leg
+      type: object
+      description: Leg
+      properties:
+        uuid:
+          type: string
+          description: Leg ID
+        type:
+          type: string
+        conversation_uuid:
+          type: string
+        status:
+          type: string
+        from:
+          type: string
+        to:
+          type: string
+        direction:
+          type: string
+        rate:
+          type: string
+        price:
+          type: string
+        duration:
+          type: string
+        network:
+          type: string
+        start_time:
+          type: string
+        end_time:
+          type: string
+      required:
+        - uuid
+        - type
+        - start_time
+        - end_time
+    Legs:
+      discriminator:
+        propertyName: Legs
+      type: object
+      description: Legs Object
+      properties:
+        count:
+          type: number
+          description: Count
+        page_size:
+          type: number
+        record_index:
+          type: number
+        _links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+        _embedded:
+          type: object
+          properties:
+            legs:
+              type: object
+              properties:
+                _links:
+                  type: array
+                  items:
+                    allOf:
+                      - $ref: '#/components/schemas/Leg'
+                      - type: object
+                        properties:
+                          _links:
+                            type: object
+                            properties:
+                              self:
+                                type: object
+                                properties:
+                                  href:
+                                    type: string
     CreateConversation:
       discriminator:
         propertyName: CreateConversation
@@ -695,6 +810,56 @@ components:
                   - href
           required:
             - conversations
+      required:
+        - count
+        - page_size
+        - record_index
+        - _links
+        - _embedded
+    LegsListed:
+      discriminator:
+        propertyName: LegsListed
+      type: object
+      description: List Legs Response Payload Object
+      properties:
+        count:
+          type: number
+        page_size:
+          type: number
+        record_index:
+          type: number
+        _links:
+          type: object
+          properties:
+            self:
+              type: object
+              properties:
+                href:
+                  type: string
+              required:
+                - href
+          required:
+            - self
+        _embedded:
+          type: object
+          properties:
+            conversations:
+              type: array
+              items:
+                type: object
+                properties:
+                  uuid:
+                    type: string
+                  name:
+                    type: string
+                  href:
+                    type: string
+                required:
+                  - uuid
+                  - name
+                  - href
+          required:
+            - legs
       required:
         - count
         - page_size
@@ -1274,3 +1439,11 @@ x-groups:
     schema:
       application/json:
         $ref: '#/components/schemas/EventCreated'
+  leg:
+    name: "Leg"
+    order: 4
+    description: >-
+      A leg can be a video call, IP call, or PSTN call that users participate in using multiple platforms. With this endpoint you can retrieve the details about all of the legs that took place in your application.
+    schema:
+      application/json:
+        $ref: '#/components/schemas/Leg'
