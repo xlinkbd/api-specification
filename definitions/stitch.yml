@@ -67,11 +67,7 @@ paths:
           $ref: '#/components/responses/ConversationsListed'
         '400':
           $ref: '#/components/responses/ValidationError'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ListConversations'
+
   '/conversations/{conv_id}':
     parameters:
       - name: conv_id
@@ -150,11 +146,7 @@ paths:
           $ref: '#/components/responses/ClientError'
         '404':
           $ref: '#/components/responses/NotFound'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetEventsObject'
+
   '/conversations/{conv_id}/events/{event_id}':
     parameters:
       - name: conv_id
@@ -193,11 +185,7 @@ paths:
           $ref: '#/components/responses/ClientError'
         '404':
           $ref: '#/components/responses/NotFound'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/deleteEventRequestPayload'
+
   '/conversations/{conv_id}/members':
     parameters:
       - name: conv_id
@@ -361,12 +349,6 @@ paths:
           $ref: '#/components/responses/FoundList'
 components:
   responses:
-    LegsListed:
-      description: List Legs Succesfully
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LegsListed'
     ConversationUpdated:
       description: Create / Update Conversation Successfully
       content:
@@ -554,86 +536,6 @@ components:
           schema:
             $ref: '#/components/schemas/UserDetails'
   schemas:
-    Leg:
-      discriminator:
-        propertyName: Leg
-      type: object
-      description: Leg
-      properties:
-        uuid:
-          type: string
-          description: Leg ID
-        type:
-          type: string
-        conversation_uuid:
-          type: string
-        status:
-          type: string
-        from:
-          type: string
-        to:
-          type: string
-        direction:
-          type: string
-        rate:
-          type: string
-        price:
-          type: string
-        duration:
-          type: string
-        network:
-          type: string
-        start_time:
-          type: string
-        end_time:
-          type: string
-      required:
-        - uuid
-        - type
-        - start_time
-        - end_time
-    Legs:
-      discriminator:
-        propertyName: Legs
-      type: object
-      description: Legs Object
-      properties:
-        count:
-          type: number
-          description: Count
-        page_size:
-          type: number
-        record_index:
-          type: number
-        _links:
-          type: object
-          properties:
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-        _embedded:
-          type: object
-          properties:
-            legs:
-              type: object
-              properties:
-                _links:
-                  type: array
-                  items:
-                    allOf:
-                      - $ref: '#/components/schemas/Leg'
-                      - type: object
-                        properties:
-                          _links:
-                            type: object
-                            properties:
-                              self:
-                                type: object
-                                properties:
-                                  href:
-                                    type: string
     CreateConversation:
       discriminator:
         propertyName: CreateConversation
@@ -642,11 +544,14 @@ components:
       properties:
         name:
           type: string
+          example: 'nexmo-conference-standard'
+          default: '63f61863-4a51-4f6b-86e1-46edebio0391'
           description: >-
             Unique name (within the same application) for the conversation. If
             not provided, one will be automatically generated.
         display_name:
           type: string
+          example: 'My-Conversation'
           description: The display name of the conversation
 
       required:
@@ -660,6 +565,7 @@ components:
       properties:
         id:
           type: string
+          example: '63f61863-4a51-4f6b-86e1-46edebio0391'
           description: Conversation ID
         href:
           type: string
@@ -674,12 +580,16 @@ components:
       description: Replace Conversation Request Payload Object
       properties:
         name:
+          example: 'nexmo-conference-standard'
+          default: '63f61863-4a51-4f6b-86e1-46edebio0391'
           type: string
           description: >-
             Unique name (within the same application) for the conversation. If
             not provided, one will be automatically generated.
         display_name:
           type: string
+          example: 'My-Conversation'
+          description: The display name of the conversation
 
     Conversation:
       discriminator:
@@ -689,18 +599,23 @@ components:
       properties:
         uuid:
           type: string
+          example: '63f61863-4a51-4f6b-86e1-46edebio0391'
           description: Conversation ID
         name:
+          example: 'nexmo-conference-standard'
           type: string
           description: Conversation Name
         display_name:
+          example: 'My-Conversation'
           type: string
           description: The display name of the conversation
         timestamp:
           type: string
+          example: '2020-01-01T14:00:00.00Z'
           description: time when conversation was created
         sequence_number:
           type: string
+          example: '1'
           description: the last event id
 
         members:
@@ -736,13 +651,16 @@ components:
       type: object
       properties:
         name:
+          example: 'nexmo-conference-standard'
           type: string
           description: Unique name (within the same application) for the conversation.
         date_start:
+          example: '2020-01-01 12:00:00'
           type: string
           format: dateTime
           description: Return the records that occurred after this point in time.
         date_end:
+          example: '2020-01-01 12:00:00'
           type: string
           format: dateTime
           description: Return the records that occurred at this point in time.
@@ -755,7 +673,7 @@ components:
           minimum: 0
         order:
           type: string
-          description: Return the records that in ascending or descending order. 
+          description: 'Return the records that in ascending or descending order.'
           enum:
             - asc
             - desc
@@ -765,21 +683,23 @@ components:
       discriminator:
         propertyName: ConversationsListed
       type: object
-      description: List Conversations Response Payload Object.
+      description: 'List Conversations Response Payload Object.'
       properties:
         count:
           type: number
-          description: The total number of records returned by your request.
+          example: '100'
+          description: 'The total number of records returned by your request.'
         page_size:
           type: number
-          description: The amount of records returned in this response.
+          example: '20'
+          description: 'The amount of records returned in this response.'
 
         record_index:
           type: number
-          description: Return page_size calls from this index in the response. That is, if your request returns 300 concersations, set record_index to 5 in order to return calls 50 to 59. The default value is 0. That is, the first page_size calls.
+          description: 'Return page_size calls from this index in the response. That is, if your request returns 300 concersations, set record_index to 5 in order to return calls 50 to 59. The default value is 0. That is, the first page_size calls.'
         _links:
           type: object
-          description: A series of links between resources in this API in the http://stateless.co/hal_specification.html.
+          description: 'A series of links between resources in this API in the http://stateless.co/hal_specification.html.'
           properties:
             self:
               type: object
@@ -816,61 +736,11 @@ components:
         - record_index
         - _links
         - _embedded
-    LegsListed:
-      discriminator:
-        propertyName: LegsListed
-      type: object
-      description: List Legs Response Payload Object
-      properties:
-        count:
-          type: number
-        page_size:
-          type: number
-        record_index:
-          type: number
-        _links:
-          type: object
-          properties:
-            self:
-              type: object
-              properties:
-                href:
-                  type: string
-              required:
-                - href
-          required:
-            - self
-        _embedded:
-          type: object
-          properties:
-            conversations:
-              type: array
-              items:
-                type: object
-                properties:
-                  uuid:
-                    type: string
-                  name:
-                    type: string
-                  href:
-                    type: string
-                required:
-                  - uuid
-                  - name
-                  - href
-          required:
-            - legs
-      required:
-        - count
-        - page_size
-        - record_index
-        - _links
-        - _embedded
     CreateDeviceObject:
       discriminator:
         propertyName: CreateDeviceObject
       type: object
-      description: Create New Device Request Payload Object
+      description: 'Create New Device Request Payload Object'
       properties:
         device_token:
           type: string
@@ -885,7 +755,7 @@ components:
       discriminator:
         propertyName: DeviceCreated
       type: object
-      description: Create New Device Response Payload Object
+      description: 'Create New Device Response Payload Object'
       properties:
         id:
           type: string
@@ -896,7 +766,7 @@ components:
       discriminator:
         propertyName: CreateEvent
       type: object
-      description: Create New Event Request Payload Object
+      description: 'Create New Event Request Payload Object'
       properties:
         type:
           type: string
@@ -914,21 +784,21 @@ components:
       discriminator:
         propertyName: EventCreated
       type: object
-      description: Create New Event Response Payload Object
+      description: 'Create New Event Response Payload Object'
       properties:
         id:
           type: string
           description: Event ID
         timestamp:
           type: string
-          description: time when event was created
+          description: 'time when event was created'
         href:
           type: string
     EventRetrieved:
       discriminator:
         propertyName: EventRetrieved
       type: object
-      description: Retrieve Event Response Payload Object
+      description: 'Retrieve Event Response Payload Object'
       properties:
         id:
           type: string
@@ -958,7 +828,7 @@ components:
       discriminator:
         propertyName: GetEventsObject
       type: object
-      description: Get Events Request Payload Object
+      description: 'Get Events Request Payload Object'
       properties:
         start_id:
           type: string
@@ -1400,15 +1270,15 @@ components:
         - $ref: '#/components/schemas/UserDetails'
 x-groups:
   conversation:
-    name: "Conversation"
+    name: 'Conversation'
     order: 1
     description: >-
       A conversation is a shared core component that Nexmo APIs rely on. Conversations happen over multiple mediums and and can have associated Users through Memberships.
     schema:
       application/json:
-        $ref: '#/components/schemas/ConversationUpdated'
+        $ref: '#/components/schemas/Conversation'
   user:
-    name: "User"
+    name: 'User'
     order: 2
     description: >-
       The concept of a user exists in Nexmo APIs, you can associate one with a user in your own application if you choose. A user can have multiple memberships to conversations and can communicate with other users through various different mediums.
@@ -1416,7 +1286,7 @@ x-groups:
       application/json:
         $ref: '#/components/schemas/GenericResource'
   member:
-    name: "Member"
+    name: 'Member'
     order: 3
     description: >-
       Memberships connect users with conversations. Each membership has one conversation and one user however a user can have many memberships to conversations just as conversations can have many members.
@@ -1424,7 +1294,7 @@ x-groups:
       application/json:
         $ref: '#/components/schemas/MemberCreated'
   session:
-    name: "Session"
+    name: 'Session'
     order: 3
     description: >-
       Coming soon
@@ -1432,18 +1302,10 @@ x-groups:
       application/json:
         $ref: '#/components/schemas/SessionCreated'
   event:
-    name: "Event"
+    name: 'Event'
     order: 4
     description: >-
       Coming soon
     schema:
       application/json:
         $ref: '#/components/schemas/EventCreated'
-  leg:
-    name: "Leg"
-    order: 4
-    description: >-
-      A leg can be a video call, IP call, or PSTN call that users participate in using multiple platforms. With this endpoint you can retrieve the details about all of the legs that took place in your application.
-    schema:
-      application/json:
-        $ref: '#/components/schemas/Leg'
