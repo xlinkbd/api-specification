@@ -124,7 +124,7 @@ components:
           pattern: '\d{7,15}'
           example: 447700900000
         text:
-          description: The body of the message being sent
+          description: The body of the message being sent. If your message contains characters that can be encoded according to the GSM Standard and Extended tables then you can set the `type` to `text`. If your message contains characters outside this range, then you will need to set the `type` to `unicode`.
           type: string
           example: Hello World!
         ttl:
