@@ -351,12 +351,12 @@ paths:
           $ref: '#/components/responses/ClientError'
 components:
   responses:
-     LegsListed:
+    LegsListed:
      description: List Legs Succesfully
      content:
         application/json:
           schema:
-           $ref: '#/components/schemas/LegsListed'
+            $ref: '#/components/schemas/LegsListed'
     ConversationUpdated:
       description: Create / Update Conversation Successfully
       content:
@@ -544,9 +544,9 @@ components:
           schema:
             $ref: '#/components/schemas/UserDetails'
   schemas:
-   Leg:
+    Leg:
       discriminator:
-       propertyName: Leg
+        propertyName: Leg
       type: object
       description: Leg
       properties:
@@ -824,7 +824,7 @@ components:
         - record_index
         - _links
         - _embedded
-   LegsListed:
+    LegsListed:
       discriminator:
         propertyName: LegsListed
       type: object
@@ -1448,7 +1448,7 @@ x-groups:
     schema:
       application/json:
         $ref: '#/components/schemas/EventCreated'
-      leg:
+  leg:
    name: "Leg"
    order: 4
    description: >-
