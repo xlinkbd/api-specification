@@ -15,6 +15,8 @@ paths:
 
   /conversations:
     post:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: createConversation
       operationId: createConversation
       x-group: conversation
@@ -30,6 +32,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateConversation'
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: listConversations
       operationId: listConversations
       x-group: conversation
@@ -49,6 +53,8 @@ paths:
         schema:
           type: string
     put:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: conversations
       operationId: replaceConversation
       x-group: conversation
@@ -64,6 +70,8 @@ paths:
             schema:
               $ref: '#/components/schemas/ReplaceConversation'
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: retrieveConversation
       operationId: retrieveConversation
       x-group: conversation
@@ -74,6 +82,8 @@ paths:
         '400':
           $ref: '#/components/responses/ClientError'
     delete:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: deleteConversation
       operationId: deleteConversation
       x-group: conversation
@@ -92,6 +102,8 @@ paths:
         schema:
           type: string
     post:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: createEvent
       operationId: createEvent
       x-group: event
@@ -107,6 +119,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateEvent'
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: getEvents
       operationId: getEvents
       x-group: event
@@ -134,6 +148,8 @@ paths:
         schema:
           type: string
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: getEvent
       operationId: getEvent
       x-group: event
@@ -146,6 +162,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     delete:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: deleteEvent
       operationId: deleteEvent
       x-group: event
@@ -167,6 +185,8 @@ paths:
         schema:
           type: string
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: members
       operationId: getMembers
       x-group: member
@@ -177,6 +197,8 @@ paths:
         '400':
           $ref: '#/components/responses/ClientError'
     post:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: members
       operationId: createMember
       x-group: member
@@ -206,6 +228,8 @@ paths:
         schema:
           type: string
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: members
       operationId: getMember
       x-group: member
@@ -216,6 +240,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     put:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: members
       operationId: updateMember
       x-group: member
@@ -229,6 +255,8 @@ paths:
             schema:
               $ref: '#/components/schemas/UpdateMember'
     delete:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: members
       operationId: deleteMember
       x-group: member
@@ -246,6 +274,8 @@ paths:
           type: string
   /users:
     post:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: createUser
       x-group: user
@@ -258,6 +288,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserDetails'
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: getUsers
       x-group: user
@@ -274,6 +306,8 @@ paths:
         schema:
           type: string
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: getUser
       x-group: user
@@ -284,6 +318,8 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
     put:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: updateUser
       x-group: user
@@ -296,6 +332,8 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/UserDetails'
     delete:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: deleteUser
       x-group: user
@@ -312,6 +350,8 @@ paths:
         schema:
           type: string
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: users
       operationId: getuserConversations
       x-group: user
@@ -322,6 +362,8 @@ paths:
 
   /legs:
     get:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: listLegs
       operationId: listLegs
       x-group: leg
@@ -340,6 +382,8 @@ paths:
         schema:
           type: string
     delete:
+      security:
+      - bearerAuth: []
       x-swagger-router-controller: deleteLeg
       operationId: deleteLeg
       x-group: leg
@@ -350,6 +394,11 @@ paths:
         '400':
           $ref: '#/components/responses/ClientError'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   responses:
     LegsListed:
       description: List Legs Succesfully
@@ -633,7 +682,6 @@ components:
         name:
           type: string
           example: 'nexmo-conference-standard'
-          default: '63f61863-4a51-4f6b-86e1-46edebio0391'
           description: >-
             Unique name (within the same application) for the conversation. If
             not provided, one will be automatically generated.
@@ -669,7 +717,6 @@ components:
       properties:
         name:
           example: 'nexmo-conference-standard'
-          default: '63f61863-4a51-4f6b-86e1-46edebio0391'
           type: string
           description: >-
             Unique name (within the same application) for the conversation. If
@@ -698,13 +745,20 @@ components:
           type: string
           description: The display name of the conversation
         timestamp:
-          type: string
-          example: '2020-01-01T14:00:00.00Z'
-          description: time when conversation was created
+          type: object
+          properties:
+            created:
+              type: string
+              example: '2020-01-01T14:00:00.00Z'
+              description: The time when conversation was created
         sequence_number:
           type: string
           example: '1'
-          description: the last event id
+          description: The last event id
+        numbers:
+          type: object
+        properties:
+          type: object
 
         members:
           type: array
@@ -1165,7 +1219,12 @@ components:
         member_id:
           type: string
         channel:
-          type: string
+          type: object
+          properties:
+            'type':
+              type: string
+              example: 'app'
+
         media:
           type: string
         action:
@@ -1192,10 +1251,24 @@ components:
           type: string
         state:
           type: string
+          example: 'JOINED'
         timestamp:
-          type: string
+          type: object
+          properties:
+            created:
+              type: string
+              example: '2020-01-01T14:00:00.00Z'
+              description: The time when the membership was created
         channel:
-          type: string
+          type: object
+          properties:
+            'type':
+              type: string
+              example: 'app'
+            leg_ids:
+              type: array
+              items:
+                $ref: '#/components/schemas/GenericResource'
         href:
           type: string
           format: url
@@ -1393,12 +1466,17 @@ components:
       properties:
         name:
           type: string
+          description: Unique name (within the same application) for the user. If not provided, one will be automatically generated.
         image_url:
           type: string
         display_name:
           type: string
         channels:
+          type: object
+        uuid:
           type: string
+          example: 'USR-c914d59f-6bed-4a76-a90c-b3f6171b54eb'
+          description: User ID
     User:
       discriminator:
         propertyName: user
@@ -1423,7 +1501,7 @@ x-groups:
       The concept of a user exists in Nexmo APIs, you can associate one with a user in your own application if you choose. A user can have multiple memberships to conversations and can communicate with other users through various different mediums.
     schema:
       application/json:
-        $ref: '#/components/schemas/GenericResource'
+        $ref: '#/components/schemas/UserDetails'
   member:
     name: 'Member'
     order: 3
