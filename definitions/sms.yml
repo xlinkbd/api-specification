@@ -113,9 +113,9 @@ components:
         - to
       properties:
         from:
-          description: The name or number the message should be sent from. Alphanumeric senderID's are not supported in all countries, see [Global Messaging](/messaging/sms/guides/global-messaging#country-specific-features) for more details. Numbers are specified in E.164 format.
+          description: The name or number the message should be sent from. Alphanumeric senderID's are not supported in all countries, see [Global Messaging](/messaging/sms/guides/global-messaging#country-specific-features) for more details. If alphanumeric, spaces will be ignored. Numbers are specified in E.164 format.
           type: string
-          example: 'Acme Inc'
+          example: 'AcmeInc'
         to:
           description: The number that the message should be sent to. Numbers are specified in E.164 format. 
           type: string
@@ -363,8 +363,8 @@ components:
           example: '447700900000'
         to:
           type: string
-          description: The SenderID you set in from in your request
-          example: Acme Inc
+          description: The SenderID you set in `from` in your request.
+          example: AcmeInc
         network-code:
           type: string
           description: The Mobile Country Code Mobile Network Code (MCCMNC) of the carrier this phone number is registered with.
