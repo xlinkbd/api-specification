@@ -345,7 +345,7 @@ components:
         name: mt-submission-response
       properties:
         messages:
-         x-skip-response-description: true
+          x-skip-response-description: true
           type: array
           items:
             $ref: '#/components/schemas/Message'
