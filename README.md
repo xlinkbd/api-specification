@@ -72,3 +72,44 @@ NexmoApiSpecification::Definition.load(:sms)
 ## Contributing
 
 Contributions are welcome, please follow [GitHub Flow](https://guides.github.com/introduction/flow/index.html)
+
+
+## Publishing
+
+Clone the repo and navigate to its directory:
+
+```
+$ cd api-specification
+```
+
+Bump the latest version in `api-specification/lib/nexmo_api_specification/version.rb`:
+
+```
+//old
+module OasParser
+  VERSION = '1.0.0'.freeze
+end
+
+//new
+module OasParser
+  VERSION = '1.1.0'.freeze
+end
+```
+
+Build the gem:
+
+```
+$ gem build nexmo_api_specification.gemspec
+```
+
+_This will create a `nexmo_api_specification-1.1.0.gem` file._
+
+Push the gem to rubygems.org:
+
+```
+$ gem push nexmo_api_specification-1.1.0.gem
+```
+
+Verify the change was made by checking for the [new version on rubygems.org](https://rubygems.org/gems/nexmo_api_specification)
+
+Don't forget to commit and push your changes after increasing the version number!
