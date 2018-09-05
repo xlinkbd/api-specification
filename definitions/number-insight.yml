@@ -508,11 +508,12 @@ components:
               $ref: '#/components/schemas/niIP'
             valid_number:
               type: string
-              description: 'Does `number` exist. This is applicable to mobile numbers only.'
+              description: 'Does `number` exist. `unknown` means the number could not be validated. `valid` means the number is valid. `not_valid` means the number is not valid. `inferred_not_valid` means that the number could not be determined as valid or invalid via an external system and the best guess is that the number is invalid. This is applicable to mobile numbers only.'
               enum:
                 - unknown
                 - valid
                 - not_valid
+                - inferred_not_valid
               example: 'valid'
             ip_warnings:
               type: string
