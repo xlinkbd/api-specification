@@ -1,13 +1,13 @@
 openapi: "3.0.0"
 info:
   version: 0.3.0
-  title: Workflows API
-  description: 'The Workflows API enables the developer to specify a multiple message workflow. A workflow follows a template. The first one we are adding is the failover template. The failover template instructs the Messages API to first send a message to the specified channel. If that message fails immediately or if the condition_status is not reached within the given time period the next message is sent. The developer will also receive status webhooks from the messages resource for each delivery and read event. This API is currently in Developer Preview and you will need to [request access](https://www.nexmo.com/products/messages) to use it.'
-  x-label: Developer Preview
+  title: Dispatch API
+  description: 'The Dispatch API enables the developer to specify a multiple message workflow. A workflow follows a template. The first one we are adding is the failover template. The failover template instructs the Messages API to first send a message to the specified channel. If that message fails immediately or if the condition_status is not reached within the given time period the next message is sent. The developer will also receive status webhooks from the messages resource for each delivery and read event. This API is currently Beta.'
+  x-label: Beta
 servers:
-  - url: https://api.nexmo.com/beta
+  - url: https://api.nexmo.com/v0.1
 paths:
-  /workflows:
+  /dispatch:
     post:
       security:
         - bearerAuth: []
@@ -41,7 +41,7 @@ paths:
               summary: Message Status
               operationId: message-status
               x-example-path: '/webhooks/message-status'
-              description: staus of the message read or delivered etc.
+              description: status of the message read or delivered etc.
               requestBody:
                 required: true
                 content:
@@ -85,7 +85,7 @@ components:
       type: object
       properties:
         template:
-          description: 'The template that the workflow API will execute. For the initial version of the API the only available value will be failover'
+          description: 'The template that the Dispatch API will execute. For the initial version of the API the only available value will be failover'
           type: string
           enum:
             - failover
@@ -367,10 +367,10 @@ components:
 
     Response:
       required:
-        - workflow_uuid
+        - dispatch_uuid
       type: object
       properties:
-        workflow_uuid:
+        dispatch_uuid:
           description: 'The parent ID for workflow request.'
           type: string
           example: 'aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
@@ -404,7 +404,7 @@ components:
               example: 'Invalid `from` parameter'
 
     MessageStatus:
-      description: 'The callbacks for the message status are the same as defined in the Messaging API. The only difference will be that workflow_uuid and link will be appended.'
+      description: 'The callbacks for the message status are the same as defined in the Messaging API. The only difference will be that dispatch_uuid and link will be appended.'
       type: object
       properties:
         message_uuid:
@@ -432,11 +432,11 @@ components:
             code:
               type: integer
               example: 1300
-              description: The error code. See [Errors](#errors) for a table of descriptions.
+              description: The error code. See [our errors list](/api-errors/messages-olympus) for a list of possible errors
             reason:
               type: string
               example: 'Not part of the provider network'
-              description: Text describing the error. See [Errors](#errors) for a more details.
+              description: Text describing the error. See [our errors list](/api-errors/messages-olympus) for a list of possible errors
         usage:
           type: object
           properties:
@@ -456,7 +456,7 @@ components:
             workflow:
               type: object
               properties:
-                workflow_uuid:
+                dispatch_uuid:
                   type: string
                   example: 'aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
                 href:
@@ -467,7 +467,7 @@ components:
     finalReport:
       type: object
       properties:
-        workflow_uuid:
+        dispatch_uuid:
           type: string
           example: 'aaaaaaaa-bbbb-cccc-dddd-0123456789ab'
         template:
