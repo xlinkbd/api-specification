@@ -328,7 +328,7 @@ paths:
         schema:
           type: string
         required: true
-        description: External id of the account you want to retrieve. In this case it will be the WhatsApp number. 
+        description: External id of the account you want to retrieve. In this case it will be the WhatsApp number.
       responses:
         '200':
           description: OK.
@@ -634,12 +634,13 @@ components:
           example: "abcd1234"
           description: The external api key for this account
         provider:
-          schema:
-            type: string
-            enum: [messenger, viber_service_msg, whatsapp]
+          type: string
+          enum:
+            - messenger
+            - viber_service_msg
+            - whatsapp
           example: "messenger"
-          description: The provider
-            (will be one of `messenger, viber_service_msg, whatsapp`).
+          description: The provider (will be one of `messenger, viber_service_msg, whatsapp`).
         access_token:
           type: string
           example: "accessToken" #optional
