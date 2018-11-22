@@ -16,7 +16,6 @@ paths:
       parameters:
         - name: order
           description: The order of search results.
-          required: false
           in: query
           schema:
             type: string
@@ -27,7 +26,6 @@ paths:
             default: descending
         - name: page_index
           description: Which page to retrieve in pagination
-          required: false
           in: query
           schema:
             type: integer
@@ -35,7 +33,6 @@ paths:
             default: 0
         - name: page_size
           description: How many items at most per page
-          required: false
           in: query
           schema:
             type: integer
@@ -43,16 +40,14 @@ paths:
             default: 20
         - name: start_time
           description: Retrieve results created on or after this timestap.
-          required: false
           in: query
           schema:
             type: string
             example: '2020-01-01T14:00:00.000Z'
-          default: '1 week ago'
+            default: '1 week ago'
           x-default-is-meta: true
         - name: end_time
           description: Retrieve results created on or before this timestamp.
-          required: false
           in: query
           schema:
             type: string
@@ -232,10 +227,10 @@ components:
         type: boolean
         description: "Whether the item is available for download without authentication."
         example: false
-      metadata_primary:
+       metadata_primary:
         type: string
         description: A user set string containing metadata about the media file.
-      metadata_secondary:
+       metadata_secondary:
         type: string
         description: A user set string containing further metadata about the media file.
 x-groups:
