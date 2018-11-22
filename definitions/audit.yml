@@ -31,40 +31,38 @@ paths:
         Nexmo account over time.
       parameters:
         - name: event_type
-          type: string
           description: Filter results by this event type.
           in: query
-          required: false
           schema:
             $ref: '#/components/schemas/EventTypes'
         - name: date_from
-          type: string
+          schema:
+            type: string
           description: Start of time range for audit events. DateTime in ISO-8601 format.
           in: query
-          required: false
         - name: date_to
-          type: string  
+          schema:
+            type: string  
           description: End of time range for audit events. DateTime in ISO-8601 format.
           in: query
-          required: false
         - name: search_text
-          type: string
+          schema:
+            type: string
           description: Return only audit events where the JSON object contains this search text. Must be legal text for a JSON attribute value, that is quotes and braces must be escaped.
           in: query
-          required: false         
         - name: page
-          type: string
+          schema:
+            type: string
           description: Page number starting with page 1.
           in: query
-          required: false         
         - name: size
-          type: string
-          minimum: 1
-          maximum: 100
-          default: 30
+          schema:
+            type: string
+            minimum: 1
+            maximum: 100
+            default: 30
           description: Number of elements per page.
           in: query
-          required: false            
       security:
         - basicAuth: []
       responses:
@@ -140,7 +138,8 @@ paths:
         Get the specified audit event.
       parameters:
         - name: id
-          type: string
+          schema:
+            type: string
           description: The UUID of the audit event to retrieve
           in: path
           required: true
@@ -161,6 +160,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorUnauthorized'
         '404':
+          description: Not Found
           content:
             application/json:
               schema:
@@ -170,6 +170,8 @@ components:
   schemas:
     EventTypes:
       type: string
+      description: "The type of the audit event."
+      example: "APP_CREATE"
       enum:
         - USER_STATUS
         - USER_UPDATE
@@ -198,7 +200,6 @@ components:
         - AUTORELOAD_ENABLE
         - AUTORELOAD_UPDATE
         - AUTORELOAD_DISABLE
-      example: APP_CREATE
 
     AuditResp:
       type: object
@@ -212,12 +213,8 @@ components:
               items:
                 $ref: '#/components/schemas/AuditEvent'
         _links:
-          type: object
-          description: Container containing self, next and last page links.
           $ref: '#/components/schemas/PaginationLinks'
         page:
-          type: object
-          description: Page containing results.
           $ref: '#/components/schemas/PaginationData'
 
     AuditEvent:
@@ -227,41 +224,30 @@ components:
           type: string
           description: "UUID of the audit event"
           example: "aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
-          required: false
         event_type:
-          type: string
-          description: "The type of the audit event."
-          example: "APP_CREATE"
-          schema:
             $ref: '#/components/schemas/EventTypes'
-          required: false
         event_type_description:
           type: string
           description: "A description of the event type"
           example: "Application created."
-          required: false
         created_at:
           type: string
           description: "When the audit event was created."
           example: "2018-07-04T11:41:32"
           format: date
-          required: false
         user_email:
           type: string
           description: "Email of the user whose account the audit event is associated with."
           format: email
           example: user@example.org
-          required: false
         user_id:
           type: integer
           description: "The ID of the user that the audit event is associated with."  
           example: 1234567
-          required: false
         account_id:
           type: string
           description: "The NEXMO_API_KEY of the Nexmo account that the audit event is associated with."
           example: "abcd1234"
-          required: false
         source:
           type: string
           description: >
@@ -273,13 +259,11 @@ components:
             - CD
             - DEVAPI
           example: CD
-          required: false
         source_ip:
           type: string
           format: ipv4
           description: The IP address used to make the account change.
           example: "192.0.2.0"
-          required: false
         source_description:
           type: string
           description: "Description of the audit event source."
@@ -288,18 +272,13 @@ components:
             - Customer Dashboard
             - Developer API
           example: Customer Dashboard
-          required: false
         source_country:
           type: string
           description: ISO 3166-1 Alpha-2 country code recorded for the event.
           example: GB
-          required: false
-        _links:
-          $ref: '#/components/schemas/EventLink'
         context:
           type: object
           description: A valid JSON object with information detailing the context of the audit event.
-          required: false
           oneOf:
             - $ref: '#/components/schemas/ContextAppCreate'
             - $ref: '#/components/schemas/ContextNumberLinking'
@@ -317,12 +296,13 @@ components:
               event_url:
                 method: POST
                 url: https://example.org/event
+        _links:
+          $ref: '#/components/schemas/EventLink'
 
     AuditEventTypesResp:
       type: object
       properties:
         eventTypes:
-          required: false
           type: array
           description: An array of audit event types.
           items:
@@ -332,15 +312,9 @@ components:
       type: object
       properties:
         type:
-          required: false
-          type: string
-          example: "APP_CREATE"
-          description: "The type of the audit event."
-          schema:
-            $ref: '#/components/schemas/EventTypes'
+          $ref: '#/components/schemas/EventTypes'
         description:
           type: string
-          required: false
           example: "Application created."
           description: "A description of the event type"
  
@@ -355,11 +329,10 @@ components:
               format: uri
               description: URI of this document.
               example: "https://api.nexmo.com/beta/audit/events/aaaaaaaa-bbbb-cccc-dddd-0123456789ab"
-              required: false
 
     PaginationLinks:
       type: object
-      description: Pagination links
+      description: Container containing self, next and last page links.
       properties:
         self:
           type: object
@@ -388,7 +361,7 @@ components:
 
     PaginationData:
       type: object
-      description: Pagination data.
+      description: Page containing results.
       properties:
         size:
           type: integer
