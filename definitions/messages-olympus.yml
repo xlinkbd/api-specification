@@ -120,18 +120,15 @@ components:
         type:
           type: string
           example: 'https://www.nexmo.com/messages/Errors#InvalidParams'
+        title:
+          type: string
+          example: 'Invalid Parameters'
         detail:
           type: string
           example: 'Your request parameters did not validate.'
         instance:
           type: string
-          example:
-
-      resolution:
-        text: Check your request parameters against the API documentation.
-        link:
-          text: See API request format
-          url: /api/messages-olympus
+          example: f94b4e56604e07e5e5ad5a7228618f81
 
     MessageStatus:
       type: object
