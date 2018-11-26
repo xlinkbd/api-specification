@@ -1,9 +1,13 @@
 openapi: "3.0.0"
 info:
-  version: 0.1.0
+  version: 0.1.1
   title: External Accounts
   description: 'The External Accounts API is used to manage accounts for Viber Service Messages, Facebook Messenger and Whatsapp for use in the [Messages](/messages/overview) and [Dispatch](/dispatch/overview) APIs.'
   x-label: Developer Preview
+  contact:
+    name: Nexmo
+    url: 'https://developer.nexmo.com/'
+    email: devrel@nexmo.com
 servers:
 - url: https://api.nexmo.com/beta/chatapp-accounts
 
@@ -328,7 +332,7 @@ paths:
         schema:
           type: string
         required: true
-        description: External id of the account you want to retrieve. In this case it will be the WhatsApp number. 
+        description: External id of the account you want to retrieve. In this case it will be the WhatsApp number.
       responses:
         '200':
           description: OK.
@@ -634,12 +638,13 @@ components:
           example: "abcd1234"
           description: The external api key for this account
         provider:
-          schema:
-            type: string
-            enum: [messenger, viber_service_msg, whatsapp]
+          type: string
+          enum:
+            - messenger
+            - viber_service_msg
+            - whatsapp
           example: "messenger"
-          description: The provider
-            (will be one of `messenger, viber_service_msg, whatsapp`).
+          description: The provider (will be one of `messenger, viber_service_msg, whatsapp`).
         access_token:
           type: string
           example: "accessToken" #optional
