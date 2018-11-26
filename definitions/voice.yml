@@ -1,10 +1,14 @@
 ---
 openapi: 3.0.0
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: Voice API
   description: The Voice API lets you create outboud calls, control in progress calls
     and get information about historical calls.
+  contact:
+    name: Nexmo.com
+    email: devrel@nexmo.com
+    url: 'https://developer.nexmo.com/'
 servers:
 - url: https://api.nexmo.com/v1
 paths:
@@ -390,8 +394,8 @@ paths:
                 level:
                   type: string
                   description: Set the audio level of the stream in the range `-1 >= level <= 1` with a precision of 0.1. The default value is 0.
-                  example: 0.4
-                  default: 0
+                  example: "0.4"
+                  default: "0"
       responses:
         '200':
           description: Ok
@@ -465,8 +469,8 @@ paths:
                 level:
                   type: string
                   description: The volume level that the speech is played. This can be any value between `-1` to `1` in `0.1` increments, with `0` being the default.
-                  example: 0.4
-                  default: 0
+                  example: "0.4"
+                  default: "0"
       responses:
         '200':
           description: Ok
