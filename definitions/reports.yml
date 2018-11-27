@@ -227,7 +227,7 @@ components:
           type: string
           format: date
           description: "ISO 8601 formatted date for when reports should begin. If unspecified, defaults to seven days ago."
-          example: "2017-12-24:00:00+0000"
+          example: "2017-12-24T00:00:00+0000"
         end_date:
           type: string
           format: date
