@@ -13,6 +13,7 @@ paths:
       - url: "https://rest.nexmo.com"
     get:
       operationId: getAccountBalance
+      summary: Get Account Balance
       description: Retrieve the current balance of your Nexmo account
       parameters:
         - $ref: '#/components/parameters/api_key_for_auth'
@@ -20,7 +21,7 @@ paths:
       tags:
         - Balance
       responses:
-        200:
+        '200':
           description: The current balance of your account
           content:
             application/json:
@@ -36,7 +37,7 @@ paths:
                   <value>10.17127500</value>
                   <autoReload>false</autoReload>
                 </accountBalance>
-        401:
+        '401':
           description: Not Authorised. You must supply your `api_key` and `api_secret` as query parameters to this request
 
   /account/top-up:
@@ -44,6 +45,7 @@ paths:
       - url: "https://rest.nexmo.com"
     post:
       operationId: topUpAccountBalance
+      summary: Top Up Account Balance
       description: >-
         You can top up your account using this API when you have enabled auto-reload in the
         dashboard. The amount added by the top-up operation will be the same amount as was
@@ -74,14 +76,24 @@ paths:
                   type: string
                   description: The transaction reference of the transaction when balance was added and auto-reload was enabled on your account.
       responses:
-        200:
+        '200':
           description: Success
           content:
             application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
               example: "success"
             application/xml:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: string
               example: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><response>success</response>
-        401:
+        '401':
           description: Not Authorised. You must supply your `api_key` and `api_secret` as query parameters to this request
 
   /account/settings:
@@ -89,6 +101,7 @@ paths:
       - url: "https://rest.nexmo.com"
     post:
       operationId: changeAccountSettings
+      summary: Change Account Settings
       description: >-
         Update the default callback URLs (where the webhooks are sent to) associated with your account:
           * Callback URL for incoming SMS messages
@@ -127,7 +140,7 @@ paths:
                   format: url
                   example: https://fabulous.example.com/incoming/delivery-receipt
       responses:
-        200:
+        '200':
           description: OK. Settings were updated if supplied, the details of the current settings are included in the response.
           content:
             application/json:
@@ -153,7 +166,7 @@ paths:
                   <max-inbound-request>30</max-inbound-request>
                   <max-calls-per-second>30</max-calls-per-second>
                 </account-settings>
-        401:
+        '401':
           description: Not Authorised. You must supply your `api_key` and `api_secret` as query parameters to this request
 
   /accounts/{api_key}/secrets:
