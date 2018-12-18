@@ -18,7 +18,7 @@ paths:
       x-group: conversation
       summary: Create a conversation
       responses:
-        '201':
+        '200':
           $ref: '#/components/responses/ConversationLite'
       requestBody:
         $ref: '#/components/requestBodies/Conversation'
@@ -27,6 +27,10 @@ paths:
       operationId: listConversations
       x-group: conversation
       summary: List conversations
+      description: >
+          List all conversations associated with your application. 
+          This endpoint required an admin JWT. To find all conversations for
+          the currently logged in user, see [GET /users/:id/conversations](#getuserConversations)
       parameters:
         - $ref: '#/components/parameters/date_start'
         - $ref: '#/components/parameters/date_end'
@@ -109,6 +113,15 @@ paths:
                     $ref: '#/components/schemas/conversation_id'
                   name:
                     $ref: '#/components/schemas/name_conversation'
+                  numbers:
+                    type: object
+                    properties: {}
+                  properties:
+                    type: object
+                    properties:
+                      video:
+                        type: boolean
+                        example: false
                   display_name:
                     $ref: '#/components/schemas/display_name'
                   timestamp:
@@ -133,8 +146,8 @@ paths:
                           $ref: '#/components/schemas/member_state'
                         timestamp:
                           $ref: '#/components/schemas/timestamp_res_member'
-                        invited_by:
-                          $ref: '#/components/schemas/user_id_or_user_name'
+                        initiator:
+                          $ref: '#/components/schemas/initiator'
                         channel:
                           $ref: '#/components/schemas/channel'
                   api_key:
@@ -287,12 +300,17 @@ paths:
                     $ref: '#/components/schemas/channel'
                   href:
                     $ref: '#/components/schemas/href_member'
+                  initiator:
+                    $ref: '#/components/schemas/initiator'
       requestBody:
         content:
           application/json:
             schema:
               type: object
               description: 'Create a Member in invite state '
+              required:
+                - user_id
+                - channel
               properties:
                 action:
                   $ref: '#/components/schemas/member_action'
@@ -388,6 +406,7 @@ paths:
       operationId: createUser
       x-group: user
       summary: Create a user
+      description: 'Note: Users must be created with an admin JWT.'
       responses:
         '200':
           description: Create a user response
@@ -400,6 +419,8 @@ paths:
                     $ref: '#/components/schemas/name_user'
                   display_name:
                     $ref: '#/components/schemas/display_name_user'
+                  href:
+                    $ref: '#/components/schemas/href_user'
       requestBody:
         content:
           application/json:
@@ -434,6 +455,11 @@ paths:
                     $ref: '#/components/schemas/user_id'
                   name:
                     $ref: '#/components/schemas/name_user'
+                  channels:
+                    type: object
+                  href:
+                    type: string
+                    example: 'https://api.nexmo.com/beta/users/USR-63f61863-4a51-4f6b-86e1-46edebio0391'
     put:
       x-swagger-router-controller: users
       operationId: updateUser
@@ -505,11 +531,14 @@ paths:
                       description: the id of the last event of the conversation (event's id is an incremental number
                       example: '123'
                     href:
-                      type: string
-                      format: url
-                      example: 'https://api.nexmo.com/beta/users/USR-00578dcd-e3c1-4b67-adb9-1521d2ec9f9b/conversations/CON-63f61863-4a51-4f6b-86e1-46edebio0391'
+                      $ref: '#/components/schemas/href'
                     id:
                       $ref: '#/components/schemas/conversation_id'
+                    timestamp:
+                      type: object
+                      properties:
+                        created:
+                          $ref: '#/components/schemas/timestamp'
   /legs:
     get:
       x-swagger-router-controller: listLegs
@@ -624,6 +653,20 @@ paths:
           $ref: '#/components/responses/SuccessEmptyJSON'
 components:
   schemas:
+    initiator:
+      type: object
+      properties:
+        joined:
+          type: object
+          properties:
+            isSystem:
+              type: boolean
+              description: '`true` if the user was invited by an admin JWT. `user_id` and `member_id` will not exist if `true`'
+            user_id:
+                $ref: '#/components/schemas/user_id'
+            member_id:
+                $ref: '#/components/schemas/member_id'
+ 
     leg_state:
       type: string
       example: terminated
@@ -1057,7 +1100,6 @@ components:
             example: {}
     Conversation:
       description: Conversation Request Payload Object
-      required: true
       content:
         application/json:
           schema:
