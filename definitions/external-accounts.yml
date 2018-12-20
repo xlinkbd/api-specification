@@ -20,7 +20,7 @@ paths:
       summary: Create a Messenger account
       operationId: CreateMessengerAccount
       tags:
-        - messenger
+        - Facebook Messenger
       requestBody:
         required: true
         content:
@@ -117,7 +117,7 @@ paths:
       summary: Retrieve a Messenger account
       operationId: GetMessengerAccount
       tags:
-        - messenger
+        - Facebook Messenger
       parameters:
       - in: path
         name: external_id
@@ -147,7 +147,7 @@ paths:
       summary: Update a Messenger account
       operationId: UpdateMessengerAccount
       tags:
-        - messenger
+        - Facebook Messenger
       parameters:
       - in: path
         name: external_id
@@ -267,7 +267,7 @@ paths:
       summary: Delete a Messenger account
       operationId: DeleteMessengerAccount
       tags:
-        - messenger
+        - Facebook Messenger
       parameters:
       - in: path
         name: external_id
@@ -300,7 +300,7 @@ paths:
       summary: Retrieve a Viber Service Message account
       operationId: GetVSMAccount
       tags:
-        - viber_service_msg
+        - Viber Service Message
       parameters:
       - in: path
         name: external_id
@@ -331,7 +331,7 @@ paths:
       summary: Retrieve a Whatsapp account
       operationId: GetWAAccount
       tags:
-        - whatsapp
+        - WhatsApp
       parameters:
       - in: path
         name: external_id
@@ -362,7 +362,7 @@ paths:
       summary: Retrieve all accounts you own
       operationId: GetAllAccounts
       tags:
-        - account
+        - Account
       parameters:
       - in: query
         name: provider
@@ -455,7 +455,7 @@ paths:
       summary: Link application to an account
       operationId: LinkApplication
       tags:
-        - applications
+        - Application
       parameters:
       - in: path
         name: provider
@@ -542,7 +542,7 @@ paths:
       summary: Unlink application from an account
       operationId: UnliWithoutApplicationnkApplication
       tags:
-        - applications
+        - Application
       parameters:
       - in: path
         name: provider
