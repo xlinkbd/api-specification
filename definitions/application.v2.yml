@@ -16,7 +16,7 @@ servers:
 security:
   - basicAuth: []
 paths:
-  /v2/application:
+  /v2/applications:
     post:
       summary: Create an application
       operationId: createApplication
@@ -274,7 +274,7 @@ paths:
         '406':
           $ref: '../shared_errors.yml#/components/responses/InvalidAcceptHeader'
 
-  /v2/application/{id}:
+  /v2/applications/{id}:
     parameters:
       - name: id
         in: path
