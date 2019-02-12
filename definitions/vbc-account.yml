@@ -5,21 +5,22 @@ info:
   title: "Account API"
   description: "The Account API is a read-only API that enables you to retrieve details about an account."
   version: "1.0"
-  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
   contact:
     name: "Account API"
     url: "https://businesssupport.vonage.com/contactus"
   license:
     name: "Vonage"
-    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
 
 servers:
-- url: "https://api.vonage.com/"
+- url: "https://api.vonage.com"
   
 paths:
   /accounts/{account_id}:
     get:
       summary: Retrieve details about the specified account.
+      operationId: getAccount
       parameters:
         - in: path
           name: account_id
@@ -39,6 +40,7 @@ paths:
   /accounts/{account_id}/locations:
     get:
       summary: Retrieve a list of locations associated with a specified account.
+      operationId: getAllLocations
       parameters:
         - in: path
           name: account_id
@@ -60,6 +62,7 @@ paths:
   /accounts/{account_id}/locations/{location_id}:
     get:
       summary: Retrieve details of a specific location associated with an account.
+      operationId: getLocation
       parameters:
         - in: path
           name: account_id

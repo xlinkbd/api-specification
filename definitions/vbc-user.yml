@@ -5,21 +5,22 @@ info:
   title: "User API"
   description: "The User API is a read-only API that enables you to retrieve details about users associated with an account."
   version: "1.0"
-  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
   contact:
     name: "User API"
     url: "https://businesssupport.vonage.com/contactus"
   license:
     name: "Vonage"
-    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
 
 servers:
-- url: "https://api.vonage.com/"
+- url: "https://api.vonage.com"
   
 paths:
   /accounts/{account_id}/users:
     get:
       summary: Retrieve a list of users for the specified account.
+      operationId: getAllUsers
       parameters:
         - in: path
           name: account_id
@@ -71,6 +72,7 @@ paths:
   /accounts/{account_id}/users/{user_id}:
     get:
       summary: Retrieve details of the specified user.
+      operationId: getUser
       parameters:
         - in: path
           name: account_id
