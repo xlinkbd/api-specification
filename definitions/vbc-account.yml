@@ -1,0 +1,169 @@
+
+openapi: "3.0.0"
+
+info:
+  title: "Account API"
+  description: "The Account API is a read-only API that enables you to retrieve details about an account."
+  version: "1.0"
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+  contact:
+    name: "Account API"
+    url: "https://businesssupport.vonage.com/contactus"
+  license:
+    name: "Vonage"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+
+servers:
+- url: "https://api.vonage.com/"
+  
+paths:
+  /accounts/{account_id}:
+    get:
+      summary: Retrieve details about the specified account.
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account you want to retrieve details for. Use `self` to retrieve details about the current account.
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'    
+
+  /accounts/{account_id}/locations:
+    get:
+      summary: Retrieve a list of locations associated with a specified account.
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account you want to retrieve locations for. Use `self` to retrieve locations for the current account.
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items: 
+                  $ref: '#/components/schemas/Location'
+
+  /accounts/{account_id}/locations/{location_id}:
+    get:
+      summary: Retrieve details of a specific location associated with an account.
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account that the location is associated with. Use `self` to retrieve locations for the current account.
+        - in: path
+          name: location_id
+          schema:
+            type: string
+          required: true
+          description: The location ID you want to retrieve locations for. Use `self` to retrieve locations for the current account.          
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Location'                                            
+
+components:
+  schemas:
+    Account:
+      type: object
+      properties: 
+        id:
+          type: integer
+          example: 1123
+          description: The account ID.
+        name:
+          type: string
+          example: "Test Account"
+          description: The name of the account holder.
+        address:
+          type: object
+          properties: 
+            address_1:
+              type: string
+              example: "23 Main Street"
+              description: The first line of the account holder's address.
+            address_2:
+              type: string
+              example: ""
+              description: The second line of the account holder's address.      
+            city:
+              type: string
+              example: "Holmdel"
+              description: The account holder's city.  
+            state:
+              type: string
+              example: "NJ"
+              description: The account holder's state.       
+            postal_code:
+              type: string
+              example: "07733"
+              description: The account holder's postal code.      
+            country:
+              type: string
+              example: "US"
+              description: The account holder's country.
+
+    Location:
+      type: object
+      properties: 
+        id:
+          type: integer
+          example: 1123
+          description: The location ID.
+        name:
+          type: string
+          example: "Location 1"
+          description: The name of the location.
+        address:
+          type: object
+          properties: 
+            address_1:
+              type: string
+              example: "23 Main Street"
+              description: The first line of the location address.
+            address_2:
+              type: string
+              example: ""
+              description: The second line of the location address.      
+            city:
+              type: string
+              example: "Holmdel"
+              description: The location city.  
+            state:
+              type: string
+              example: "NJ"
+              description: The location state.       
+            postal_code:
+              type: string
+              example: "07733"
+              description: The postal code of the location.  
+            time_zone:
+              type: string
+              example: "America/New_York"
+              description: The location's time zone.                   
+            country:
+              type: string
+              example: "US"
+              description: The account holder's country.                                                    

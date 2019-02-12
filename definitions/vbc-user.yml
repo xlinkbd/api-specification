@@ -1,0 +1,154 @@
+
+openapi: "3.0.0"
+
+info:
+  title: "User API"
+  description: "The User API is a read-only API that enables you to retrieve details about users associated with an account."
+  version: "1.0"
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+  contact:
+    name: "User API"
+    url: "https://businesssupport.vonage.com/contactus"
+  license:
+    name: "Vonage"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+
+servers:
+- url: "https://api.vonage.com/"
+  
+paths:
+  /accounts/{account_id}/users:
+    get:
+      summary: Retrieve a list of users for the specified account.
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account you want to retrieve user details for. Use `self` to retrieve users belonging to the current account.
+        - in: query
+          name: first_name
+          schema:
+            type: string
+          required: false
+          description: The first name of the user(s) you want to retrieve.          
+        - in: query
+          name: last_name
+          schema:
+            type: string
+          required: false
+          description: The last name of the user(s) you want to retrieve.          
+        - in: query
+          name: login_name
+          schema:
+            type: string
+          required: false
+          description: The login name of the user you want to retrieve.          
+        - in: query
+          name: user_type
+          schema:
+            type: string
+          required: false
+          description: The type of users you want to retrieve details for.          
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: false
+          description: The email address of the user you want to retrieve.          
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'   
+
+  /accounts/{account_id}/users/{user_id}:
+    get:
+      summary: Retrieve details of the specified user.
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: integer
+          required: true
+          description: The ID of the account you want to retrieve user details for. Use `self` for both `account_id` and `user_id` to retrieve details about the current user.
+        - in: path
+          name: user_id
+          schema:
+            type: integer
+          required: true
+          description: Use `self` for both `user_id` and `account_id` to retrieve details about the current user.
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'   
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties: 
+        id:
+          type: integer
+          example: 1123
+          description: The user ID.
+        email:
+          type: string
+          example: "bob@example.com"
+          description: The user's email address.
+        first_name:
+          type: string
+          example: "Bob"
+          description: The user's name.   
+        last_name:
+          type: string
+          example: "Smith"
+          description: The user's last name.    
+        login_name:
+          type: string
+          example: "bsmith"
+          description: The user's login name.    
+        user_type:
+          type: string
+          example: "END_USER"
+          description: The type of user.                                     
+        contact_numbers:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                example: "Mobile"
+                description: "The type of number, for example: Mobile, Home or Fax."
+              value:
+                type: string
+                example: "732-867-5309"
+                description: The telephone number.
+        extensions:
+          type: array
+          items:
+            type: object
+            properties:
+              dids:
+                type: array
+                items:
+                  type: string
+                  example: "17328675309"
+                description: An array containing the Direct Inward Dial (DID) number(s) for the user's extension.
+              extension_number:
+                type: string
+                example: "1000"
+                description: The user's extension number.
+

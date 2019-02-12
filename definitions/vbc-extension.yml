@@ -1,0 +1,165 @@
+
+openapi: "3.0.0"
+
+info:
+  title: "Extension API"
+  description: "The Extension API is a read-only API that enables you to retrieve details of the extensions associated with an account."
+  version: "1.0"
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+  contact:
+    name: "Extension API"
+    url: "https://businesssupport.vonage.com/contactus"
+  license:
+    name: "Vonage"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos/"
+
+servers:
+- url: "https://api.vonage.com/"
+  
+paths:
+  /accounts/{account_id}/extensions:
+    get:
+      summary: Retrieve the extensions for the specified account
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account you want to list the extensions for
+        - in: query
+          name: login_name
+          schema:
+            type: string
+          required: false
+          description: The login name to list extensions for
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: false
+          description: The account email address
+        - in: query
+          name: location_id
+          schema:
+            type: integer
+          required: false
+          description: The location id of the account    
+        - in: query
+          name: phone_number
+          schema:
+            type: string
+          required: false
+          description: The DID phone number
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Extension'
+                  
+  /accounts/{account_id}/extensions/{extension_number}:
+    get:
+      summary: Retrieve details about the specified extension
+      parameters:
+        - in: path
+          name: account_id
+          schema:
+            type: string
+          required: true
+          description: The ID of the account you want to list the extensions for
+        - in: path
+          name: extension_number
+          schema:
+            type: integer
+          required: true
+          description: The number of the extension you want to retrieve details about
+
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Extension'                  
+
+components:
+  schemas:
+    Extension:
+      type: object
+      properties: 
+        extension_number:
+          type: integer
+          example: 900
+        user:
+          type: object
+          properties: 
+            email:
+              type: string
+              description: User email address
+            login_name:
+              type: string
+              description: User login            
+            first_name:
+              type: string
+              description: User first name           
+            last_name:
+              type: string
+              description: User last name
+        location_id:
+          type: integer
+          description: Location ID 
+          example: 267256
+        vtt_enabled:
+          type: boolean
+          description: VTT enabled? 
+          example: true    
+        blf_enabled:
+          type: boolean
+          description: BLF enabled? 
+          example: true 
+        sla_enabled:
+          type: boolean
+          description: SLA enabled? 
+          example: true 
+        dnd_enabled:
+          type: boolean
+          description: DND enabled? 
+          example: false   
+        caller_id:
+          type: string
+          description: Caller ID
+          example: "17328675309"
+        allow_monitoring:
+          type: boolean
+          description: Allow monitoring?
+          example: true
+        ala_monitoring:
+          type: boolean
+          description: ALA monitoring?
+          example: false      
+        block_caller_id:
+          type: boolean
+          description: Block caller ID?
+          example: false
+        dids:
+          type: object
+          properties:
+            phone_number:
+              type: string
+              example: "17328675309"
+            custom_tag:
+              type: string
+        handsets:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Vonage Desktop Softphone"
+            sip_id:
+              type: string    
+              example: "VH4258231"
