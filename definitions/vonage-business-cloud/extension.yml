@@ -54,7 +54,7 @@ paths:
           description: The DID phone number
 
       responses:
-        200:
+        '200':
           description: Successful response
           content:
             application/json:
@@ -82,7 +82,7 @@ paths:
         description: The number of the extension you want to retrieve details about
 
       responses:
-        200:
+        '200':
           description: Successful response
           content:
             application/json:
