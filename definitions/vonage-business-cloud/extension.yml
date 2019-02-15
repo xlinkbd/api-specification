@@ -22,12 +22,7 @@ paths:
       summary: Retrieve the extensions for the specified account
       operationId: getAllExtensions
       parameters:
-        - in: path
-          name: account_id
-          schema:
-            type: string
-          required: true
-          description: The ID of the account you want to list the extensions for
+        - $ref: '/components/parameters/AccountIdParam'
         - in: query
           name: login_name
           schema:
@@ -61,19 +56,14 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Extension'
+                  $ref: '#/components/responses/Extension'
                   
   /accounts/{account_id}/extensions/{extension_number}:
     get:
       summary: Retrieve details about the specified extension
       operationId: getExtension
       parameters:
-      - in: path
-        name: account_id
-        schema:
-          type: string
-        required: true
-        description: The ID of the account you want to list the extensions for
+      - $ref: '/components/parameters/AccountIdParam'
       - in: path
         name: extension_number
         schema:
@@ -87,10 +77,19 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Extension'                  
+                $ref: '#/components/responses/Extension'                  
 
 components:
-  schemas:
+  parameters:
+    AccountIdParam:
+      in: path
+      name: account_id
+      schema:
+        type: string
+      required: true
+      description: The ID of the account you want to list the extensions for
+
+  responses:
     Extension:
       type: object
       properties: 

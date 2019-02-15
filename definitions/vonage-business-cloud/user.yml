@@ -67,7 +67,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/User'   
+                  $ref: '#/components/responses/User'   
 
   /accounts/{account_id}/users/{user_id}:
     get:
@@ -93,11 +93,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'   
+                $ref: '#/components/responses/User'   
 
 
 components:
-  schemas:
+  responses:
     User:
       type: object
       properties: 

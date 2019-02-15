@@ -35,7 +35,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Account'    
+                $ref: '#/components/responses/Account'    
 
   /accounts/{account_id}/locations:
     get:
@@ -57,7 +57,7 @@ paths:
               schema:
                 type: array
                 items: 
-                  $ref: '#/components/schemas/Location'
+                  $ref: '#/components/responses/Location'
 
   /accounts/{account_id}/locations/{location_id}:
     get:
@@ -83,10 +83,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Location'                                            
+                $ref: '#/components/responses/Location'                                            
 
 components:
-  schemas:
+  responses:
     Account:
       type: object
       properties: 
