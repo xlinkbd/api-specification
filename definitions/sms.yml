@@ -38,7 +38,7 @@ paths:
             maxLength: 8
         - name: api_secret
           description: Your API secret. Required unless `sig` is provided
-          required: true
+          required: false
           in: query
           example: abcdef0123456789
           schema:
