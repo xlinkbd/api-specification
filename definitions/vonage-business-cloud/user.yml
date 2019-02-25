@@ -4,7 +4,7 @@ info:
   version: 1.10.1
   title: User API
   description: Retrieve information about users
-  termsOfService: ""
+  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
 servers:
 - url: "https://api.vonage.com"  
 paths:
