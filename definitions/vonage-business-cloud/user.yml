@@ -3,8 +3,14 @@ openapi: 3.0.0
 info:
   version: 1.10.1
   title: User API
-  description: Retrieve information about users
-  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
+  description: Retrieve information about users.
+  contact:
+    name: "User API"
+    url: "https://businesssupport.vonage.com/contactus"
+  license:
+    name: "Vonage"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
+
 servers:
 - url: "https://api.vonage.com"  
 paths:
@@ -19,48 +25,50 @@ paths:
           required: false
           schema:
             type: number
+          description: Page size for pagination
         - in: query
           name: cursor
           required: false
           schema:
             type: number
-        - description: ASC or DESC
-          in: query
+          description: Cursor for pagination
+        - in: query
           name: order
           required: false
           schema:
             type: string
-        - description: filter by first name
-          in: query
+          description: ASC or DESC
+        - in: query
           name: first_name
           required: false
           schema:
             type: string
-        - description: filter by last name
-          in: query
+          description: filter by first name
+        - in: query
           name: last_name
           required: false
           schema:
             type: string
-        - description: filter by login name
-          in: query
+          description: filter by last name
+        - in: query
           name: login_name
           required: false
           schema:
             type: string
-        - description: filter by email address
-          in: query
+          description: filter by login name
+        - in: query
           name: email
           required: false
           schema:
             type: string
+          description: filter by email address
       responses:
         "200":
           description: Success
           content:
             "application/json":
               schema:
-                $ref: "#/components/responses/UsersHalResponse"
+                $ref: "#/components/schemas/UsersHalResponse"
       security:
         - LoginName:
             []
@@ -76,13 +84,14 @@ paths:
           required: true
           schema:
             type: number
+          description: The ID of the user
       responses:
         "200":
           description: Success
           content:
             "application/json":
               schema:
-                $ref: "#/components/responses/UserHalResponse"
+                $ref: "#/components/schemas/UserHalResponse"
         "404":
           description: User not found
       security:
@@ -103,31 +112,7 @@ components:
       required: true
       schema:
         type: string
-
-  responses:
-    UserHalResponse:
-      properties:
-        page_size:
-          type: number
-        cursor:
-          type: number
-        _links:
-          $ref: "#/components/schemas/Links"
-        _embedded:
-          $ref: "#/components/schemas/UserEmbeddedObject"
-      type: object
-
-    UsersHalResponse:
-      properties:
-        page_size:
-          type: number
-        cursor:
-          type: number
-        _links:
-          $ref: "#/components/schemas/Links"
-        _embedded:
-          $ref: "#/components/schemas/UsersEmbeddedObject"
-      type: object
+      description: The account ID
 
   schemas:
     Href:
@@ -201,3 +186,27 @@ components:
         data:
           $ref: "#/components/schemas/User"
       type: object
+
+    UserHalResponse:
+      properties:
+        page_size:
+          type: number
+        cursor:
+          type: number
+        _links:
+          $ref: "#/components/schemas/Links"
+        _embedded:
+          $ref: "#/components/schemas/UserEmbeddedObject"
+      type: object
+
+    UsersHalResponse:
+      properties:
+        page_size:
+          type: number
+        cursor:
+          type: number
+        _links:
+          $ref: "#/components/schemas/Links"
+        _embedded:
+          $ref: "#/components/schemas/UsersEmbeddedObject"
+      type: object  
