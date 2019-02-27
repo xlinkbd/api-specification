@@ -4,7 +4,13 @@ info:
   version: 1.10.1
   title: Account API
   description: Retrieve information about accounts.
-  termsOfService: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
+  contact:
+    name: "Account API"
+    url: "https://businesssupport.vonage.com/contactus"
+  license:
+    name: "Vonage"
+    url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
+
 servers:
 - url: "https://api.vonage.com"  
 paths:
@@ -20,7 +26,7 @@ paths:
           content:
             "application/json":
               schema:
-                $ref: "#/components/responses/AccountHalResponse"
+                $ref: "#/components/schemas/AccountHalResponse"
         "404":
           description: Account not found
       security:
@@ -39,7 +45,7 @@ paths:
           content:
             "application/json":
               schema:
-                $ref: "#/components/responses/LocationsHalResponse"
+                $ref: "#/components/schemas/LocationsHalResponse"
       security:
         - LoginName:
             []
@@ -55,13 +61,14 @@ paths:
           required: true
           schema:
             type: number
+          description: The location ID
       responses:
         "200":
           description: Success
           content:
             "application/json":
               schema:
-                $ref: "#/components/responses/LocationHalResponse"
+                $ref: "#/components/schemas/LocationHalResponse"
         "404":
           description: Location not found
       security:
@@ -70,7 +77,6 @@ paths:
       summary: Get location data by account ID and location ID
 
 components:
-
   securitySchemes:
     LoginName:
       type: apiKey
@@ -83,58 +89,23 @@ components:
       name: account_id
       required: true
       schema:
-        type: string 
-
-  responses:
-    AccountHalResponse:
-      properties:
-        page_size:
-          type: number
-        cursor:
-          type: number
-        _links:
-          $ref: "#/components/schemas/Links"
-        _embedded:
-          $ref: "#/components/schemas/AccountEmbeddedObject"
-      type: object
-    LocationHalResponse:
-      properties:
-        page_size:
-          type: number
-        cursor:
-          type: number
-        _links:
-          $ref: "#/components/schemas/Links"
-        _embedded:
-          $ref: "#/components/schemas/LocationEmbeddedObject"
-      type: object
-    LocationsHalResponse:
-      properties:
-        page_size:
-          type: number
-        cursor:
-          type: number
-        _links:
-          $ref: "#/components/schemas/Links"
-        _embedded:
-          $ref: "#/components/schemas/LocationsEmbeddedObject"
-      type: object
+        type: string
+      description: The account ID
 
   schemas:
     Href:
       properties:
         href:
           type: string
-      type: object
     Links:
       properties:
         first:
           $ref: "#/components/schemas/Href"
-        prev:
+        prev:       
           $ref: "#/components/schemas/Href"
-        self:
+        self:       
           $ref: "#/components/schemas/Href"
-        next:
+        next:       
           $ref: "#/components/schemas/Href"
       type: object
 
@@ -212,6 +183,42 @@ components:
       properties:
         data:
           $ref: "#/components/schemas/Location"
+      type: object
+
+    AccountHalResponse:
+      type: object
+      properties:
+        page_size:         
+          type: number
+        cursor:                  
+          type: number
+        _links:
+          $ref: "#/components/schemas/Links"
+        _embedded:
+          $ref: "#/components/schemas/AccountEmbeddedObject"        
+    LocationHalResponse:
+      description: Data for the specific location
+      properties:
+        page_size:
+          type: number          
+        cursor:
+          type: number          
+        _links:
+          $ref: "#/components/schemas/Links"
+        _embedded:
+          $ref: "#/components/schemas/LocationEmbeddedObject"
+      type: object
+    LocationsHalResponse:
+      description: Data for all associated locations
+      properties:
+        page_size:
+          type: number         
+        cursor:
+          type: number          
+        _links:
+          $ref: "#/components/schemas/Links"
+        _embedded:
+          $ref: "#/components/schemas/LocationsEmbeddedObject"
       type: object
 
   
