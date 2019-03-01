@@ -2,7 +2,7 @@ openapi: "3.0.2"
 info:
   title: "Nexmo Account API"
   version: "0.1"
-  summary: >-
+  description : >-
     Enables users to manage their Nexmo Account by programmable means. More information is available here: https://developer.nexmo.com/account/overview.
   contact:
     name: Nexmo.com
