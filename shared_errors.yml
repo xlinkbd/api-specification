@@ -40,7 +40,7 @@ components:
               instance:
                 $ref: '#/components/fields/instance'
     NotFoundError:
-      description: Credential is missing or invalid
+      description: Resource Not Found
       content:
         application/json:
           schema:
@@ -57,7 +57,7 @@ components:
               instance:
                 $ref: '#/components/fields/instance'
     InvalidRequestMethod:
-      description: Credential is missing or invalid
+      description: Invalid Request Method
       content:
         application/json:
           schema:
@@ -74,7 +74,7 @@ components:
               instance:
                 $ref: '#/components/fields/instance'
     InvalidAcceptHeader:
-      description: Credential is missing or invalid
+      description: Invalid Accept Header
       content:
         application/json:
           schema:
