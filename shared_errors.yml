@@ -91,7 +91,7 @@ components:
               instance:
                 $ref: '#/components/fields/instance'
     UnsupportedContentTypeHeader:
-      description: Invalid Content Type Header
+      description: Unsupported Content Type Header
       content:
         application/json:
           schema:
