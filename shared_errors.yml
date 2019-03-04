@@ -90,3 +90,20 @@ components:
                 example: "Invalid Accept header provided. Must be one of the following: 'application/json'"
               instance:
                 $ref: '#/components/fields/instance'
+    UnsupportedContentTypeHeader:
+      description: Invalid Content Type Header
+      content:
+        application/json:
+          schema:
+            properties:
+              type:
+                type: string
+                example: 'https://developer.nexmo.com/api-errors#content-type-header'
+              title:
+                type: string
+                example: Unsupported Content-Type header
+              detail:
+                type: string
+                example: "Unsupported Content-Type header provided. Must be one of the following: 'application/json'"
+              instance:
+                $ref: '#/components/fields/instance'
