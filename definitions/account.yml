@@ -131,7 +131,7 @@ paths:
                     Send an empty string to unset this value.
                   type: string
                   format: url
-                  example: https://fabulous.example.com/incoming/sms
+                  example: https://example.com/webhooks/inbound-sms
                 drCallBackUrl:
                   description: >-
                     The URL where Nexmo will send a webhook when an delivery
@@ -140,7 +140,7 @@ paths:
                     Send an empty string to unset this value.
                   type: string
                   format: url
-                  example: https://fabulous.example.com/incoming/delivery-receipt
+                  example: https://example.com/webhooks/delivery-receipt
       responses:
         '200':
           description: OK. Settings were updated if supplied, the details of the current settings are included in the response.
@@ -150,8 +150,8 @@ paths:
                 $ref: '#/components/schemas/accountSettings'
               example: >-
                 {
-                  "mo-callback-url": "https:\/\/fabulous.example.com\/incoming\/sms",
-                  "dr-callback-url": "https:\/\/fabulous.example.com\/incoming\/delivery-receipt",
+                  "mo-callback-url": "https:\/\/example.com\/webhooks\/inbound-sms",
+                  "dr-callback-url": "https:\/\/example.com\/webhooks\/delivery-receipt",
                   "max-outbound-request": 30,
                   "max-inbound-request": 30,
                   "max-calls-per-second": 30
@@ -162,8 +162,8 @@ paths:
               example: >-
                 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
                 <account-settings>
-                  <mo-callback-url>https://fabulous.example.com/incoming/sms</mo-callback-url>
-                  <dr-callback-url>https://fabulous.example.com/incoming/delivery-receipt</dr-callback-url>
+                  <mo-callback-url>https://example.com/webhooks/inbound-sms</mo-callback-url>
+                  <dr-callback-url>https://example.com/webhooks/delivery-receipt</dr-callback-url>
                   <max-outbound-request>30</max-outbound-request>
                   <max-inbound-request>30</max-inbound-request>
                   <max-calls-per-second>30</max-calls-per-second>
@@ -458,12 +458,12 @@ components:
           type: string
           format: url
           description: The current or updated inbound message URI
-          example: https://fabulous.example.com/incoming/sms
+          example: https://example.com/webhooks/inbound-sms
         dr-callback-url:
           type: string
           format: url
           description: The current or updated delivery receipt URI
-          example: https://fabulous.example.com/incoming/delivery-receipt
+          example: https://example.com/webhooks/delivery-receipt
         max-outbound-request:
           type: integer
           description: The maximum number of outbound messages per second.
