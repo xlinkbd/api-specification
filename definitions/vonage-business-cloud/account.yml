@@ -30,8 +30,7 @@ paths:
         "404":
           description: Account not found
       security:
-        - LoginName:
-            []
+        - bearerAuth: []
       summary: Get account data by ID
 
   "/api/accounts/{account_id}/locations":
@@ -47,8 +46,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/LocationsHalResponse"
       security:
-        - LoginName:
-            []
+        - bearerAuth: []
       summary: Get account locations data by account ID
 
   "/api/accounts/{account_id}/locations/{location_id}":
@@ -72,16 +70,16 @@ paths:
         "404":
           description: Location not found
       security:
-        - LoginName:
-            []
+        - bearerAuth: []
       summary: Get location data by account ID and location ID
 
 components:
   securitySchemes:
-    LoginName:
-      type: apiKey
-      name: x-von-user
-      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: OAuth
+
 
   parameters:
     AccountID:
