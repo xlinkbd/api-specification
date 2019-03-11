@@ -3,7 +3,7 @@ info:
   title: "Nexmo Account API"
   version: "0.1"
   description : >-
-    Enables users to manage their Nexmo Account by programmable means. More information is available here: https://developer.nexmo.com/account/overview.
+    Enables users to manage their Nexmo Account by programmable means. More information is available here: <https://developer.nexmo.com/account/overview>.
   contact:
     name: Nexmo.com
     url: "https://developer.nexmo.com"
@@ -223,7 +223,11 @@ paths:
         '401':
           $ref: '#/components/responses/BadCredentialsError'
         '404':
-          $ref: '#/components/responses/NotFoundError'
+          description: "Item not found"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorAPIKeyNotFound'
     post:
       summary: Create API Secret
       operationId: createAPISecret
@@ -272,19 +276,27 @@ paths:
                   "created_at": "2018-12-03T10:07:23Z"
                 }
         '400':
-          description: Bad Request
+          description: Bad request. This usually indicates valid data but can also occur when a user has exceeded the allowed number of secrets on their account.
           content:
             application/json:
               schema:
                 properties:
                   type:
-                    $ref: '#/components/schemas/errorType'
+                    type: string
+                    description: URL for further information
+                    example: https://developer.nexmo.com/api-errors/account/secret-management#validation
                   title:
-                    $ref: '#/components/schemas/errorTitle'
+                    type: string
+                    description: Description of the error
+                    example: Bad Request
                   detail:
-                    $ref: '#/components/schemas/errorDetail'
+                    type: string
+                    description: More detail regarding this error, including the API key supplied
+                    example: The request failed due to secret validation errors
                   instance:
-                    $ref: '#/components/schemas/errorInstance'
+                    type: string
+                    description: Internal Trace ID
+                    example: bf0ca0bf927b3b52e3cb03217e1a1ddf
                   invalid_parameters:
                     type: array
                     description: Array of the parameters that are considered invalid, and explanations of why
@@ -301,22 +313,12 @@ paths:
                           example: Does not meet complexity requirements
         '401':
           $ref: '#/components/responses/BadCredentialsError'
-        '403':
-          description: This operation is forbidden. Either you do not have access to add a secret, or your account has the maximum number of secrets (usually two) and cannot add another.
+        '404':
+          description: "Item not found"
           content:
             application/json:
               schema:
-                properties:
-                  type:
-                    $ref: '#/components/schemas/errorType'
-                  title:
-                    $ref: '#/components/schemas/errorTitle'
-                  detail:
-                    $ref: '#/components/schemas/errorDetail'
-                  instance:
-                    $ref: '#/components/schemas/errorInstance'
-        '404':
-          $ref: '#/components/responses/NotFoundError'
+                $ref: '#/components/schemas/ErrorAPIKeyNotFound'
   
   /accounts/{api_key}/secrets/{secret_id}:
     get:
@@ -349,7 +351,13 @@ paths:
         '401':
           $ref: '#/components/responses/BadCredentialsError'
         '404':
-          $ref: '#/components/responses/NotFoundError'
+          description: "Item not found"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorAPIKeyNotFound'
+                  - $ref: '#/components/schemas/ErrorSecretIDNotFound'
     delete:
       summary: Revoke an API Secret
       operationId: revokeAPISecret
@@ -372,16 +380,29 @@ paths:
               schema:
                 properties:
                   type:
-                    $ref: '#/components/schemas/errorType'
+                    type: string
+                    description: URL for further information
+                    example: https://developer.nexmo.com/api-errors/account/secret-management#delete-last-secret
                   title:
-                    $ref: '#/components/schemas/errorTitle'
+                    type: string
+                    description: Description of the error
+                    example: Secret Deletion Forbidden
                   detail:
-                    $ref: '#/components/schemas/errorDetail'
+                    type: string
+                    description: More detail regarding this error
+                    example: Can not delete the last secret. The account must always have at least 1 secret active at any time
                   instance:
-                    $ref: '#/components/schemas/errorInstance'
+                    type: string
+                    description: Internal Trace ID
+                    example: bf0ca0bf927b3b52e3cb03217e1a1ddf
         '404':
-          $ref: '#/components/responses/NotFoundError'
-
+          description: "Item not found"
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ErrorAPIKeyNotFound'
+                  - $ref: '#/components/schemas/ErrorSecretIDNotFound'
 
 tags:
   - name: Balance
@@ -500,23 +521,58 @@ components:
             href:
               type: string
               description: The URI for this resource
-    errorType:
-      type: string
-      description: A link to documentation on the type of error that occurred
-      example: >-
-        https://developer.nexmo.com/api-errors/account/secret-management#validation
-    errorTitle:
-      type: string
-      description: Summary description of the error
-      example: Invalid API Key
-    errorDetail:
-      type: string
-      description: Further explanation or detail of the error
-      example: API key 'ABC123' does not exist, or you do not have access
-    errorInstance:
-      type: string
-      description: An internal identifier that may assist Nexmo in identifying the circumstances of the error
-      example: 797a8f199c45014ab7b08bfe9cc1c12c
+    ErrorAPIKeyNotFound:
+      description: This API key was not recognised
+      type: object
+      required:
+        - type
+        - title
+        - detail
+        - instance
+      properties:
+        type:
+          type: string
+          description: URL for further information
+          # example: https://developer.nexmo.com/api-errors#invalid-id
+          example: https://developer.nexmo.com/api-errors#invalid-api-key
+        title:
+          type: string
+          description: Description of the error
+          example: Invalid API Key
+        detail:
+          type: string
+          description: More detail regarding this error, including the API key supplied
+          example: API key 'abc123' not found
+        instance:
+          type: string
+          description: Internal Trace ID
+          example: bf0ca0bf927b3b52e3cb03217e1a1ddf
+
+    ErrorSecretIDNotFound:
+      description: This secret ID was not recognised
+      type: object
+      required:
+        - type
+        - title
+        - detail
+        - instance
+      properties:
+        type:
+          type: string
+          description: URL for further information
+          example: https://developer.nexmo.com/api-errors#invalid-id
+        title:
+          type: string
+          description: Description of the error
+          example: Invalid ID
+        detail:
+          type: string
+          description: More detail regarding this error, including the secret ID supplied
+          example: ID '07239aeb-d756-4c32-a1de-cf64f8b21827' could not be found
+        instance:
+          type: string
+          description: Internal Trace ID
+          example: bf0ca0bf927b3b52e3cb03217e1a1ddf
 
   responses: 
     BadCredentialsError:
@@ -526,26 +582,18 @@ components:
           schema:
             properties:
               type:
-                $ref: '#/components/schemas/errorType'
+                type: string
+                description: URL for further information
+                example: https://developer.nexmo.com/
               title:
-                $ref: '#/components/schemas/errorTitle'
+                type: string
+                description: Description of the error
+                example: Unauthorized
               detail:
-                $ref: '#/components/schemas/errorDetail'
+                type: string
+                description: More detail regarding this error, including the expected value
+                example: Invalid credentials format. Expected: "Authorization: (Base64(UTF-8(apiKey:secret)))"
               instance:
-                $ref: '#/components/schemas/errorInstance'
-    NotFoundError:
-      description: Resource could not be found
-      content:
-        application/json:
-          schema:
-            properties:
-              type:
-                $ref: '#/components/schemas/errorType'
-              title:
-                $ref: '#/components/schemas/errorTitle'
-              detail:
-                $ref: '#/components/schemas/errorDetail'
-              instance:
-                $ref: '#/components/schemas/errorInstance'
-
-
+                type: string
+                description: Internal Trace ID
+                example: bf0ca0bf927b3b52e3cb03217e1a1ddf
