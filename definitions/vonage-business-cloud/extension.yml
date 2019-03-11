@@ -63,16 +63,16 @@ paths:
           description: Filter by email address
           example: "john.smith@example.com"
       responses:
-        "200":
+        '200':
           description: Success
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/EndUserRouteHalResponse"
-        "400":
+        '400':
           description: Invalid parameters given
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/ValidationErrorsResponse"
       security:
@@ -92,16 +92,16 @@ paths:
           description: The extension number
           example: 789
       responses:
-        "200":
+        '200':
           description: Success
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/EndUserRouteHalResponse"
-        "404":
+        '404':
           description: Extension not found
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
       security:

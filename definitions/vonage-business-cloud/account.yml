@@ -21,13 +21,13 @@ paths:
       parameters:
         - $ref: "#/components/parameters/AccountID"
       responses:
-        "200":
+        '200':
           description: Success
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/AccountHalResponse"
-        "404":
+        '404':
           description: Account not found
       security:
         - bearerAuth: []
@@ -39,10 +39,10 @@ paths:
       parameters:
         - $ref: "#/components/parameters/AccountID"
       responses:
-        "200":
+        '200':
           description: Success
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/LocationsHalResponse"
       security:
@@ -62,13 +62,13 @@ paths:
           description: The location ID
           example: 123456
       responses:
-        "200":
+        '200':
           description: Success
           content:
-            "application/json":
+            application/json:
               schema:
                 $ref: "#/components/schemas/LocationHalResponse"
-        "404":
+        '404':
           description: Location not found
       security:
         - bearerAuth: []
