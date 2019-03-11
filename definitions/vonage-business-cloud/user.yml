@@ -12,7 +12,7 @@ info:
     url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
 
 servers:
-- url: "https://api.vonage.com"  
+- url: "https://api.vonage.com"
 paths:
 
   "/api/accounts/{account_id}/users":
@@ -70,8 +70,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/UsersHalResponse"
       security:
-        - LoginName:
-            []
+        - bearerAuth: []
       summary: Get account users data by account ID
 
   "/api/accounts/{account_id}/users/{user_id}":
@@ -95,15 +94,14 @@ paths:
         "404":
           description: User not found
       security:
-        - LoginName:
-            []
+        - bearerAuth: []
       summary: Get user data by account ID and user ID
 components:
   securitySchemes:
-    LoginName:
-      type: apiKey
-      name: x-von-user
-      in: header
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: OAuth
 
   parameters:
     AccountID:
@@ -209,4 +207,4 @@ components:
           $ref: "#/components/schemas/Links"
         _embedded:
           $ref: "#/components/schemas/UsersEmbeddedObject"
-      type: object  
+      type: object
