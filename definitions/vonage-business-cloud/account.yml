@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.0
 info:
-  version: 1.10.1
+  version: 1.11.7
   title: Account API
   description: Retrieve information about accounts.
   contact:
@@ -12,7 +12,7 @@ info:
     url: "https://www.vonage.com/business/legal-policy-center/business-cloud/tos"
 
 servers:
-- url: "https://api.vonage.com"  
+- url: "https://api.vonage.com/t/vbc.prod/provisioning"  
 paths:
 
   "/api/accounts/{account_id}":
@@ -60,6 +60,7 @@ paths:
           schema:
             type: number
           description: The location ID
+          example: 123456
       responses:
         "200":
           description: Success
@@ -87,50 +88,92 @@ components:
       name: account_id
       required: true
       schema:
-        type: string
+        type: number
       description: The account ID
+      example: 123456
 
   schemas:
-    Href:
+    FirstHref:
       properties:
         href:
           type: string
+      description: URL to the first page of records
+    PrevHref:
+      properties:
+        href:
+          type: string
+      description: URL to the previous page of records
+    SelfHref:
+      properties:
+        href:
+          type: string
+      description: URL to the current page of records
+    NextHref:
+      properties:
+        href:
+          type: string
+      description: URL to the next page of records
+    LastHref:
+      properties:
+        href:
+          type: string
+      description: URL to the last page of records                                
     Links:
       properties:
         first:
-          $ref: "#/components/schemas/Href"
+          $ref: "#/components/schemas/FirstHref"
         prev:       
-          $ref: "#/components/schemas/Href"
+          $ref: "#/components/schemas/PrevHref"
         self:       
-          $ref: "#/components/schemas/Href"
+          $ref: "#/components/schemas/SelfHref"
         next:       
-          $ref: "#/components/schemas/Href"
+          $ref: "#/components/schemas/NextHref"
+        last:       
+          $ref: "#/components/schemas/LastHref"          
       type: object
 
     Address:
       properties:
         address_1:
           type: string
+          example: "123 Example Street"
+          description: Street portion of the address
         address_2:
           type: string
+          example: "Apt. 456"
+          description: Additional address information
         country:
           type: string
+          example: "US"
+          description: Country code
         state:
           type: string
+          example: "NJ"
+          description: State/Province code
         city:
           type: string
+          example: "Holmdel"
+          description: City name
         postal_code:
           type: string
+          example: "07733"
+          description: Postal code
       type: object
 
     Account:
       properties:
         id:
           type: number
+          example: 123456
+          description: Unique identifier of the account
         name:
           type: string
+          example: "Vonage"
+          description: Name of the account
         status:
           type: string
+          example: "ACTIVE"
+          description: Status of the account
         address:
           $ref: "#/components/schemas/Address"
       type: object
@@ -140,31 +183,50 @@ components:
         data:
           $ref: "#/components/schemas/Account"
       type: object
+      description: Account object
 
     AddressWithTimeZone:
       properties:
         address_1:
           type: string
+          example: "123 Example Street"
+          description: Street portion of the address
         address_2:
           type: string
+          example: "Apt. 456"
+          description: Additional address information
         country:
           type: string
+          example: "US"
+          description: Country code
         state:
           type: string
+          example: "NJ"
+          description: State/Province code
         city:
           type: string
+          example: "Holmdel"
+          description: City name
         postal_code:
           type: string
+          example: "07733"
+          description: Postal code
         time_zone:
           type: string
+          example: "America/New York"
+          description: Time zone
       type: object
 
     Location:
       properties:
         id:
           type: number
+          example: 123456
+          description: Unique identifier of the location
         name:
           type: string
+          example: "Headquarters"
+          description: Name of the location
         address:
           $ref: "#/components/schemas/AddressWithTimeZone"
       type: object
@@ -176,43 +238,75 @@ components:
             $ref: "#/components/schemas/Location"
           type: array
       type: object
+      description: Collection of location objects
 
     LocationEmbeddedObject:
       properties:
         data:
           $ref: "#/components/schemas/Location"
       type: object
+      description: Location object
 
     AccountHalResponse:
       type: object
       properties:
         page_size:         
           type: number
-        cursor:                  
+          example: 100
+          description: Number of records per page
+        page:                  
           type: number
+          example: 1
+          description: Current page number
+        total_pages:
+          type: number
+          example: 10
+          description: Total number of pages
+        total_items:
+          type: number
+          example: 100        
+          description: Total number of records
         _links:
           $ref: "#/components/schemas/Links"
         _embedded:
           $ref: "#/components/schemas/AccountEmbeddedObject"        
     LocationHalResponse:
-      description: Data for the specific location
       properties:
-        page_size:
-          type: number          
-        cursor:
-          type: number          
+        page_size:         
+          type: number
+          example: 100
+          description: Number of records per page
+        page:                  
+          type: number
+          example: 1
+          description: Current page number
+        total_pages:
+          type: number
+          example: 10
+          description: Total number of pages
+        total_items:
+          type: number
+          example: 100        
+          description: Total number of records
         _links:
           $ref: "#/components/schemas/Links"
         _embedded:
           $ref: "#/components/schemas/LocationEmbeddedObject"
       type: object
     LocationsHalResponse:
-      description: Data for all associated locations
       properties:
-        page_size:
-          type: number         
-        cursor:
-          type: number          
+        page_size:         
+          type: number
+          example: 100
+        page:                  
+          type: number
+          example: 1
+        total_pages:
+          type: number
+          example: 10
+        total_items:
+          type: number
+          example: 100              
         _links:
           $ref: "#/components/schemas/Links"
         _embedded:
