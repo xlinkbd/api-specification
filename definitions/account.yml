@@ -592,7 +592,7 @@ components:
               detail:
                 type: string
                 description: More detail regarding this error, including the expected value
-                example: Invalid credentials format. Expected: "Authorization: (Base64(UTF-8(apiKey:secret)))"
+                example: "Invalid credentials format. Expected: \"Authorization: (Base64(UTF-8(apiKey:secret)))\""
               instance:
                 type: string
                 description: Internal Trace ID
