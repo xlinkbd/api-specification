@@ -28,6 +28,10 @@ paths:
     get:
       operationId: getNumberInsightBasic
       summary: Basic Number Insight
+      description: |
+        Provides [basic number insight](/number-insight/overview#basic-standard-and-advanced-apis) information about a number.
+
+        Note that this endpoint also supports [POST] requests.
       parameters:
         - $ref: '#/components/parameters/number'
         - $ref: '#/components/parameters/country'
@@ -47,6 +51,10 @@ paths:
     get:
       operationId: getNumberInsightStandard
       summary: Standard Number Insight
+      description: |
+        Provides [standard number insight](/number-insight/overview#basic-standard-and-advanced-apis) information about a number.
+
+        Note that this endpoint also supports [POST] requests.      
       parameters:
         - $ref: '#/components/parameters/number'
         - $ref: '#/components/parameters/country'
@@ -67,6 +75,10 @@ paths:
     get:
       operationId: getNumberInsightAdvanced
       summary: Advanced Number Insight (sync)
+      description: |
+        Provides [advanced number insight](/number-insight/overview#basic-standard-and-advanced-apis) information about a number synchronously, in the same way that the basic and standard endpoints do.
+
+        Note that this endpoint also supports [POST] requests.
       parameters:
         - $ref: '#/components/parameters/number'
         - $ref: '#/components/parameters/country'
@@ -88,6 +100,10 @@ paths:
     get:
       operationId: getNumberInsightAsync
       summary: Advanced Number Insight (async)
+      description: |
+        Provides [advanced number insight](/number-insight/overview#basic-standard-and-advanced-apis) number information **asynchronously** using the URL specified in the `callback` parameter.
+
+        Note that this endpoint also supports [POST] requests.
       parameters:
         - $ref: '#/components/parameters/callback'
         - $ref: '#/components/parameters/number'
