@@ -1,7 +1,7 @@
 ---
 openapi: "3.0.0"
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: "Application API"
   description: |
     Nexmo provides an Application API to allow programatic management of your Nexmo Applications.
@@ -20,7 +20,8 @@ paths:
     post:
       summary: Create an application
       operationId: createApplication
-      x-group: application
+      tags:
+        - Application
       requestBody:
         required: true
         content:
@@ -307,7 +308,8 @@ paths:
     put:
       summary: Update an application
       operationId: updateApplication
-      x-group: application
+      tags:
+        - Application
       requestBody:
        required: true
        content:
@@ -485,9 +487,10 @@ paths:
           $ref: '../shared_errors.yml#/components/responses/UnsupportedContentTypeHeader'
     delete:
       operationId: deleteApplication
-      x-group: application
       summary: Delete an application
       description: Deleting an application **cannot be undone**.
+      tags:
+        - Application
       responses:
         '204':
           description: Success
@@ -500,10 +503,8 @@ paths:
         '406':
           $ref: '../shared_errors.yml#/components/responses/InvalidAcceptHeader'
 
-x-groups:
-  application:
-    name: Application
-    order: 1
+tags:
+  - name: Application
     description: Manage your Nexmo applications
 
 components:
