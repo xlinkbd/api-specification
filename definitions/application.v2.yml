@@ -1,7 +1,7 @@
 ---
 openapi: "3.0.0"
 info:
-  version: 1.0.1
+  version: 1.0.2
   title: "Application API"
   description: |
     Nexmo provides an Application API to allow programatic management of your Nexmo Applications.
@@ -147,6 +147,10 @@ paths:
                                   example: POST
                                   enum:
                                     - POST
+                    vbc:
+                      type: object
+                      description: "Specify `vbc` capability to enable zero-rated calls for VBC number programmability service applications. This must be an empty object."
+                      x-nexmo-developer-collection-description-shown: true                                   
       responses:
         '200':
           description: Success
@@ -311,130 +315,134 @@ paths:
       tags:
         - Application
       requestBody:
-       required: true
-       content:
-         application/json:
-           schema:
-             required:
-               - name
-             properties:
-               name:
-                 description: "Application Name"
-                 example: "Demo Application"
-                 type: "string"
-               keys:
-                 type: object
-                 properties:
-                   public_key:
-                     type: string
-                     example: |
-                         -----BEGIN PUBLIC KEY-----
-                         MIIBIjANBgkqhkiG9w0BAQEFAAOCA
-                         KOxjsU4pf/sMFi9N0jqcSLcjxu33G
-                         d/vynKnlw9SENi+UZR44GdjGdmfm1
-                         tL1eA7IBh2HNnkYXnAwYzKJoa4eO3
-                         0kYWekeIZawIwe/g9faFgkev+1xsO
-                         OUNhPx2LhuLmgwWSRS4L5W851Xe3f
-                         UQIDAQAB
-                         -----END PUBLIC KEY-----
-                     description: Public key
-               capabilities:
-                 type: object
-                 description: "Your application can use multiple products. This contains the configuration for each product. This replaces the application `type` from version 1 of the Application API."
-                 x-nexmo-developer-collection-description-shown: true
-                 properties:
-                   voice:
-                     type: object
-                     description: "Voice application webhook config"
-                     x-nexmo-developer-collection-description-shown: true
-                     properties:
-                       webhooks:
-                         type: object
-                         properties:
-                           answer_url:
-                             type: object
-                             description: "The URL that Nexmo make a request to when a call is placed/received. Must return an NCCO"
-                             x-nexmo-developer-collection-description-shown: true
-                             properties:
-                               address:
-                                 type: string
-                                 example: https://example.com/webhooks/answer
-                               http_method:
-                                 type: string
-                                 example: GET
-                                 enum:
-                                   - GET
-                                   - POST
-                           event_url:
-                             type: object
-                             description: "Nexmo will send call events (e.g. `ringing`, `answered`) to this URL"
-                             x-nexmo-developer-collection-description-shown: true
-                             properties:
-                               address:
-                                 type: string
-                                 example: https://example.com/webhooks/status
-                               http_method:
-                                 type: string
-                                 example: POST
-                                 enum:
-                                   - GET
-                                   - POST
-                   rtc:
-                     type: object
-                     description: "RTC / Client SDK application webhook config"
-                     x-nexmo-developer-collection-description-shown: true
-                     properties:
-                       webhooks:
-                         type: object
-                         properties:
-                           event_url:
-                             type: object
-                             description: "Nexmo will send RTC events to this URL"
-                             x-nexmo-developer-collection-description-shown: true
-                             properties:
-                               address:
-                                 type: string
-                                 example: https://example.com/webhooks/event
-                               http_method:
-                                 type: string
-                                 example: POST
-                                 enum:
-                                   - GET
-                                   - POST
-                   messages:
-                     type: object
-                     description: "Messages and Dispatch application webhook config"
-                     x-nexmo-developer-collection-description-shown: true
-                     properties:
-                       webhooks:
-                         type: object
-                         properties:
-                           inbound_url:
-                             type: object
-                             description: "Nexmo will forward inbound messages to this URL"
-                             x-nexmo-developer-collection-description-shown: true
-                             properties:
-                               address:
-                                 type: string
-                                 example: https://example.com/webhooks/inbound
-                               http_method:
-                                 type: string
-                                 example: POST
-                                 enum:
-                                   - POST
-                           status_url:
-                             type: object
-                             description: "Nexmo will send message status updates (e.g. `delivered`, `seen`) to this URL"
-                             x-nexmo-developer-collection-description-shown: true
-                             properties:
-                               address:
-                                 type: string
-                                 example: https://example.com/webhooks/event
-                               http_method:
-                                 type: string
-                                 example: POST
-                                 enum:
-                                   - POST
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+              properties:
+                name:
+                  description: "Application Name"
+                  example: "Demo Application"
+                  type: "string"
+                keys:
+                  type: object
+                  properties:
+                    public_key:
+                      type: string
+                      example: |
+                          -----BEGIN PUBLIC KEY-----
+                          MIIBIjANBgkqhkiG9w0BAQEFAAOCA
+                          KOxjsU4pf/sMFi9N0jqcSLcjxu33G
+                          d/vynKnlw9SENi+UZR44GdjGdmfm1
+                          tL1eA7IBh2HNnkYXnAwYzKJoa4eO3
+                          0kYWekeIZawIwe/g9faFgkev+1xsO
+                          OUNhPx2LhuLmgwWSRS4L5W851Xe3f
+                          UQIDAQAB
+                          -----END PUBLIC KEY-----
+                      description: Public key
+                capabilities:
+                  type: object
+                  description: "Your application can use multiple products. This contains the configuration for each product. This replaces the application `type` from version 1 of the Application API."
+                  x-nexmo-developer-collection-description-shown: true
+                  properties:
+                    voice:
+                      type: object
+                      description: "Voice application webhook config"
+                      x-nexmo-developer-collection-description-shown: true
+                      properties:
+                        webhooks:
+                          type: object
+                          properties:
+                            answer_url:
+                              type: object
+                              description: "The URL that Nexmo make a request to when a call is placed/received. Must return an NCCO"
+                              x-nexmo-developer-collection-description-shown: true
+                              properties:
+                                address:
+                                  type: string
+                                  example: https://example.com/webhooks/answer
+                                http_method:
+                                  type: string
+                                  example: GET
+                                  enum:
+                                    - GET
+                                    - POST
+                            event_url:
+                              type: object
+                              description: "Nexmo will send call events (e.g. `ringing`, `answered`) to this URL"
+                              x-nexmo-developer-collection-description-shown: true
+                              properties:
+                                address:
+                                  type: string
+                                  example: https://example.com/webhooks/status
+                                http_method:
+                                  type: string
+                                  example: POST
+                                  enum:
+                                    - GET
+                                    - POST
+                    rtc:
+                      type: object
+                      description: "RTC / Client SDK application webhook config"
+                      x-nexmo-developer-collection-description-shown: true
+                      properties:
+                        webhooks:
+                          type: object
+                          properties:
+                            event_url:
+                              type: object
+                              description: "Nexmo will send RTC events to this URL"
+                              x-nexmo-developer-collection-description-shown: true
+                              properties:
+                                address:
+                                  type: string
+                                  example: https://example.com/webhooks/event
+                                http_method:
+                                  type: string
+                                  example: POST
+                                  enum:
+                                    - GET
+                                    - POST
+                    messages:
+                      type: object
+                      description: "Messages and Dispatch application webhook config"
+                      x-nexmo-developer-collection-description-shown: true
+                      properties:
+                        webhooks:
+                          type: object
+                          properties:
+                            inbound_url:
+                              type: object
+                              description: "Nexmo will forward inbound messages to this URL"
+                              x-nexmo-developer-collection-description-shown: true
+                              properties:
+                                address:
+                                  type: string
+                                  example: https://example.com/webhooks/inbound
+                                http_method:
+                                  type: string
+                                  example: POST
+                                  enum:
+                                    - POST
+                            status_url:
+                              type: object
+                              description: "Nexmo will send message status updates (e.g. `delivered`, `seen`) to this URL"
+                              x-nexmo-developer-collection-description-shown: true
+                              properties:
+                                address:
+                                  type: string
+                                  example: https://example.com/webhooks/event
+                                http_method:
+                                  type: string
+                                  example: POST
+                                  enum:
+                                    - POST
+                    vbc:
+                      type: object
+                      description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications.  This must be an empty object."
+                      x-nexmo-developer-collection-description-shown: true                                      
       responses:
         '200':
           description: Success
@@ -544,99 +552,102 @@ components:
  
   schemas:
     ApplicationResponse:
-     properties:
-       id:
-         type: string
-         example: 78d335fa323d01149c3dd6f0d48968cf
-         description: The application's ID
-       name:
-         type: string
-         example: My Application
-         description: Friendly identifier for your application. This is not unique
-       capabilities:
-         type: object
-         description: Configuration for the products available in this application
-         properties:
-           voice:
-             type: object
-             description: Voice related configuration
-             properties:
-               webhooks:
-                 type: object
-                 properties:
-                   answer_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/answer
-                         description: The URL that Nexmo requests when a call is placed/received. Must return an NCCO
-                       http_method:
-                         type: string
-                         example: POST
-                         description: The HTTP method used to fetch your NCCO from your `answer_url`
-                   event_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/event
-                         description: The URL that Nexmo sends events related to your call to
-                       http_method:
-                         type: string
-                         example: POST
-                         description: The HTTP method used to send events to your server
-           messages:
-             type: object
-             description: Messages / Dispatch related configuration
-             properties:
-               webhooks:
-                 type: object
-                 properties:
-                   inbound_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/inbound
-                         description: The URL that Nexmo forwards inbound messages to on your server
-                       http_method:
-                         type: string
-                         example: POST
-                         description: The HTTP method used to send inbound messages to your server
-                   status_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/status
-                         description: The URL that Nexmo sends events related to your messages to
-                       http_method:
-                         type: string
-                         example: POST
-                         description: The HTTP method used to send events to your server (always `POST`)
-           rtc:
-             type: object
-             description: RTC / Conversation Service related configuration
-             properties:
-               webhooks:
-                 type: object
-                 properties:
-                   answer_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/answer
-                       http_method:
-                         type: string
-                         example: POST
-                   event_url:
-                     type: object
-                     properties:
-                       address:
-                         type: string
-                         example: https://example.com/webhooks/event
-                       http_method:
-                         type: string
-                         example: POST
+      properties:
+        id:
+          type: string
+          example: 78d335fa323d01149c3dd6f0d48968cf
+          description: The application's ID
+        name:
+          type: string
+          example: My Application
+          description: Friendly identifier for your application. This is not unique
+        capabilities:
+          type: object
+          description: Configuration for the products available in this application
+          properties:
+            voice:
+              type: object
+              description: Voice related configuration
+              properties:
+                webhooks:
+                  type: object
+                  properties:
+                    answer_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/answer
+                          description: The URL that Nexmo requests when a call is placed/received. Must return an NCCO
+                        http_method:
+                          type: string
+                          example: POST
+                          description: The HTTP method used to fetch your NCCO from your `answer_url`
+                    event_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/event
+                          description: The URL that Nexmo sends events related to your call to
+                        http_method:
+                          type: string
+                          example: POST
+                          description: The HTTP method used to send events to your server
+            messages:
+              type: object
+              description: Messages / Dispatch related configuration
+              properties:
+                webhooks:
+                  type: object
+                  properties:
+                    inbound_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/inbound
+                          description: The URL that Nexmo forwards inbound messages to on your server
+                        http_method:
+                          type: string
+                          example: POST
+                          description: The HTTP method used to send inbound messages to your server
+                    status_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/status
+                          description: The URL that Nexmo sends events related to your messages to
+                        http_method:
+                          type: string
+                          example: POST
+                          description: The HTTP method used to send events to your server (always `POST`)
+            rtc:
+              type: object
+              description: RTC / Conversation Service related configuration
+              properties:
+                webhooks:
+                  type: object
+                  properties:
+                    answer_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/answer
+                        http_method:
+                          type: string
+                          example: POST
+                    event_url:
+                      type: object
+                      properties:
+                        address:
+                          type: string
+                          example: https://example.com/webhooks/event
+                        http_method:
+                          type: string
+                          example: POST
+            vbc:
+              type: object
+              description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications. This is always an empty object."                         
