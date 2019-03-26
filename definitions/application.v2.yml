@@ -20,8 +20,6 @@ paths:
     post:
       summary: Create an application
       operationId: createApplication
-      tags:
-        - Application
       requestBody:
         required: true
         content:
@@ -312,8 +310,6 @@ paths:
     put:
       summary: Update an application
       operationId: updateApplication
-      tags:
-        - Application
       requestBody:
         required: true
         content:
@@ -497,8 +493,6 @@ paths:
       operationId: deleteApplication
       summary: Delete an application
       description: Deleting an application **cannot be undone**.
-      tags:
-        - Application
       responses:
         '204':
           description: Success
@@ -510,10 +504,6 @@ paths:
           $ref: 'common/common_errors.yml#/components/responses/InvalidRequestMethod'
         '406':
           $ref: 'common/common_errors.yml#/components/responses/InvalidAcceptHeader'
-
-tags:
-  - name: Application
-    description: Manage your Nexmo applications
 
 components:
   securitySchemes:
