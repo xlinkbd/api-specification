@@ -149,7 +149,7 @@ paths:
                                     - POST
                     vbc:
                       type: object
-                      description: "Specify `vbc` capability to enable zero-rated calls for VBC number programmability service applications."
+                      description: "Specify `vbc` capability to enable zero-rated calls for VBC number programmability service applications. This must be an empty object."
                       x-nexmo-developer-collection-description-shown: true                                   
       responses:
         '200':
@@ -441,7 +441,7 @@ paths:
                                     - POST
                     vbc:
                       type: object
-                      description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications."
+                      description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications.  This must be an empty object."
                       x-nexmo-developer-collection-description-shown: true                                      
       responses:
         '200':
@@ -650,4 +650,4 @@ components:
                           example: POST
             vbc:
               type: object
-              description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications."                         
+              description: "Specify the `vbc` capability to enable zero-rated calls for VBC number programmability service applications. This is always an empty object."                         
