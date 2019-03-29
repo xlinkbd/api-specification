@@ -662,11 +662,8 @@ components:
           example: 'valid'
         ip_warnings:
           type: string
-          description: 'Warning levels for `ip`'
-          enum:
-            - unknown
-            - no_warning
-          example: 'no_warning'
+          description: 'This property is deprecated and can safely be ignored.'
+          example: 'unknown'
 
     niResponseJsonBasic:
       type: object
@@ -882,11 +879,8 @@ components:
           $ref: '#/components/schemas/niIP'
         ip_warnings:
           type: string
-          description: 'Warning levels for `ip`'
-          enum:
-            - unknown
-            - no_warning
-          example: 'no_warning'
+          description: 'This property is deprecated and can safely be ignored.'
+          example: 'unknown'
       required:
         - status
         - status_message
