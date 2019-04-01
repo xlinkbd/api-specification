@@ -555,6 +555,77 @@ paths:
                     example: DTMF sent
                   uuid:
                     $ref: '#/components/schemas/uuid'
+  "/v1/conversations/{conversation_uuid}/record":
+    parameters:
+    - in: path
+      name: conversation_uuid
+      schema:
+        type: string
+      required: true
+      description: UUID of the Conversation
+      example: CON-f972836a-550f-45fa-956c-12a2ab5b7d22
+    put:
+      security:
+      - bearerAuth: []
+      summary: Start/Stop recording of a call
+      description: Start/Stop recording of a call
+      operationId: controlRecording
+      requestBody:
+        description: action to perform
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - action
+              properties:
+                action:
+                  type: string
+                  example: start
+                  description: Start/Stop a recording
+                  enum:
+                    - start
+                    - stop
+                eventUrl:
+                  description: URL to send the recording callback to
+                  type: array
+                  x-nexmo-developer-collection-description-shown: true
+                  example: '["https://example.com/event"]'
+                  items:
+                    type: string
+                    format: string
+                eventMethod:
+                  description: The HTTP method used to send the callback to your event URL. Uses the application event URL if not provided
+                  type: string
+                  example: POST
+                  default: POST
+                  enum:
+                    - POST
+                    - GET
+                split:
+                  type: string
+                  description: Record the sent and received audio in separate channels of a stereo recording. [More information](/voice/voice-api/ncco-reference#record)
+                  example: conversation
+                timeout:
+                  type: integer
+                  description: The maximum length of a recording in seconds. One the recording is stopped the recording data is sent to `eventUrl`
+                  minimum: 3
+                  maximum: 7200
+                  example: 600
+                  default: -1
+                format:
+                  type: string
+                  description: Record the Call in a specific format
+                  example: wav
+                  enum:
+                    - mp3
+                    - wav
+                    - ogg
+                  default: mp3
+
+      responses:
+        '204':
+          description: No Content
 components:
   securitySchemes:
     bearerAuth:
