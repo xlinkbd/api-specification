@@ -13,7 +13,13 @@ COMMAND="$COMMAND -s openapi-tags-alphabetical"
 # There's an issue that means file-based refs trigger this rule incorrectly
 COMMAND="$COMMAND -s reference-no-other-properties"
 
-for i in $(ls definitions/*.yml); do
+DOCS=$1
+
+if [[ -z "$DOCS" ]]; then
+  DOCS=$(ls definitions/*.yml)
+fi
+
+for i in $DOCS; do
   echo -n "$i "
 
   OUTPUT=$($COMMAND $i 2>&1)
