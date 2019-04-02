@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Nexmo Developer Numbers API
-  version: 1.0.0
+  version: 1.0.1
   description: >-
     The Numbers API lets you manage your numbers and buy new virtual numbers for
     use with Nexmo's APIs.
