@@ -1,0 +1,362 @@
+openapi: 3.0.0
+info:
+  title: Nexmo Developer Numbers API
+  version: 1.0.0
+  description: >-
+    The Numbers API lets you manage your numbers and buy new virtual numbers for
+    use with Nexmo's APIs.
+  contact:
+    name: Nexmo.com
+    email: devrel@nexmo.com
+    url: 'https://developer.nexmo.com/'
+    x-twitter: Nexmo
+  termsOfService: 'https://www.nexmo.com/terms-of-use'
+  license:
+    name: The MIT License (MIT)
+    url: 'https://opensource.org/licenses/MIT'
+  x-logo:
+    url: 'https://twitter.com/Nexmo/profile_image?size=original'
+  x-apiClientRegistration: 'https://dashboard.nexmo.com/sign-up'
+servers:
+  - url: 'https://rest.nexmo.com/'
+externalDocs:
+  url: 'https://developer.nexmo.com/api/developer/numbers'
+  x-sha1: 8ad8bc6b0c51af4ca458c13cfced6124783ab113
+security:
+  - apiKey: []
+    apiSecret: []
+tags:
+  - name: Numbers
+    description: Manage Numbers.
+paths:
+  /account/numbers:
+    get:
+      operationId: getOwnedNumbers
+      summary: List owned numbers
+      description: Retrieve all the inbound numbers associated with your Nexmo account.
+      tags:
+        - Numbers
+      parameters:
+        - $ref: '#/components/parameters/index'
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/pattern'
+        - $ref: '#/components/parameters/search_pattern'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inbound-numbers'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/inbound-numbers'
+        '401':
+          description: Unauthorized
+  /number/search:
+    get:
+      operationId: getAvailableNumbers
+      summary: Search available numbers
+      description: Retrieve inbound numbers that are available for a given country.
+      tags:
+        - Numbers
+      parameters:
+        - $ref: '#/components/parameters/country'
+        - $ref: '#/components/parameters/pattern'
+        - $ref: '#/components/parameters/search_pattern'
+        - name: features
+          required: false
+          in: query
+          description: >-
+            Available features are SMS and VOICE. For both features, use a
+            comma-separated value SMS,VOICE.
+          schema:
+            type: string
+            enum:
+              - SMS
+              - VOICE
+              - 'SMS,VOICE'
+          example: SMS
+        - $ref: '#/components/parameters/size'
+        - $ref: '#/components/parameters/index'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/available-numbers'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/available-numbers'
+        '401':
+          description: Unauthorized
+  /number/buy:
+    post:
+      operationId: buyANumber
+      summary: Buy a number.
+      description: Request to purchase a specific inbound number.
+      tags:
+        - Numbers
+      parameters:
+        - $ref: '#/components/parameters/country'
+        - name: msisdn
+          required: true
+          in: query
+          description: An available inbound virtual number.
+          schema:
+            type: string
+          example: '447700900000'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/response'
+        '401':
+          description: Unauthorized
+  /number/cancel:
+    post:
+      operationId: cancelANumber
+      summary: Cancel a number.
+      description: Cancel your subscription for a specific inbound number.
+      tags:
+        - Numbers
+      parameters:
+        - $ref: '#/components/parameters/country'
+        - name: msisdn
+          required: true
+          in: query
+          description: One of your inbound numbers.
+          schema:
+            type: string
+          example: '447700900000'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/response'
+        '401':
+          description: Unauthorized
+  /number/update:
+    post:
+      operationId: updateANumber
+      summary: Update a number.
+      description: Change the behaviour of a number that you own.
+      tags:
+        - Numbers
+      parameters:
+        - $ref: '#/components/parameters/country'
+        - name: msisdn
+          required: true
+          in: query
+          description: One of your inbound numbers.
+          schema:
+            type: string
+          example: '447700900000'
+        - name: moHttpUrl
+          required: false
+          in: query
+          description: >-
+            An URL encoded URI to the webhook endpoint that handles inbound
+            messages. Your webhook endpoint must be active before you make this
+            request, Nexmo makes a [GET] request to your endpoint and checks
+            that it returns a `200 OK` response. Set to empty string to clear.
+          schema:
+            type: string
+          example: 'https://example.com/mo'
+        - name: moSmppSysType
+          required: false
+          in: query
+          description: The associated system type for your SMPP client.
+          schema:
+            type: string
+          example: inbound
+        - name: voiceCallbackType
+          required: false
+          in: query
+          description: The voice webhook type.
+          schema:
+            type: string
+            enum:
+              - sip
+              - tel
+              - app
+          example: sip
+        - name: voiceCallbackValue
+          required: false
+          in: query
+          description: >-
+            A SIP URI, telephone number or Application ID. Has to be used
+            together with `voiceCallbackType` parameter.
+          schema:
+            type: string
+          example: '447700900000'
+        - name: voiceStatusCallback
+          required: false
+          in: query
+          description: A webhook URI for Nexmo to send a request to when a call ends.
+          schema:
+            type: string
+          example: 'https://example.com/vsc'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/response'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/response'
+        '401':
+          description: Unauthorized
+components:
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: api_key
+      in: query
+      description: >-
+        You can find your API key in your [account
+        overview](https://dashboard.nexmo.com/account-overview)
+    apiSecret:
+      type: apiKey
+      name: api_secret
+      in: query
+      description: >-
+        You can find your API secret in your [account
+        overview](https://dashboard.nexmo.com/account-overview)
+  parameters:
+    index:
+      name: index
+      required: false
+      in: query
+      description: Page index
+      schema:
+        type: integer
+        default: 1
+      example: 1
+    size:
+      name: size
+      required: false
+      in: query
+      description: Page size
+      schema:
+        type: integer
+        maximum: 100
+        default: 10
+      example: 10
+    pattern:
+      name: pattern
+      required: false
+      in: query
+      description: A matching pattern
+      schema:
+        type: string
+      example: '12345'
+    search_pattern:
+      name: search_pattern
+      required: false
+      in: query
+      description: Strategy for matching pattern.
+      schema:
+        type: integer
+        default: 0
+        enum:
+          - 0
+          - 1
+          - 2
+        x-ms-enum:
+          name: search_pattern
+          values:
+            - value: 0
+              description: Starts with
+            - value: 1
+              description: Anywhere
+            - value: 2
+              description: Ends with
+      example: 0
+    country:
+      name: country
+      in: query
+      required: true
+      description: The two character country code in ISO 3166-1 alpha-2 format.
+      schema:
+        type: string
+      example: GB
+  schemas:
+    number:
+      type: object
+      properties:
+        country:
+          type: string
+          example: GB
+        msisdn:
+          type: string
+          example: '447700900000'
+        cost:
+          type: number
+          example: 0.5
+        moHttpUrl:
+          type: string
+          format: url
+          example: 'https://example.com/mo'
+        type:
+          type: string
+          example: mobile-lvn
+        features:
+          type: array
+          items:
+            type: string
+            example: VOICE
+        voiceCallbackType:
+          type: string
+          example: app
+        voiceCallbackValue:
+          type: string
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
+    inbound-numbers:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: The total amount of numbers owned by account.
+          example: 1
+        numbers:
+          type: array
+          description: A paginated array of numbers and their details.
+          items:
+            $ref: '#/components/schemas/number'
+    available-numbers:
+      type: object
+      xml:
+        name: inbound-numbers
+      properties:
+        count:
+          type: integer
+          description: The total amount of numbers available in the pool.
+          example: 1234
+        numbers:
+          type: array
+          description: A paginated array of available numbers and their details.
+          items:
+            $ref: '#/components/schemas/number'
+    response:
+      type: object
+      properties:
+        error-code:
+          type: integer
+          example: 200
+        error-code-label:
+          type: string
+          example: success
