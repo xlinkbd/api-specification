@@ -1,14 +1,14 @@
 openapi: 3.0.0
 info:
   title: Nexmo Developer Numbers API
-  version: 1.0.0
+  version: 1.0.1
   description: >-
     The Numbers API lets you manage your numbers and buy new virtual numbers for
     use with Nexmo's APIs.
   contact:
     name: Nexmo.com
     email: devrel@nexmo.com
-    url: 'https://developer.nexmo.com/'
+    url: 'https://developer.nexmo.com'
     x-twitter: Nexmo
   termsOfService: 'https://www.nexmo.com/terms-of-use'
   license:
@@ -18,7 +18,7 @@ info:
     url: 'https://twitter.com/Nexmo/profile_image?size=original'
   x-apiClientRegistration: 'https://dashboard.nexmo.com/sign-up'
 servers:
-  - url: 'https://rest.nexmo.com/'
+  - url: 'https://rest.nexmo.com'
 externalDocs:
   url: 'https://developer.nexmo.com/api/developer/numbers'
   x-sha1: 8ad8bc6b0c51af4ca458c13cfced6124783ab113
