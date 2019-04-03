@@ -3,7 +3,7 @@ info:
   title: Nexmo Developer Numbers API
   version: 1.0.1
   description: >-
-    The Numbers API lets you manage your numbers and buy new virtual numbers for
+    The Numbers API enables you to manage your existing numbers and buy new virtual numbers for
     use with Nexmo's APIs.
   contact:
     name: Nexmo.com
@@ -25,17 +25,12 @@ externalDocs:
 security:
   - apiKey: []
     apiSecret: []
-tags:
-  - name: Numbers
-    description: Manage Numbers.
 paths:
-  /account/numbers:
+  '/account/numbers':
     get:
       operationId: getOwnedNumbers
       summary: List owned numbers
       description: Retrieve all the inbound numbers associated with your Nexmo account.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/size'
@@ -48,18 +43,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inbound-numbers'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/inbound-numbers'
         '401':
           description: Unauthorized
-  /number/search:
+  '/number/search':
     get:
       operationId: getAvailableNumbers
       summary: Search available numbers
       description: Retrieve inbound numbers that are available for a given country.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - $ref: '#/components/parameters/pattern'
@@ -86,18 +79,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/available-numbers'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/available-numbers'
         '401':
           description: Unauthorized
-  /number/buy:
+  '/number/buy':
     post:
       operationId: buyANumber
-      summary: Buy a number.
+      summary: Buy a number
       description: Request to purchase a specific inbound number.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
@@ -114,18 +105,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
           description: Unauthorized
-  /number/cancel:
+  '/number/cancel':
     post:
       operationId: cancelANumber
-      summary: Cancel a number.
+      summary: Cancel a number
       description: Cancel your subscription for a specific inbound number.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
@@ -142,18 +131,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
           description: Unauthorized
-  /number/update:
+  '/number/update':
     post:
       operationId: updateANumber
-      summary: Update a number.
+      summary: Update a number
       description: Change the behaviour of a number that you own.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
@@ -215,7 +202,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
