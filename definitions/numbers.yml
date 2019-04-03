@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
-  title: Nexmo Developer Numbers API
-  version: 1.0.1
+  title: Numbers API
+  version: 1.0.2
   description: >-
-    The Numbers API lets you manage your numbers and buy new virtual numbers for
+    The Numbers API enables you to manage your existing numbers and buy new virtual numbers for
     use with Nexmo's APIs.
   contact:
     name: Nexmo.com
@@ -25,17 +25,12 @@ externalDocs:
 security:
   - apiKey: []
     apiSecret: []
-tags:
-  - name: Numbers
-    description: Manage Numbers.
 paths:
-  /account/numbers:
+  '/account/numbers':
     get:
       operationId: getOwnedNumbers
-      summary: List owned numbers
+      summary: List the numbers you own
       description: Retrieve all the inbound numbers associated with your Nexmo account.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/size'
@@ -48,18 +43,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/inbound-numbers'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/inbound-numbers'
         '401':
           description: Unauthorized
-  /number/search:
+  '/number/search':
     get:
       operationId: getAvailableNumbers
       summary: Search available numbers
-      description: Retrieve inbound numbers that are available for a given country.
-      tags:
-        - Numbers
+      description: Retrieve inbound numbers that are available for    the specified country.
       parameters:
         - $ref: '#/components/parameters/country'
         - $ref: '#/components/parameters/pattern'
@@ -68,8 +61,8 @@ paths:
           required: false
           in: query
           description: >-
-            Available features are SMS and VOICE. For both features, use a
-            comma-separated value SMS,VOICE.
+            Available features are `SMS` and `VOICE`. To look for numbers that support both, use a 
+            comma-separated value: `SMS,VOICE`.
           schema:
             type: string
             enum:
@@ -86,24 +79,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/available-numbers'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/available-numbers'
         '401':
           description: Unauthorized
-  /number/buy:
+  '/number/buy':
     post:
       operationId: buyANumber
-      summary: Buy a number.
+      summary: Buy a number
       description: Request to purchase a specific inbound number.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
           in: query
-          description: An available inbound virtual number.
+          description: An available inbound virtual number
           schema:
             type: string
           example: '447700900000'
@@ -114,24 +105,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
           description: Unauthorized
-  /number/cancel:
+  '/number/cancel':
     post:
       operationId: cancelANumber
-      summary: Cancel a number.
+      summary: Cancel a number
       description: Cancel your subscription for a specific inbound number.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
           in: query
-          description: One of your inbound numbers.
+          description: The inbound number you want to cancel, in [E.164 international format](/concepts/guides/glossary#e-164-format)
           schema:
             type: string
           example: '447700900000'
@@ -142,24 +131,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
           description: Unauthorized
-  /number/update:
+  '/number/update':
     post:
       operationId: updateANumber
-      summary: Update a number.
+      summary: Update a number
       description: Change the behaviour of a number that you own.
-      tags:
-        - Numbers
       parameters:
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
           in: query
-          description: One of your inbound numbers.
+          description: The inbound number you want to update, in [E.164 international format](/concepts/guides/glossary#e-164-format)
           schema:
             type: string
           example: '447700900000'
@@ -167,24 +154,24 @@ paths:
           required: false
           in: query
           description: >-
-            An URL encoded URI to the webhook endpoint that handles inbound
+            An URL-encoded URI to the webhook endpoint that handles inbound
             messages. Your webhook endpoint must be active before you make this
-            request, Nexmo makes a [GET] request to your endpoint and checks
-            that it returns a `200 OK` response. Set to empty string to clear.
+            request. Nexmo makes a `GET` request to the endpoint and checks
+            that it returns a `200 OK` response. Set this parameter's value to an empty string to remove the webhook.
           schema:
             type: string
-          example: 'https://example.com/mo'
+          example: 'https://example.com/webhooks/inbound-sms'
         - name: moSmppSysType
           required: false
           in: query
-          description: The associated system type for your SMPP client.
+          description: The associated system type for your SMPP client
           schema:
             type: string
           example: inbound
         - name: voiceCallbackType
           required: false
           in: query
-          description: The voice webhook type.
+          description: The voice webhook type
           schema:
             type: string
             enum:
@@ -196,18 +183,18 @@ paths:
           required: false
           in: query
           description: >-
-            A SIP URI, telephone number or Application ID. Has to be used
-            together with `voiceCallbackType` parameter.
+            A SIP URI, telephone number or Application ID. Must be used
+            with the `voiceCallbackType` parameter.
           schema:
             type: string
           example: '447700900000'
         - name: voiceStatusCallback
           required: false
           in: query
-          description: A webhook URI for Nexmo to send a request to when a call ends.
+          description: A webhook URI for Nexmo to send a request to when a call ends
           schema:
             type: string
-          example: 'https://example.com/vsc'
+          example: 'https://example.com/webhooks/status'
       responses:
         '200':
           description: OK
@@ -215,7 +202,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/response'
-            application/xml:
+            text/xml:
               schema:
                 $ref: '#/components/schemas/response'
         '401':
@@ -227,15 +214,13 @@ components:
       name: api_key
       in: query
       description: >-
-        You can find your API key in your [account
-        overview](https://dashboard.nexmo.com/account-overview)
+        You can find your API key in the [developer dashboard](https://dashboard.nexmo.com)
     apiSecret:
       type: apiKey
       name: api_secret
       in: query
       description: >-
-        You can find your API secret in your [account
-        overview](https://dashboard.nexmo.com/account-overview)
+        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)
   parameters:
     index:
       name: index
@@ -260,7 +245,7 @@ components:
       name: pattern
       required: false
       in: query
-      description: A matching pattern
+      description: The number pattern you want to search for. Use in conjunction with `search_pattern`.
       schema:
         type: string
       example: '12345'
@@ -268,7 +253,13 @@ components:
       name: search_pattern
       required: false
       in: query
-      description: Strategy for matching pattern.
+      description: |
+        The strategy you want to use for matching:
+
+
+        * `0` - Search for numbers that start with `pattern`
+        * `1` - Search for numbers that contain `pattern`
+        * `2` - Search for numbers that end with `pattern`
       schema:
         type: integer
         default: 0
@@ -276,21 +267,12 @@ components:
           - 0
           - 1
           - 2
-        x-ms-enum:
-          name: search_pattern
-          values:
-            - value: 0
-              description: Starts with
-            - value: 1
-              description: Anywhere
-            - value: 2
-              description: Ends with
-      example: 0
+      example: 1
     country:
       name: country
       in: query
       required: true
-      description: The two character country code in ISO 3166-1 alpha-2 format.
+      description: The two character country code in ISO 3166-1 alpha-2 format
       schema:
         type: string
       example: GB
@@ -301,40 +283,45 @@ components:
         country:
           type: string
           example: GB
+          description: The two character country code in ISO 3166-1 alpha-2 format
         msisdn:
           type: string
           example: '447700900000'
-        cost:
-          type: number
-          example: 0.5
+          description: An available inbound virtual number.
         moHttpUrl:
           type: string
           format: url
-          example: 'https://example.com/mo'
+          example: 'https://example.com/webhooks/inbound-sms'
+          description: >- 
+            The URL of the webhook endpoint that handles inbound messages
         type:
           type: string
           example: mobile-lvn
+          description: 'The type of number: `landline`, `landline-toll-free` or `mobile-lvn`'
         features:
           type: array
           items:
             type: string
-            example: VOICE
+          example: [VOICE, SMS]
+          description: 'The capabilities of the number: `SMS` or `VOICE` or `SMS,VOICE`'
         voiceCallbackType:
           type: string
           example: app
+          description: 'The voice webhook type: `sip`, `tel`, or `app`'
         voiceCallbackValue:
           type: string
           example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
+          description: A SIP URI, telephone number or Application ID
     inbound-numbers:
       type: object
       properties:
         count:
           type: integer
-          description: The total amount of numbers owned by account.
+          description: The total amount of numbers owned by the account
           example: 1
         numbers:
           type: array
-          description: A paginated array of numbers and their details.
+          description: A paginated array of numbers and their details
           items:
             $ref: '#/components/schemas/number'
     available-numbers:
@@ -357,6 +344,8 @@ components:
         error-code:
           type: integer
           example: 200
+          description: The status code of the response. `200` indicates a successful request.
         error-code-label:
           type: string
           example: success
+          description: The status code description
