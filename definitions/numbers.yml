@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Numbers API
-  version: 1.0.2
+  version: 1.0.3
   description: >-
     The Numbers API enables you to manage your existing numbers and buy new virtual numbers for
     use with Nexmo's APIs.
@@ -22,16 +22,15 @@ servers:
 externalDocs:
   url: 'https://developer.nexmo.com/api/developer/numbers'
   x-sha1: 8ad8bc6b0c51af4ca458c13cfced6124783ab113
-security:
-  - apiKey: []
-    apiSecret: []
 paths:
-  '/account/numbers':
+  '/account/numbers/{NEXMO_API_KEY}/{NEXMO_API_SECRET}':
     get:
       operationId: getOwnedNumbers
       summary: List the numbers you own
       description: Retrieve all the inbound numbers associated with your Nexmo account.
       parameters:
+        - $ref: '#/components/parameters/apiKeyPath'
+        - $ref: '#/components/parameters/apiSecretPath'             
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/size'
         - $ref: '#/components/parameters/pattern'
@@ -54,7 +53,10 @@ paths:
       summary: Search available numbers
       description: Retrieve inbound numbers that are available for    the specified country.
       parameters:
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/apiSecret'        
         - $ref: '#/components/parameters/country'
+        - $ref: '#/components/parameters/type'        
         - $ref: '#/components/parameters/pattern'
         - $ref: '#/components/parameters/search_pattern'
         - name: features
@@ -90,6 +92,8 @@ paths:
       summary: Buy a number
       description: Request to purchase a specific inbound number.
       parameters:
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/apiSecret'        
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
@@ -110,12 +114,14 @@ paths:
                 $ref: '#/components/schemas/response'
         '401':
           description: Unauthorized
-  '/number/cancel':
+  '/number/cancel':  
     post:
       operationId: cancelANumber
       summary: Cancel a number
       description: Cancel your subscription for a specific inbound number.
       parameters:
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/apiSecret'        
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
@@ -142,6 +148,8 @@ paths:
       summary: Update a number
       description: Change the behaviour of a number that you own.
       parameters:
+        - $ref: '#/components/parameters/apiKey'
+        - $ref: '#/components/parameters/apiSecret'        
         - $ref: '#/components/parameters/country'
         - name: msisdn
           required: true
@@ -168,10 +176,30 @@ paths:
           schema:
             type: string
           example: inbound
+        - name: messagesCallbackType
+          required: false
+          in: query
+          description: The SMS webhook type (always `app`). Must be used
+            with the `messagesCallbackValue` parameter.
+          schema:
+            type: string
+            enum:
+              - app
+          example: app
+        - name: messagesCallbackValue
+          required: false
+          in: query
+          description: >-
+            A Nexmo Application ID. Must be used
+            with the `messagesCallbackType` parameter.
+          schema:
+            type: string
+          example: 'aaaaaaaa-bbbb-cccc-dddd-0123456789ab'          
         - name: voiceCallbackType
           required: false
           in: query
-          description: The voice webhook type
+          description: The voice webhook type. Must be used
+            with the `voiceCallbackValue` parameter.
           schema:
             type: string
             enum:
@@ -208,20 +236,43 @@ paths:
         '401':
           description: Unauthorized
 components:
-  securitySchemes:
+  parameters:
     apiKey:
-      type: apiKey
       name: api_key
       in: query
+      required: true
       description: >-
         You can find your API key in the [developer dashboard](https://dashboard.nexmo.com)
+      schema:
+        type: string
+      example: 1a23b45c        
     apiSecret:
-      type: apiKey
       name: api_secret
       in: query
+      required: true
       description: >-
         You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)
-  parameters:
+      schema:
+        type: string
+      example: Ab1CDEfghIJ23k4          
+    apiKeyPath:
+      name: NEXMO_API_KEY
+      in: path
+      required: true
+      description: >-
+        You can find your API key in the [developer dashboard](https://dashboard.nexmo.com)
+      schema:
+        type: string
+      example: 1a23b45c         
+    apiSecretPath:
+      name: NEXMO_API_SECRET
+      in: path
+      required: true
+      description: >-
+        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)  
+      schema:
+        type: string
+      example: Ab1CDEfghIJ23k4                 
     index:
       name: index
       required: false
@@ -276,6 +327,18 @@ components:
       schema:
         type: string
       example: GB
+    type:
+      name: type
+      in: query
+      required: false
+      description: Set this parameter to filter the type of number, such as mobile or landline
+      schema:
+        type: string
+        enum:
+          - landline
+          - mobile-lvn
+          - landline-toll-free
+      example: mobile-lvn      
   schemas:
     number:
       type: object
@@ -304,6 +367,14 @@ components:
             type: string
           example: [VOICE, SMS]
           description: 'The capabilities of the number: `SMS` or `VOICE` or `SMS,VOICE`'
+        messagesCallbackType:
+          type: string
+          example: app
+          description: 'The messages webhook type: always `app`'
+        messagesCallbackValue:
+          type: string
+          example: aaaaaaaa-bbbb-cccc-dddd-0123456789ab
+          description: A Nexmo Application ID         
         voiceCallbackType:
           type: string
           example: app
