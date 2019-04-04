@@ -28,10 +28,9 @@ paths:
       operationId: getOwnedNumbers
       summary: List the numbers you own
       description: Retrieve all the inbound numbers associated with your Nexmo account.
-      security:
-      - apiKeyPath: []
-        apiSecretPath: []
       parameters:
+        - $ref: '#/components/parameters/apiKeyPath'
+        - $ref: '#/components/parameters/apiSecretPath'             
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/size'
         - $ref: '#/components/parameters/pattern'
@@ -237,19 +236,6 @@ paths:
         '401':
           description: Unauthorized
 components:
-  securitySchemes:
-    apiKeyPath:
-      type: apiKey
-      name: api_key
-      in: path
-      description: >-
-        You can find your API key in the [developer dashboard](https://dashboard.nexmo.com)
-    apiSecretPath:
-      type: apiKey
-      name: api_secret
-      in: path
-      description: >-
-        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)
   parameters:
     apiKey:
       type: apiKey
@@ -264,7 +250,19 @@ components:
       in: query
       required: true
       description: >-
-        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)  
+        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)
+    apiKeyPath:
+      type: apiKey
+      name: api_key
+      in: path
+      description: >-
+        You can find your API key in the [developer dashboard](https://dashboard.nexmo.com)
+    apiSecretPath:
+      type: apiKey
+      name: api_secret
+      in: path
+      description: >-
+        You can find your API secret in the [developer dashboard](https://dashboard.nexmo.com)        
     index:
       name: index
       required: false
