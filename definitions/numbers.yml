@@ -26,11 +26,14 @@ security:
   - apiKey: []
     apiSecret: []
 paths:
-  '/account/numbers':
+  '/account/numbers/{api_key}/{api_secret}':
     get:
       operationId: getOwnedNumbers
       summary: List the numbers you own
       description: Retrieve all the inbound numbers associated with your Nexmo account.
+      security:
+      - apiKeyPath: []
+        apiSecretPath: []
       parameters:
         - $ref: '#/components/parameters/index'
         - $ref: '#/components/parameters/size'
