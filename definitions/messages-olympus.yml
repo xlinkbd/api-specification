@@ -2,7 +2,7 @@ openapi: "3.0.0"
 info:
   version: 0.3.0
   title: Messages API
-  description: 'The Messaging API is a new API that consolidates all messaging channels. It encapsulates a user (developer) from having to use multiple APIs to interact with our various channels such as SMS, MMS, Viber, Facebook Messenger, etc. The API normalises information across all channels to abstracted to, from and content. This API is currently Beta.'
+  description: 'The Messaging API is a new API that consolidates all messaging channels. It encapsulates a user (developer) from having to use multiple APIs to interact with our various channels such as SMS, MMS, Viber, Facebook Messenger, etc. The API normalises information across all channels to abstracted to, from and content. This API is currently in Beta.'
   contact:
     name: Nexmo DevRel
     email: devrel@nexmo.com
@@ -10,7 +10,6 @@ info:
   x-label: Beta
 servers:
   - url: https://api.nexmo.com/v0.1
-
 paths:
   /messages:
     post:
@@ -214,11 +213,20 @@ components:
               example: messenger
               enum:
                 - messenger
+                - mms
                 - whatsapp
             id:
               type: string
               description: The ID of the recipient.
               example: '0123456678901234'
+            number:
+              type: string
+              minLength: 1
+              maxLength: 50
+              example: '447700900000'
+              description: |
+                **WhatsApp** or **MMS**: 
+                The phone number of the message recipient in the [E.164](https://en.wikipedia.org/wiki/E.164) format.
         from:
           type: object
           required:
@@ -230,11 +238,20 @@ components:
               example: messenger
               enum:
                 - messenger
+                - mms
                 - whatsapp
             id:
               type: string
               description: The ID of the sender.
               example: '0123456789012345'
+            number:
+              type: string
+              minLength: 1
+              maxLength: 50
+              example: '447700900000'
+              description: |
+                **WhatsApp** or **MMS**: 
+                The phone number of the message sender in the [E.164](https://en.wikipedia.org/wiki/E.164) format.
         timestamp:
           type: string
           format: ISO 8601
@@ -248,7 +265,10 @@ components:
               properties:
                 type:
                   type: string
-                  description: The type of message being received.
+                  description: |
+                    The type of message being received. 
+                    **whatsapp** and **messenger** supports `text`, `image`, `audio`, `file` and `location`. WhatsApp maximum inbound size is 64mb.
+                    **mms** supports `image`. 
                   example: 'text'
                   enum:
                     - text
@@ -266,7 +286,7 @@ components:
                 audio:
                   $ref: '#/components/schemas/AudioProperty'
                 video:
-                  $ref: '#/components/schemas/VideoProperty'
+                  $ref: '#/components/schemas/VideoPropertyInbound'
                 file:
                   $ref: '#/components/schemas/FileProperty'
                 location:
@@ -352,11 +372,11 @@ components:
               description: |
                 The type of message that you are sending.
 
-                **Messenger**: supports all types.
+                **Messenger**: supports `text`, `image`, `audio`, `video` and `file`.
 
                 **Viber Service Messages**: supports `image` and `text` and `custom`.
 
-                **WhatsApp**: supports `template` and `text`.
+                **WhatsApp**: supports `template`, `text`, `image`, `audio` and `file`. Maxmimum outbound media size is 5mb.
 
                 **SMS**: supports `text`.
 
@@ -463,17 +483,35 @@ components:
       properties:
         url:
           type: string
-          description: 'The URL of the image attachment. `messenger` supports .jpg, .png and .gif. `viber_service_msg` supports .jpg and .png.'
-          minLength: 1
+          description: |
+            The URL of the image attachment. 
+
+            **messenger** and **mms** supports .jpg, .jpeg, .png and .gif.
+
+            **viber_service_msg** supports .jpg .jpeg, and .png.
+
+            **whatsapp** supports .jpg .jpeg, and .png.
+          minLength: 10
           maxLength: 2000
           example: 'https://example.com/image.jpg'
+        caption:
+          type: string
+          description: 'Additional text to accompany the image. Supported by WhatsApp and MMS.'
+          minLength: 1
+          maxLength: 3000
+          example: 'Additional text to accompany the image.'
     AudioProperty:
       type: object
       properties:
         url:
           type: string
-          description: 'The URL of the audio attachment. `messenger` supports .mp3.'
-          minLength: 1
+          description: |
+            The URL of the audio attachment.
+
+            **messenger** supports .mp3.
+
+            **whatsapp** supports .acc, .m4a, .amr, .mp3 and .opus.
+          minLength: 10
           maxLength: 2000
           example: 'https://example.com/audio.mp3'
     VideoProperty:
@@ -481,25 +519,54 @@ components:
       properties:
         url:
           type: string
-          description: 'The URL of the video attachment. `messenger` supports .mp4'
-          minLength: 1
+          description: 'The URL of the video attachment. **messenger** supports .mp4'
+          minLength: 10
           maxLength: 2000
           example: 'https://example.com/video.mp4'
+    VideoPropertyInbound:
+      type: object
+      properties:
+        url:
+          type: string
+          description: |
+            The URL of the video attachment.
+
+            **messenger** and **whatsapp** supports .mp4.
+          minLength: 10
+          maxLength: 2000
+          example: 'https://example.com/video.mp4'
+        caption:
+          type: string
+          description: 'Additional text to accompany the image. Only supported by WhatsApp. Only present if specified.'
+          minLength: 1
+          maxLength: 3000
+          example: 'Additional text to accompany the image.'
     FileProperty:
       type: object
       properties:
         url:
           type: string
-          description: 'The URL of the file attachment. `messenger` supports a wide range of attachments including .zip, .csv and .pdf'
-          minLength: 1
+          description: |
+            The URL of the file attachment.
+
+            **messenger** supports a wide range of attachments including .zip, .csv and .pdf.
+
+            **whatsapp** supports .pdf, .doc(x), .ppt(x) and .xls(x).'
+          minLength: 10
           maxLength: 2000
           example: 'https://example.com/file.zip'
+        caption:
+          type: string
+          description: 'Additional text to accompany the image. Only supported by WhatsApp. Optional. Only present if specified.'
+          minLength: 1
+          maxLength: 3000
+          example: 'Additional text to accompany the image.'
     TemplateProperty:
       type: object
       properties:
         name:
           type: string
-          description: 'The name of the template.'
+          description: 'The name of the template. For WhatsApp use "<WhatsApp_namespace>:<template_name>"'
           example: 'whatsapp:hsm:technology:nexmo:verify'
         parameters:
           type: array
@@ -642,6 +709,9 @@ x-errors:
 
   1330:
     description: Unknown  -  An unknown error was received from the carrier who tried to send this this message. Depending on the carrier, that to is unknown. When you see this error, and status is rejected, always check if to in your request was valid.
+  
+  1331:
+    description: Provider error  -  The provider is not responding or unable to process the request. Please try sending your message in a few minutes time.
 
   1340:
     description: Outside of the allowed window  -  This message is sent outside of allowed response window.
@@ -651,3 +721,15 @@ x-errors:
 
   1360:
     description: TTL was activated  -  TTL was activated, no callbacks and no charge will be issued.
+
+  1370:
+    description: Expired access Token - Please reauthenticate your Facebook Page with Nexmo.
+  
+  1380:
+    description: Invalid resource - Please check that the URL your provided to your resrouce is accesible and valid.
+  
+  1381:
+    description: Resource size is too large - Please try sending a smaller media file.
+    
+  1382:
+    description: Resource type is invalid - Please check that the file you are trying to send is valid.
