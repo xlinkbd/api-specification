@@ -359,8 +359,6 @@ paths:
                     type:
                       type: string
                       example: ncco
-                      enum:
-                      - ncco
                     url:
                       x-nexmo-developer-collection-description-shown: true
                       example: '["https://example.com/ncco.json"]'
@@ -680,8 +678,6 @@ components:
           type: string
           example: phone
           description: The type of connection. Must be `phone`
-          enum:
-            - phone
         number:
           "$ref": "#/components/schemas/AddressE164"
         dtmfAnswer:
@@ -699,8 +695,6 @@ components:
           description: The type of connection. Must be `websocket`
           type: string
           example: websocket
-          enum:
-            - websocket
         uri:
           "$ref": "#/components/schemas/AddressWebsocket"
         content-type:
@@ -727,8 +721,6 @@ components:
           description: The type of connection. Must be `sip`
           type: string
           example: sip
-          enum:
-            - sip
         uri:
           "$ref": "#/components/schemas/AddressSip"
     EndpointVBCExtension:
@@ -742,8 +734,6 @@ components:
           type: string
           example: vbc
           description: The type of connection. Must be `vbc`
-          enum:
-            - vbc
         extension:
           type: string
           example: '1234'         
