@@ -754,7 +754,7 @@ components:
       type: string
       minLength: 1
       maxLength: 50
-      example: rebekka@sip.example.com
+      example: sip:rebekka@sip.example.com
     AddressWebsocket:
       type: string
       minLength: 1
