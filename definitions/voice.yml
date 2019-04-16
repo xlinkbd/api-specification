@@ -33,6 +33,7 @@ paths:
                   type: array
                   items:
                     oneOf:
+                    - "$ref": "#/components/schemas/EndpointApp"
                     - "$ref": "#/components/schemas/EndpointPhone"
                     - "$ref": "#/components/schemas/EndpointSip"
                     - "$ref": "#/components/schemas/EndpointWebsocket"
@@ -656,6 +657,19 @@ components:
       example: started
       description: The status of the call. [See possible values](https://developer.nexmo.com/voice/voice-api/guides/call-flow#event-objects)
 
+    EndpointApp:
+      type: object
+      description: Connect to an App User
+      required:
+        - type
+        - user
+      properties:
+        type:
+          type: string
+          example: app
+          description: The type of connection. Must be `app`
+        user:
+          "$ref": '#/components/schemas/name_user'
     EndpointPhone:
       type: object
       description: Connect to a Phone (PSTN) number
