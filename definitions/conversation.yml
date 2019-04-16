@@ -898,30 +898,36 @@ components:
         - phone
         - sip
         - websocket
+        - vbc
     channel:
       type: object
-      description: 'A user who joins a conversation as a member can have one channel per membership type. Channels can be `app`, `phone`, `sip`, or `websocket`'
+      description: 'A user who joins a conversation as a member can have one channel per membership type. Channels can be `app`, `phone`, `sip`, `websocket`, or `vbc`'
       properties:
         type:
           $ref: '#/components/schemas/channel_type'
         leg_id:
           $ref: '#/components/schemas/leg_id'
         from:
-          type: object
-          properties:
-            type:
-              $ref: '#/components/schemas/channel_type'
-            number:
-              $ref: '#/components/schemas/channel_number'
+          type: array
+          items:
+            oneOf:
+            - "$ref": "#/components/schemas/EndpointApp"
+            - "$ref": "#/components/schemas/EndpointPhone"
+            - "$ref": "#/components/schemas/EndpointSip"
+            - "$ref": "#/components/schemas/EndpointWebsocket"
+            - "$ref": "#/components/schemas/EndpointVBCExtension"
         to:
-          type: object
-          properties:
-            type:
-              $ref: '#/components/schemas/channel_type'
-            number:
-              $ref: '#/components/schemas/channel_number'
+          type: array
+          items:
+            oneOf:
+            - "$ref": "#/components/schemas/EndpointApp"
+            - "$ref": "#/components/schemas/EndpointPhone"
+            - "$ref": "#/components/schemas/EndpointSip"
+            - "$ref": "#/components/schemas/EndpointWebsocket"
+            - "$ref": "#/components/schemas/EndpointVBCExtension"
         leg_ids:
           type: array
+          description: Leg ids associated with this Channel. The first item in the array represents the main active Leg. The second item, if exists, represents a screen-share Leg.
           items:
             properties:
               leg_id:
@@ -1126,3 +1132,71 @@ tags:
     description: 'A leg can be a video call, IP call, or PSTN call that users participate in using multiple platforms. With this endpoint you can retrieve the details about all of the legs that took place in your application.'
   - name: Rtc
     description: Rtc actions. Any rtc action related (like starting a new rtc connection).
+
+    EndpointApp:
+      type: object
+      description: App User endpoint
+      required:
+        - type
+        - user_name
+      properties:
+        type:
+          type: string
+          example: app
+          description: The type of connection. Must be `app`
+        user_name:
+          "$ref": '#/components/schemas/name_user'
+    EndpointPhone:
+      type: object
+      description: Phone (PSTN) number endpoint
+      required:
+        - type
+        - number
+      properties:
+        type:
+          type: string
+          example: phone
+          description: The type of connection. Must be `phone`
+        number:
+          "$ref": "#/components/schemas/AddressE164"
+    EndpointWebsocket:
+      type: object
+      description: Websocket endpoint
+      required:
+        - type
+        - uri
+      properties:
+        type:
+          description: The type of connection. Must be `websocket`
+          type: string
+          example: websocket
+        uri:
+          "$ref": "#/components/schemas/AddressWebsocket"     
+    EndpointSip:
+      type: object
+      description: SIP endpoint
+      required:
+        - type
+        - uri
+      properties:
+        type:
+          description: The type of connection. Must be `sip`
+          type: string
+          example: sip
+        uri:
+          "$ref": "#/components/schemas/AddressSip"
+    EndpointVBCExtension:
+      type: object
+      description: VBC extension endpoint
+      required:
+        - type
+        - extension
+      properties:
+        type:
+          type: string
+          example: vbc
+          description: The type of connection. Must be `vbc`
+        extension:
+          type: string
+          example: '1234'         
+   
