@@ -984,7 +984,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Webhook ID
+          description: Unique identifier of the webhook
           required: true
           schema:
             type: string
@@ -1028,7 +1028,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Webhook ID
+          description: Unique identifier of the webhook
           required: true
           schema:
             type: string
@@ -1281,20 +1281,30 @@ components:
       properties:
         url:
           type: string
+          example: https://www.example.com
+          description: Destination URL for events
         events:
           type: array
+          example: 
+            - CALL
+          description: Events to subscribe to the webhook
           items:
             type: string
             enum:
               - CALL
         signingAlgo:
           type: string
+          example: HMAC_SHA256
+          description: Signing algorithm for the webhook
           enum:
             - HMAC_SHA256
         signingKey:
           type: string
+          description: Signing key for the webhook
         metadataPolicy:
           type: string
+          example: NONE
+          description: Metadata policy for the webhook
           enum:
             - NONE
             - HEADER
@@ -1304,91 +1314,124 @@ components:
       properties:
         id:
           type: string
+          example: 123456
+          description: Unique identifier for the webhook
         userId:
           type: string
+          example: 123456
+          description: Unique identifier of the user
         accountId:
           type: string
+          example: 123456
+          description: Unique identifier of the account
         url:
           type: string
+          example: https://www.example.com
+          description: Destination URL for events
         status:
-          type: array
-          items:
-            type: string
-            enum:
-              - ACTIVE
-              - PAUSED
+          type: string
+          example: ACTIVE
+          description: Status for the webhook
+          enum:
+            - ACTIVE
+            - PAUSED
         events:
           type: array
+          example: 
+            - CALL
+          description: Subscribed events for the webhook
           items:
             type: string
             enum:
               - CALL
         signingAlgo:
           type: string
+          example: HMAC_SHA256
+          description: Signing algorithm for the webhook
           enum:
             - HMAC_SHA256
             - NONE
         metadataPolicy:
           type: string
+          example: NONE
+          description: Metadata policy for the webhook
           enum:
             - NONE
             - HEADER
             - BODY
         expireAt:
           type: string
+          example: 2019-01-01T00:00:00.000Z
+          description: Expiration time for the webhook
         createdAt:
           type: string
-        createdBy:
-          type: string
+          example: 2019-01-01T00:00:00.000Z
+          description: Created time for the webhook
         renewedAt:
           type: string
-        renewedBy:
-          type: string
+          example: 2019-01-01T00:00:00.000Z
+          description: Last renewed time for the webhook
         purgeAt:
           type: string
+          example: 2019-01-01T00:00:00.000Z
+          description: Scheduled purge time for the webhook
         signingKey:
           type: string
+          description: Signing key for the webhook
         statistics:
           type: object
           properties:
             totalAttempts:
               type: integer
+              example: 10
+              description: Total delivery attempts
             totalSuccesses:
               type: integer
+              example: 10
+              description: Total successful deliveries
             totalFailures:
               type: integer
+              example: 10
+              description: Total failed deliveries
             failed:
               type: boolean
-            lastSuccess:
-              type: string
-            lastFailure:
-              type: string
-            lastHttpErrorCode:
-              type: string
-            lastErrorMessage:
-              type: string
+              example: false
+              description: Current delivery status
     User:
       type: object
       properties:
         id:
           type: integer
-          format: int64
+          example: 123456
+          description: Unique identifier of the user
         accountId:
           type: integer
-          format: int64
+          example: 123456
+          description: Unique identifier of the user's account
         acountLabel:
-          description:  ()
           type: string
+          example: Vonage
+          description: The name of the user's account
         firstName:
           type: string
+          example: Robert
+          description: First name of the user
         lastName:
           type: string
+          example: Smith
+          description: Last name of the user
         emailAddress:
           type: string
+          example: john.smith@example.com
+          description: Email address of the user
         contactNumber:
           type: string
+          example: 14155550100
+          description: Contact number of the user
         status:
           type: string
+          example: ACTIVE
+          description: Status of the user
           enum:
             - PENDING
             - ACTIVE
@@ -1422,18 +1465,27 @@ components:
             properties:
               code:
                 type: string
+                example: AU
+                description: Code for the role
               name:
                 type: string
+                example: Account User
+                description: Name for the role
     Account:
       type: object
       properties:
         id:
           type: integer
-          format: int64
+          example: 123456
+          description: Unique identifier of the account
         name:
           type: string
+          example: Vonage
+          description: Name of the account
         org:
           type: string
+          example: Vonage
+          description: Organization of the account
         ucis:
           type: array
           items:
@@ -1459,6 +1511,8 @@ components:
                 default: ACCOUNT_UCI
         status:
           type: string
+          example: ACTIVE
+          description: Status of the account
           enum:
             - PENDING
             - ACTIVE
