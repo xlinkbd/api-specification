@@ -3,7 +3,7 @@ servers:
   - url: 'https://api.nexmo.com/verify'
 info:
   title: Nexmo Verify API
-  version: 1.0.1
+  version: 1.0.2
   description: >-
     The Verify API helps you to implement 2FA (two-factor authentication) in your applications.
     This is useful for:
@@ -14,6 +14,8 @@ info:
     * Monitoring suspicious activity, by forcing an account user to verify ownership of a number
 
     * Ensuring that you can reach your users at any time because you have their correct phone number
+
+    More information is available at <https://developer.nexmo.com/verify>
   contact:
     name: Nexmo DevRel
     email: devrel@nexmo.com
@@ -23,7 +25,8 @@ info:
     name: The MIT License (MIT)
     url: 'https://opensource.org/licenses/MIT'
 externalDocs:
-  url: 'https://developer.nexmo.com/api/verify'
+  description: "More information on the Verify product on our Developer Portal"
+  url: 'https://developer.nexmo.com/verify'
 security:
   - apiKey: []
     apiSecret: []
