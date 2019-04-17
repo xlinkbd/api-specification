@@ -911,20 +911,20 @@ components:
           type: array
           items:
             oneOf:
-            - "$ref": "#/components/schemas/EndpointApp"
-            - "$ref": "#/components/schemas/EndpointPhone"
-            - "$ref": "#/components/schemas/EndpointSip"
-            - "$ref": "#/components/schemas/EndpointWebsocket"
-            - "$ref": "#/components/schemas/EndpointVBCExtension"
+            - "$ref": "voice.yml#/components/schemas/EndpointApp"
+            - "$ref": "voice.yml#/components/schemas/EndpointPhone"
+            - "$ref": "voice.yml#/components/schemas/EndpointSip"
+            - "$ref": "voice.yml#/components/schemas/EndpointWebsocket"
+            - "$ref": "voice.yml#/components/schemas/EndpointVBCExtension"
         to:
           type: array
           items:
             oneOf:
-            - "$ref": "#/components/schemas/EndpointApp"
-            - "$ref": "#/components/schemas/EndpointPhone"
-            - "$ref": "#/components/schemas/EndpointSip"
-            - "$ref": "#/components/schemas/EndpointWebsocket"
-            - "$ref": "#/components/schemas/EndpointVBCExtension"
+            - "$ref": "voice.yml#/components/schemas/EndpointApp"
+            - "$ref": "voice.yml#/components/schemas/EndpointPhone"
+            - "$ref": "voice.yml#/components/schemas/EndpointSip"
+            - "$ref": "voice.yml#/components/schemas/EndpointWebsocket"
+            - "$ref": "voice.yml#/components/schemas/EndpointVBCExtension"
         leg_ids:
           type: array
           description: Leg ids associated with this Channel. The first item in the array represents the main active Leg. The second item, if exists, represents a screen-share Leg.
@@ -1132,71 +1132,3 @@ tags:
     description: 'A leg can be a video call, IP call, or PSTN call that users participate in using multiple platforms. With this endpoint you can retrieve the details about all of the legs that took place in your application.'
   - name: Rtc
     description: Rtc actions. Any rtc action related (like starting a new rtc connection).
-
-    EndpointApp:
-      type: object
-      description: App User endpoint
-      required:
-        - type
-        - user_name
-      properties:
-        type:
-          type: string
-          example: app
-          description: The type of connection. Must be `app`
-        user_name:
-          "$ref": '#/components/schemas/name_user'
-    EndpointPhone:
-      type: object
-      description: Phone (PSTN) number endpoint
-      required:
-        - type
-        - number
-      properties:
-        type:
-          type: string
-          example: phone
-          description: The type of connection. Must be `phone`
-        number:
-          "$ref": "#/components/schemas/AddressE164"
-    EndpointWebsocket:
-      type: object
-      description: Websocket endpoint
-      required:
-        - type
-        - uri
-      properties:
-        type:
-          description: The type of connection. Must be `websocket`
-          type: string
-          example: websocket
-        uri:
-          "$ref": "#/components/schemas/AddressWebsocket"     
-    EndpointSip:
-      type: object
-      description: SIP endpoint
-      required:
-        - type
-        - uri
-      properties:
-        type:
-          description: The type of connection. Must be `sip`
-          type: string
-          example: sip
-        uri:
-          "$ref": "#/components/schemas/AddressSip"
-    EndpointVBCExtension:
-      type: object
-      description: VBC extension endpoint
-      required:
-        - type
-        - extension
-      properties:
-        type:
-          type: string
-          example: vbc
-          description: The type of connection. Must be `vbc`
-        extension:
-          type: string
-          example: '1234'         
-   

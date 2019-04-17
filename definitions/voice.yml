@@ -655,6 +655,11 @@ components:
       example: started
       description: The status of the call. [See possible values](https://developer.nexmo.com/voice/voice-api/guides/call-flow#event-objects)
 
+    name_user:
+      type: string
+      example: my_user_name
+      description: Unique name for a user
+
     EndpointApp:
       type: object
       description: Connect to an App User
