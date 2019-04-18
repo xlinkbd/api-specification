@@ -4,7 +4,7 @@ info:
   version: 1.0.2
   title: "Application API"
   description: |
-    Nexmo provides an Application API to allow programatic management of your Nexmo Applications.
+    Nexmo provides an Application API to allow management of your Nexmo Applications.
 
     This API is backwards compatible with version 1. Applications created using Version 1 of the API can also be managed using Version 2.
   contact:
@@ -82,7 +82,7 @@ paths:
                               properties:
                                 address:
                                   type: string
-                                  example: https://example.com/webhooks/status
+                                  example: https://example.com/webhooks/event
                                 http_method:
                                   type: string
                                   example: POST
@@ -139,7 +139,7 @@ paths:
                               properties:
                                 address:
                                   type: string
-                                  example: https://example.com/webhooks/event
+                                  example: https://example.com/webhooks/status
                                 http_method:
                                   type: string
                                   example: POST
@@ -372,7 +372,7 @@ paths:
                               properties:
                                 address:
                                   type: string
-                                  example: https://example.com/webhooks/status
+                                  example: https://example.com/webhooks/event
                                 http_method:
                                   type: string
                                   example: POST
@@ -429,7 +429,7 @@ paths:
                               properties:
                                 address:
                                   type: string
-                                  example: https://example.com/webhooks/event
+                                  example: https://example.com/webhooks/status
                                 http_method:
                                   type: string
                                   example: POST
@@ -620,15 +620,6 @@ components:
                 webhooks:
                   type: object
                   properties:
-                    answer_url:
-                      type: object
-                      properties:
-                        address:
-                          type: string
-                          example: https://example.com/webhooks/answer
-                        http_method:
-                          type: string
-                          example: POST
                     event_url:
                       type: object
                       properties:
