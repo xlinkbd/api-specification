@@ -908,7 +908,7 @@ components:
         leg_id:
           $ref: '#/components/schemas/leg_id'
         from:
-          type: array
+          type: object
           items:
             oneOf:
             - "$ref": "voice.yml#/components/schemas/EndpointApp"
@@ -917,7 +917,7 @@ components:
             - "$ref": "voice.yml#/components/schemas/EndpointWebsocket"
             - "$ref": "voice.yml#/components/schemas/EndpointVBCExtension"
         to:
-          type: array
+          type: object
           items:
             oneOf:
             - "$ref": "voice.yml#/components/schemas/EndpointApp"
