@@ -33,7 +33,6 @@ paths:
                   type: array
                   items:
                     oneOf:
-                    - "$ref": "#/components/schemas/EndpointApp"
                     - "$ref": "#/components/schemas/EndpointPhone"
                     - "$ref": "#/components/schemas/EndpointSip"
                     - "$ref": "#/components/schemas/EndpointWebsocket"
