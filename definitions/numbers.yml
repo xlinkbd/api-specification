@@ -1,10 +1,10 @@
 openapi: 3.0.0
 info:
   title: Numbers API
-  version: 1.0.5
+  version: 1.0.6
   description: >-
     The Numbers API enables you to manage your existing numbers and buy new virtual numbers for
-    use with Nexmo's APIs.
+    use with Nexmo's APIs. Further information is here: <https://developer.nexmo.com/numbers/overview>
   contact:
     name: Nexmo.com
     email: devrel@nexmo.com
@@ -20,8 +20,8 @@ info:
 servers:
   - url: 'https://rest.nexmo.com'
 externalDocs:
-  url: 'https://developer.nexmo.com/api/developer/numbers'
-  x-sha1: 8ad8bc6b0c51af4ca458c13cfced6124783ab113
+  description: Numbers product documentation on the Nexmo Developer Portal
+  url: 'https://developer.nexmo.com/numbers/overview'
 security:
   - apiKey: []
     apiSecret: []  
