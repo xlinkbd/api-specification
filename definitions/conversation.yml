@@ -434,8 +434,6 @@ paths:
                   $ref: '#/components/schemas/display_name_user'
                 image_url:
                   $ref: '#/components/schemas/image_url'
-                channels:
-                  $ref: '#/components/schemas/channel'
   '/users/{user_id}':
     parameters:
       - $ref: '#/components/parameters/user_id'
