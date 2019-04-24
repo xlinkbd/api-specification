@@ -434,8 +434,6 @@ paths:
                   $ref: '#/components/schemas/display_name_user'
                 image_url:
                   $ref: '#/components/schemas/image_url'
-                channels:
-                  $ref: '#/components/schemas/channel'
   '/users/{user_id}':
     parameters:
       - $ref: '#/components/parameters/user_id'
@@ -898,30 +896,32 @@ components:
         - phone
         - sip
         - websocket
+        - vbc
     channel:
       type: object
-      description: 'A user who joins a conversation as a member can have one channel per membership type. Channels can be `app`, `phone`, `sip`, or `websocket`'
+      description: 'A user who joins a conversation as a member can have one channel per membership type. Channels can be `app`, `phone`, `sip`, `websocket`, or `vbc`'
       properties:
         type:
           $ref: '#/components/schemas/channel_type'
         leg_id:
           $ref: '#/components/schemas/leg_id'
         from:
-          type: object
-          properties:
-            type:
-              $ref: '#/components/schemas/channel_type'
-            number:
-              $ref: '#/components/schemas/channel_number'
+          oneOf:
+            - "$ref": "voice.yml#/components/schemas/EndpointApp"
+            - "$ref": "voice.yml#/components/schemas/EndpointPhone"
+            - "$ref": "voice.yml#/components/schemas/EndpointSip"
+            - "$ref": "voice.yml#/components/schemas/EndpointWebsocket"
+            - "$ref": "voice.yml#/components/schemas/EndpointVBCExtension"
         to:
-          type: object
-          properties:
-            type:
-              $ref: '#/components/schemas/channel_type'
-            number:
-              $ref: '#/components/schemas/channel_number'
+          oneOf:
+            - "$ref": "voice.yml#/components/schemas/EndpointApp"
+            - "$ref": "voice.yml#/components/schemas/EndpointPhone"
+            - "$ref": "voice.yml#/components/schemas/EndpointSip"
+            - "$ref": "voice.yml#/components/schemas/EndpointWebsocket"
+            - "$ref": "voice.yml#/components/schemas/EndpointVBCExtension"
         leg_ids:
           type: array
+          description: Leg ids associated with this Channel. The first item in the array represents the main active Leg. The second item, if exists, represents a screen-share Leg.
           items:
             properties:
               leg_id:
