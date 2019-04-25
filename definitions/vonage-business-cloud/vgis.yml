@@ -160,9 +160,10 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: 'Filter by call direction (Default: all)'
+          description: Filter by call direction
           schema:
             type: array
+            default: ALL
             items:
               type: string
               enum:
@@ -170,9 +171,10 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter calls by state (Default: ACTIVE)'
+          description: Filter calls by state
           schema:
             type: array
+            default: ACTIVE
             items:
               type: string
               enum:
@@ -189,14 +191,16 @@ paths:
             format: int64
         - in: query
           name: size
-          description: 'Return this amount of calls in the response (Default: 20)'
+          description: Return this amount of calls in the response
           schema:
             type: integer
+            default: 20
         - in: query
           name: order
-          description: 'Sort in either ascending or descending order (Default: ASC)'
+          description: Sort in either ascending or descending order
           schema:
             type: string
+            default: ASC
             enum:
               - DESC
               - ASC
@@ -260,21 +264,23 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: 'Filter by call direction (Default: all)'
+          description: Filter by call direction
           schema:
             type: array
             items:
               type: string
+              default: ALL
               enum:
                 - INBOUND
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter calls by state (Default: ACTIVE)'
+          description: Filter calls by state
           schema:
             type: array
             items:
               type: string
+              default: ACTIVE
               enum:
                 - INITIALIZING
                 - RINGING
@@ -667,17 +673,18 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: 'Filter by event direction (Default: all)'
+          description: Filter by event direction
           schema:
             type: array
             items:
               type: string
+              default: ALL
               enum:
                 - INBOUND
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter events by state'
+          description: Filter events by state
           schema:
             type: array
             items:
@@ -701,14 +708,16 @@ paths:
             format: int64
         - in: query
           name: size
-          description: 'Return this amount of events in the response (Default: 20)'
+          description: Return this amount of events in the response
           schema:
             type: integer
+            default: 20
         - in: query
           name: order
-          description: 'Sort in either ascending or descending order (Default: ASC)'
+          description: Sort in either ascending or descending order'
           schema:
             type: string
+            default: ASC
             enum:
               - DESC
               - ASC
@@ -772,17 +781,18 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: 'Filter by event direction (Default: all)'
+          description: Filter by event direction
           schema:
             type: array
             items:
               type: string
+              default: ALL
               enum:
                 - INBOUND
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter events by state'
+          description: Filter events by state
           schema:
             type: array
             items:
