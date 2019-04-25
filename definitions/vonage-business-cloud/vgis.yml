@@ -163,6 +163,7 @@ paths:
           description: Filter by call direction
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             default: ALL
             items:
               type: string
@@ -174,6 +175,7 @@ paths:
           description: Filter calls by state
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             default: ACTIVE
             items:
               type: string
@@ -267,6 +269,7 @@ paths:
           description: Filter by call direction
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               default: ALL
@@ -278,6 +281,7 @@ paths:
           description: Filter calls by state
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               default: ACTIVE
@@ -655,6 +659,7 @@ paths:
           description: Record type
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               enum:
@@ -676,6 +681,7 @@ paths:
           description: Filter by event direction
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               default: ALL
@@ -687,6 +693,7 @@ paths:
           description: Filter events by state
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               enum:
@@ -784,6 +791,7 @@ paths:
           description: Filter by event direction
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               default: ALL
@@ -795,6 +803,7 @@ paths:
           description: Filter events by state
           schema:
             type: array
+            x-nexmo-developer-collection-description-shown: true
             items:
               type: string
               enum:
@@ -1316,6 +1325,7 @@ components:
           description: Events to subscribe to the webhook
           items:
             type: string
+            x-nexmo-developer-collection-description-shown: true
             enum:
               - CALL
         signingAlgo:
