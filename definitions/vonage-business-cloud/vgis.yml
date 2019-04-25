@@ -160,7 +160,7 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: 'Filter by direction (Default: all)'
+          description: 'Filter by call direction (Default: all)'
           schema:
             type: array
             items:
@@ -655,19 +655,19 @@ paths:
                 - CALL
         - in: query
           name: fromDate
-          description: Return calls that occurred after this point in time
+          description: Return events that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Return calls that occurred before this point in time
+          description: Return events that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: 'Filter by direction (Default: all)'
+          description: 'Filter by event direction (Default: all)'
           schema:
             type: array
             items:
@@ -677,7 +677,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter calls by state'
+          description: 'Filter events by state'
           schema:
             type: array
             items:
@@ -688,15 +688,20 @@ paths:
                 - ACTIVE
                 - HELD
                 - REMOTE_HELD
+                - DETACHED  
+                - REJECTED  
+                - CANCELLED 
+                - ANSWERED  
+                - MISSED
         - in: query
           name: offset
-          description: Page number of calls to return
+          description: Page number of events to return
           schema:
             type: integer
             format: int64
         - in: query
           name: size
-          description: 'Return this amount of calls in the response (Default: 20)'
+          description: 'Return this amount of events in the response (Default: 20)'
           schema:
             type: integer
         - in: query
@@ -709,7 +714,7 @@ paths:
               - ASC
         - in: query
           name: sort
-          description: 'Sort calls by property'
+          description: 'Sort events by property'
           schema:
             type: string
       responses:
@@ -755,13 +760,13 @@ paths:
       parameters:
         - in: query
           name: fromDate
-          description: Return calls that occurred after this point in time
+          description: Return events that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Return calls that occurred before this point in time
+          description: Return events that occurred before this point in time
           schema:
             type: integer
             #format: date
@@ -777,7 +782,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter calls by state (Default: ACTIVE)'
+          description: 'Filter events by state'
           schema:
             type: array
             items:
@@ -1190,7 +1195,7 @@ components:
         count:
           type: integer
           format: int64
-          description: Number of calls found
+          description: Number of events found
     Call:
       type: object
       required:
