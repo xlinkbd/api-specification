@@ -655,13 +655,13 @@ paths:
                 - CALL
         - in: query
           name: fromDate
-          description: Return events that occurred after this point in time
+          description: Return calls that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Return events that occurred before this point in time
+          description: Return calls that occurred before this point in time
           schema:
             type: integer
             #format: date
@@ -677,7 +677,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: 'Filter events by state'
+          description: 'Filter calls by state'
           schema:
             type: array
             items:
@@ -690,13 +690,13 @@ paths:
                 - REMOTE_HELD
         - in: query
           name: offset
-          description: Page number of events to return
+          description: Page number of calls to return
           schema:
             type: integer
             format: int64
         - in: query
           name: size
-          description: 'Return this amount of events in the response (Default: 20)'
+          description: 'Return this amount of calls in the response (Default: 20)'
           schema:
             type: integer
         - in: query
@@ -709,7 +709,7 @@ paths:
               - ASC
         - in: query
           name: sort
-          description: 'Sort events by property'
+          description: 'Sort calls by property'
           schema:
             type: string
       responses:
@@ -754,29 +754,20 @@ paths:
       operationId: getEventsCount
       parameters:
         - in: query
-          name: types
-          description: Needs a description
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - CALL
-        - in: query
           name: fromDate
-          description: Default - start of time
+          description: Return calls that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Default - now
+          description: Return calls that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: Filter by direction. Default - all
+          description: 'Filter by event direction (Default: all)'
           schema:
             type: array
             items:
@@ -786,7 +777,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: Filter by state.
+          description: 'Filter calls by state (Default: ACTIVE)'
           schema:
             type: array
             items:
@@ -797,11 +788,6 @@ paths:
                 - ACTIVE
                 - HELD
                 - REMOTE_HELD
-                - DETACHED
-                - REJECTED
-                - CANCELLED
-                - ANSWERED
-                - MISSED
       responses:
         "200":
           description: Successful
@@ -1133,58 +1119,78 @@ components:
         id:
           type: integer
           format: int64
+          description: Unique identifier of the call
         externalId:
           type: string
+          description: External identifier of the call
         type:
           type: string
           enum:
             - CALL
+          description: Record type
         accountId:
           type: integer
           format: int64
+          description: Unique identifier of the account
         userId:
           type: integer
           format: int64
+          description: Unique identifier of the user
         uciId:
           type: integer
           format: int64
+          description: Unique identifier of communications provider
         direction:
           type: string
           enum:
             - INBOUND
             - OUTBOUND
+          description: Direction of the call
         callerId:
           type: string
-          description: Remote caller ID (if present)
+          description: Remote caller ID
         phoneNumber:
           type: string
+          description: Unique identifier of the account
         duration:
           type: integer
           format: int64
-          description: Duration in milliseconds
+          description: Duration of the call in milliseconds
         smsData:
           type: string
         state:
           type: string
           enum:
-            - SENT
-            - DELIVERED
+            - INITIALIZING
+            - RINGING
+            - ACTIVE
+            - HELD
+            - REMOTE_HELD
+            - DETACHED
+            - REJECTED
+            - CANCELLED
+            - ANSWERED
+            - MISSED
+          description: Status of the call
         startTime:
           type: string
           format: date
+          description: Start time of the call
         answerTime:
           type: string
           format: date
+          description: Time to answer the call
         endTime:
           type: string
           format: date
+          description: End time of the call
     EventsCount:
       type: object
       properties:
         count:
           type: integer
           format: int64
-          description: Number of events found
+          description: Number of calls found
     Call:
       type: object
       required:
