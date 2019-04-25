@@ -1124,10 +1124,10 @@ components:
         id:
           type: integer
           format: int64
-          description: Unique identifier of the call
+          description: Unique identifier of the event
         externalId:
           type: string
-          description: External identifier of the call
+          description: External identifier of the event
         type:
           type: string
           enum:
@@ -1150,7 +1150,7 @@ components:
           enum:
             - INBOUND
             - OUTBOUND
-          description: Direction of the call
+          description: Direction of the event
         callerId:
           type: string
           description: Remote caller ID
@@ -1176,19 +1176,19 @@ components:
             - CANCELLED
             - ANSWERED
             - MISSED
-          description: Status of the call
+          description: Status of the event
         startTime:
           type: string
           format: date
-          description: Start time of the call
+          description: Start time of the event
         answerTime:
           type: string
           format: date
-          description: Time to answer the call
+          description: Time to answer the event
         endTime:
           type: string
           format: date
-          description: End time of the call
+          description: End time of the event
     EventsCount:
       type: object
       properties:
