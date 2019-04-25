@@ -834,7 +834,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Event ID
+          description: Unique identifier of the event
           required: true
           schema:
             type: string
