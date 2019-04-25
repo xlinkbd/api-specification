@@ -9,16 +9,12 @@ info:
     url: https://integrate.vonage.com
 tags:
   - name: Users
-    description: Users
   - name: Accounts
-    description: Accounts
   - name: Calls
-    description: Active Voice Calls
   - name: Events
-    description: Call Detail Record
   - name: Webhooks
-    description: Webhooks are external urls which receive events via Http POST for a
-      certain set of events.
+    description: Webhooks are external URLs which subscribe to receive events via HTTP POST for a
+      specified set of events.
 paths:
   /self:
     get:
@@ -28,34 +24,34 @@ paths:
         - Users
       responses:
         "200":
-          description: successful operation
+          description: Success
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/User"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/account:
@@ -66,34 +62,34 @@ paths:
         - Accounts
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Account"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/calls:
@@ -111,7 +107,7 @@ paths:
         required: true
       responses:
         "201":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -119,53 +115,52 @@ paths:
                 items:
                   $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
     get:
       tags:
         - Calls
       summary: List active calls
-      description: Alias to scope type CALL, active states only. For listing not active
-        calls use Events API.
+      description: Lists currently active calls
       operationId: listCalls
       parameters:
         - in: query
           name: fromDate
-          description: Needs a description
+          description: Return calls that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Default - now
+          description: Return calls that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: Filter by direction. Default - all
+          description: 'Filter by call direction (Default: all)'
           schema:
             type: array
             items:
@@ -175,7 +170,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: Filter by state. Default - active call states
+          description: 'Filter calls by state (Default: ACTIVE)'
           schema:
             type: array
             items:
@@ -188,18 +183,18 @@ paths:
                 - REMOTE_HELD
         - in: query
           name: offset
-          description: Page number from beginning
+          description: 'Page number of calls to return'
           schema:
             type: integer
             format: int64
         - in: query
           name: size
-          description: Page size - number of records to return (default 20)
+          description: 'Return this amount of calls in the response (Default: 20)'
           schema:
             type: integer
         - in: query
           name: order
-          description: Defalt - descending
+          description: 'Sort in either ascending or descending order (Default: ASC)'
           schema:
             type: string
             enum:
@@ -207,12 +202,12 @@ paths:
               - ASC
         - in: query
           name: sort
-          description: Sort property
+          description: 'Sort calls by property'
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -220,28 +215,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/calls/count:
@@ -253,19 +248,19 @@ paths:
       parameters:
         - in: query
           name: fromDate
-          description: Default - start of time
+          description: Return calls that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Default - now
+          description: Return calls that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: Filter by direction. Default - all
+          description: 'Filter by call direction (Default: all)'
           schema:
             type: array
             items:
@@ -275,7 +270,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: Filter by state. Default - active call states
+          description: 'Filter calls by state (Default: ACTIVE)'
           schema:
             type: array
             items:
@@ -288,34 +283,34 @@ paths:
                 - REMOTE_HELD
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventsCount"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/calls/{id}":
@@ -327,13 +322,13 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -341,28 +336,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
     delete:
@@ -373,13 +368,13 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -387,28 +382,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/calls/{id}/answer":
@@ -420,40 +415,40 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/calls/{id}/hold":
@@ -465,40 +460,40 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
     delete:
@@ -509,40 +504,40 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/calls/{id}/vmtransfer":
@@ -554,40 +549,40 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/calls/{id}/transfer":
@@ -599,7 +594,7 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Call ID
+          description: Unique identifier of the call
           required: true
           schema:
             type: string
@@ -612,34 +607,34 @@ paths:
         required: true
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Call"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/events:
@@ -651,7 +646,7 @@ paths:
       parameters:
         - in: query
           name: types
-          description: Needs a description
+          description: Record type
           schema:
             type: array
             items:
@@ -660,19 +655,19 @@ paths:
                 - CALL
         - in: query
           name: fromDate
-          description: Default - start of time
+          description: Return events that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Default - now
+          description: Return events that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: Filter by direction. Default - all
+          description: 'Filter by event direction (Default: all)'
           schema:
             type: array
             items:
@@ -682,7 +677,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: Filter by state. (Mix SMS/CALL states)
+          description: 'Filter events by state'
           schema:
             type: array
             items:
@@ -693,25 +688,25 @@ paths:
                 - ACTIVE
                 - HELD
                 - REMOTE_HELD
-                - DETACHED
-                - REJECTED
-                - CANCELLED
-                - ANSWERED
+                - DETACHED  
+                - REJECTED  
+                - CANCELLED 
+                - ANSWERED  
                 - MISSED
         - in: query
           name: offset
-          description: Page number, from beginning
+          description: Page number of events to return
           schema:
             type: integer
             format: int64
         - in: query
           name: size
-          description: Page size - number of records to return (default 20)
+          description: 'Return this amount of events in the response (Default: 20)'
           schema:
             type: integer
         - in: query
           name: order
-          description: Defalt - descending
+          description: 'Sort in either ascending or descending order (Default: ASC)'
           schema:
             type: string
             enum:
@@ -719,12 +714,12 @@ paths:
               - ASC
         - in: query
           name: sort
-          description: Sort property
+          description: 'Sort events by property'
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -732,28 +727,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Event"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/events/count:
@@ -764,29 +759,20 @@ paths:
       operationId: getEventsCount
       parameters:
         - in: query
-          name: types
-          description: Needs a description
-          schema:
-            type: array
-            items:
-              type: string
-              enum:
-                - CALL
-        - in: query
           name: fromDate
-          description: Default - start of time
+          description: Return events that occurred after this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: toDate
-          description: Default - now
+          description: Return events that occurred before this point in time
           schema:
             type: integer
             #format: date
         - in: query
           name: direction
-          description: Filter by direction. Default - all
+          description: 'Filter by event direction (Default: all)'
           schema:
             type: array
             items:
@@ -796,7 +782,7 @@ paths:
                 - OUTBOUND
         - in: query
           name: states
-          description: Filter by state.
+          description: 'Filter events by state'
           schema:
             type: array
             items:
@@ -807,41 +793,36 @@ paths:
                 - ACTIVE
                 - HELD
                 - REMOTE_HELD
-                - DETACHED
-                - REJECTED
-                - CANCELLED
-                - ANSWERED
-                - MISSED
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventsCount"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/events/{id}":
@@ -853,13 +834,13 @@ paths:
       parameters:
         - name: id
           in: path
-          description: Event ID
+          description: Unique identifier of the event
           required: true
           schema:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -867,28 +848,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Event"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   /self/webhooks:
@@ -906,34 +887,34 @@ paths:
         required: true
       responses:
         "201":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Webhook"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
     get:
@@ -943,7 +924,7 @@ paths:
       operationId: listWebhooks
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
@@ -951,28 +932,28 @@ paths:
                 items:
                   $ref: "#/components/schemas/Webhook"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/webhooks/{id}":
@@ -990,34 +971,34 @@ paths:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Webhook"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
     delete:
@@ -1034,30 +1015,30 @@ paths:
             type: string
       responses:
         "204":
-          description: successful operation
+          description: Successful
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
   "/self/webhooks/{id}/renew":
@@ -1075,34 +1056,34 @@ paths:
             type: string
       responses:
         "200":
-          description: successful operation
+          description: Successful
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/Webhook"
         "400":
-          description: Bad request. The client SHOULD NOT repeat the request without
-            modifications.
+          description: 'Bad Request: The client should not repeat the request without
+            modifications'
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
-          description: Unauthorized (Invalid access token).
+          description: 'Unauthorized: Invalid access token'
         "403":
-          description: Forbidden. The user has no rights to access the resource(s).
+          description: 'Forbidden: The user has no rights to access the resource(s)'
         "408":
-          description: Timeout. The client MAY repeat the request without modifications.
+          description: 'Timeout: The client may repeat the request without modifications'
         "422":
-          description: Validation error
+          description: Validation Error
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
         "500":
-          description: Internal Server Error.
+          description: Internal Server Error
         "502":
-          description: Bad Gateway.
+          description: Bad Gateway
       x-auth-type: Application & Application User
       x-throttling-tier: Unlimited
 servers:
@@ -1143,57 +1124,78 @@ components:
         id:
           type: integer
           format: int64
+          description: Unique identifier of the event
         externalId:
           type: string
+          description: External identifier of the event
         type:
           type: string
           enum:
             - CALL
+          description: Record type
         accountId:
           type: integer
           format: int64
+          description: Unique identifier of the account
         userId:
           type: integer
           format: int64
+          description: Unique identifier of the user
         uciId:
           type: integer
           format: int64
+          description: Unique identifier of communications provider
         direction:
           type: string
           enum:
             - INBOUND
             - OUTBOUND
+          description: Direction of the event
         callerId:
           type: string
-          description: Remote caller ID (if present)
+          description: Remote caller ID
         phoneNumber:
           type: string
+          description: Unique identifier of the account
         duration:
           type: integer
           format: int64
-          description: Duration in milliseconds
+          description: Duration of the call in milliseconds
         smsData:
           type: string
         state:
           type: string
           enum:
-            - SENT
-            - DELIVERED
+            - INITIALIZING
+            - RINGING
+            - ACTIVE
+            - HELD
+            - REMOTE_HELD
+            - DETACHED
+            - REJECTED
+            - CANCELLED
+            - ANSWERED
+            - MISSED
+          description: Status of the event
         startTime:
           type: string
           format: date
+          description: Start time of the event
         answerTime:
           type: string
           format: date
+          description: Time to answer the event
         endTime:
           type: string
           format: date
+          description: End time of the event
     EventsCount:
       type: object
       properties:
         count:
           type: integer
           format: int64
+          description: Number of events found
     Call:
       type: object
       required:
@@ -1211,35 +1213,43 @@ components:
         id:
           type: integer
           format: int64
+          description: Unique identifier of the call
         externalId:
           type: string
+          description: External identifier of the call
         type:
           type: string
           enum:
             - CALL
+          description: Record type
         accountId:
           type: integer
           format: int64
+          description: Unique identifier of the account
         userId:
           type: integer
           format: int64
+          description: Unique identifier of the user
         uciId:
           type: integer
           format: int64
+          description: Unique identifier of communications provider
         direction:
           type: string
           enum:
             - INBOUND
             - OUTBOUND
+          description: Direction of the call
         callerId:
           type: string
-          description: Remote caller ID (if present)
+          description: Remote caller ID
         phoneNumber:
           type: string
+          description: Unique identifier of the account
         duration:
           type: integer
           format: int64
-          description: Duration in milliseconds
+          description: Duration of the call in milliseconds
         state:
           type: string
           enum:
@@ -1253,15 +1263,19 @@ components:
             - CANCELLED
             - ANSWERED
             - MISSED
+          description: Status of the call
         startTime:
           type: string
           format: date
+          description: Start time of the call
         answerTime:
           type: string
           format: date
+          description: Time to answer the call
         endTime:
           type: string
           format: date
+          description: End time of the call
     CallCreate:
       type: object
       required:
@@ -1269,6 +1283,7 @@ components:
       properties:
         phoneNumber:
           type: string
+          description: Phone number to call
     CallTransfer:
       type: object
       required:
@@ -1276,6 +1291,7 @@ components:
       properties:
         phoneNumber:
           type: string
+          description: Phone number to transfer to
     WebhookCreate:
       type: object
       properties:
