@@ -162,29 +162,24 @@ paths:
           name: direction
           description: Filter by call direction
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            default: ALL
-            items:
-              type: string
-              enum:
-                - INBOUND
-                - OUTBOUND
+            type: string
+            example: INBOUND,OUTBOUND
+            enum:
+              - INBOUND
+              - OUTBOUND
         - in: query
           name: states
           description: Filter calls by state
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
+            type: string
             default: ACTIVE
-            items:
-              type: string
-              enum:
-                - INITIALIZING
-                - RINGING
-                - ACTIVE
-                - HELD
-                - REMOTE_HELD
+            example: ACTIVE,RINGING
+            enum:
+              - INITIALIZING
+              - RINGING
+              - ACTIVE
+              - HELD
+              - REMOTE_HELD
         - in: query
           name: offset
           description: 'Page number of calls to return'
@@ -268,29 +263,24 @@ paths:
           name: direction
           description: Filter by call direction
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              default: ALL
-              enum:
-                - INBOUND
-                - OUTBOUND
+            type: string
+            example: INBOUND,OUTBOUND
+            enum:
+              - INBOUND
+              - OUTBOUND
         - in: query
           name: states
           description: Filter calls by state
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              default: ACTIVE
-              enum:
-                - INITIALIZING
-                - RINGING
-                - ACTIVE
-                - HELD
-                - REMOTE_HELD
+            type: string
+            default: ACTIVE
+            example: ACTIVE,RINGING
+            enum:
+              - INITIALIZING
+              - RINGING
+              - ACTIVE
+              - HELD
+              - REMOTE_HELD
       responses:
         "200":
           description: Successful
@@ -658,12 +648,10 @@ paths:
           name: types
           description: Record type
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              enum:
-                - CALL
+            type: string
+            example: CALL
+            enum:
+              - CALL
         - in: query
           name: fromDate
           description: Return events that occurred after this point in time
@@ -680,33 +668,28 @@ paths:
           name: direction
           description: Filter by event direction
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              default: ALL
-              enum:
-                - INBOUND
-                - OUTBOUND
+            type: string
+            example: INBOUND,OUTBOUND
+            enum:
+              - INBOUND
+              - OUTBOUND
         - in: query
           name: states
           description: Filter events by state
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              enum:
-                - INITIALIZING
-                - RINGING
-                - ACTIVE
-                - HELD
-                - REMOTE_HELD
-                - DETACHED  
-                - REJECTED  
-                - CANCELLED 
-                - ANSWERED  
-                - MISSED
+            type: string
+            example: ACTIVE,RINGING
+            enum:
+              - INITIALIZING
+              - RINGING
+              - ACTIVE
+              - HELD
+              - REMOTE_HELD
+              - DETACHED  
+              - REJECTED  
+              - CANCELLED 
+              - ANSWERED  
+              - MISSED
         - in: query
           name: offset
           description: Page number of events to return
@@ -790,28 +773,23 @@ paths:
           name: direction
           description: Filter by event direction
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              default: ALL
-              enum:
-                - INBOUND
-                - OUTBOUND
+            type: string
+            example: INBOUND,OUTBOUND
+            enum:
+              - INBOUND
+              - OUTBOUND
         - in: query
           name: states
           description: Filter events by state
           schema:
-            type: array
-            x-nexmo-developer-collection-description-shown: true
-            items:
-              type: string
-              enum:
-                - INITIALIZING
-                - RINGING
-                - ACTIVE
-                - HELD
-                - REMOTE_HELD
+            type: string
+            example: ACTIVE,RINGING
+            enum:
+              - INITIALIZING
+              - RINGING
+              - ACTIVE
+              - HELD
+              - REMOTE_HELD
       responses:
         "200":
           description: Successful
@@ -1325,7 +1303,7 @@ components:
           description: Events to subscribe to the webhook
           items:
             type: string
-            x-nexmo-developer-collection-description-shown: true
+            example: CALL
             enum:
               - CALL
         signingAlgo:
