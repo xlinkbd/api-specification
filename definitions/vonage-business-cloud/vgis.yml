@@ -160,7 +160,7 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: Filter by call direction
+          description: Filter by call direction. For multiple criteria, seperate values by a comma.
           schema:
             type: string
             example: INBOUND,OUTBOUND
@@ -169,7 +169,7 @@ paths:
               - OUTBOUND
         - in: query
           name: states
-          description: Filter calls by state
+          description: Filter calls by state. For multiple criteria, seperate values by a comma.
           schema:
             type: string
             default: ACTIVE
@@ -261,7 +261,7 @@ paths:
             #format: date
         - in: query
           name: direction
-          description: Filter by call direction
+          description: Filter by call direction. For multiple criteria, seperate values by a comma.
           schema:
             type: string
             example: INBOUND,OUTBOUND
@@ -270,7 +270,7 @@ paths:
               - OUTBOUND
         - in: query
           name: states
-          description: Filter calls by state
+          description: Filter calls by state. For multiple criteria, seperate values by a comma.
           schema:
             type: string
             default: ACTIVE
@@ -1460,7 +1460,6 @@ components:
                 type: integer
                 format: int64
               ucpLabel:
-                description: "{ucpName} ({ucpType})"
                 type: string
               health:
                 type: object
@@ -1509,7 +1508,6 @@ components:
                 type: integer
                 format: int64
               ucpLabel:
-                description: "{ucpName} ({ucpType})"
                 type: string
               ucpAccountId:
                 type: string
