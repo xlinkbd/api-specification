@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   description: Vonage Integration Suite
-  version: 1.0.0
+  version: 1.0.1
   title: Vonage Integration Suite
   contact:
     email: gunifydevops@vonage.com
