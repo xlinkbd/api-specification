@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Numbers API
-  version: 1.0.7
+  version: 1.0.8
   description: >-
     The Numbers API enables you to manage your existing numbers and buy new virtual numbers for
     use with Nexmo's APIs. Further information is here: <https://developer.nexmo.com/numbers/overview>
@@ -48,6 +48,20 @@ paths:
                 $ref: '#/components/schemas/inbound-numbers'
         '401':
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error-code:
+                    type: number
+                    description: A code relating to this error
+                    example: 401
+                  error-code-label:
+                    type: string
+                    description: Words describing the error that occurred
+                    example: authentication failed
+
   '/number/search':
     get:
       operationId: getAvailableNumbers
