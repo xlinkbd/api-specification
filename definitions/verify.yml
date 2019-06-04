@@ -3,7 +3,7 @@ servers:
   - url: 'https://api.nexmo.com/verify'
 info:
   title: Nexmo Verify API
-  version: 1.0.3
+  version: 1.0.4
   description: >-
     The Verify API helps you to implement 2FA (two-factor authentication) in your applications.
     This is useful for:
@@ -43,7 +43,7 @@ paths:
 
 
         2. Check the `status` field in the response to ensure that your request
-        was successful.
+        was successful (zero is success).
 
 
         3. Use the `request_id` field in the response for the Verify check.
@@ -198,36 +198,22 @@ paths:
                     (`zh-tw`), the text message will be sent in Traditional
                     Chinese, but the voice call uses a female voice speaking
                     English with a Chinese accent.
-        - name: require_type
-          required: false
-          in: query
-          description: >-
-            Restrict verification to a certain network type. You must 
-            contact [support@nexmo.com](mailto:support@nexmo.com) to
-            enable this feature. If not enabled, **sending this field will
-            result in an error**.
-          schema:
-            type: string
-            default: All
-            enum:
-              - All
-              - Mobile
-              - Landline
-          example: Mobile
         - name: pin_expiry
           required: false
           in: query
           description: >-
             How log the generated verification code is valid for, in seconds.
-            When you specify both `pin_expiry` and `next_event_wait` then `pin_expiry` must be 
-            an integer multiple of `next_event_wait`. Otherwise, `pin_expiry`
-            is set to equal `next_event_wait`. See [changing the default event timings](https://developer.nexmo.com/verify/guides/changing-default-timings).
+            When you specify both `pin_expiry` and `next_event_wait` then
+            `pin_expiry` must be an integer multiple of `next_event_wait`
+            otherwise `pin_expiry` is defaulted to equal next_event_wait. See
+            [changing the event
+            timings](https://developer.nexmo.com/verify/guides/changing-default-timings).
           schema:
             type: integer
             minimum: 60
             maximum: 3600
             default: 300
-          example: 300
+          example: 240
         - name: next_event_wait
           required: false
           in: query
@@ -239,7 +225,26 @@ paths:
             minimum: 60
             maximum: 900
             default: 300
-          example: 300
+          example: 120
+        - name: workflow_id
+          required: false
+          in: query
+          description: >-
+            Selects the predefined sequence of SMS and TTS (Text To Speech)
+            actions to use in order to convey the PIN to your user. For example,
+            an id of 1 identifies the workflow SMS - TTS - TTS. For a list of
+            all workflows and their associated ids, please visit the [developer
+            portal](https://developer.nexmo.com/verify/guides/workflows-and-events).
+          schema:
+            type: integer
+            default: 1
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4
+              - 5
+          example: 4
       responses:
         '200':
           description: OK
@@ -472,6 +477,7 @@ components:
             - '17'
             - '18'
             - '19'
+            - '20'
             - '101'
           description: |
             Code | Text | Description
@@ -492,6 +498,7 @@ components:
             17 | The wrong code was provided too many times | You can run Verify check on a specific `request_id` up to three times unless a new verification code is generated. If you check a request more than three times, it is set to FAILED and you cannot check it again.
             18 | Too many request_ids provided | You added more than the maximum ten `request_id`s to your request.
             19 | No more events are left to execute for this request |
+            20 | This account does not support the parameter: pin_code. | Only certain accounts have the ability to set the `pin_code`. Please contact your account manager for more information.
             101 | No request found | There are no matching verify requests.
         error_text:
           type: string
@@ -812,3 +819,5 @@ components:
       description: >-
         You can find your API secret in your Nexmo account [developer
         dashboard](https://dashboard.nexmo.com)
+
+
