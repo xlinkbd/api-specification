@@ -3,7 +3,7 @@ servers:
   - url: 'https://api.nexmo.com/verify'
 info:
   title: Nexmo Verify API
-  version: 1.0.4
+  version: 1.0.5
   description: >-
     The Verify API helps you to implement 2FA (two-factor authentication) in your applications.
     This is useful for:
@@ -282,7 +282,7 @@ paths:
           schema:
             type: string
             maxLength: 32
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         - name: code
           required: true
           in: query
@@ -335,7 +335,7 @@ paths:
           description: The `request_id` you received in the Verify Request Response.
           schema:
             type: string
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         - name: request_ids
           required: false
           in: query
@@ -346,7 +346,7 @@ paths:
             type: array
             items:
               type: string
-              example: aaaaaaaa-bbbb-...
+              example: abcdef012345...
             maxItems: 10
           style: form
           explode: true
@@ -383,7 +383,7 @@ paths:
           description: 'The `request_id` you received in the response to the Verify request.'
           schema:
             type: string
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         - name: cmd
           required: true
           in: query
@@ -442,7 +442,7 @@ components:
             The unique ID of the Verify request. You need this
             `request_id` for the Verify check.
           maxLength: 32
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         status:
           type: string
           example: '0'
@@ -456,7 +456,7 @@ components:
           description: >-
             The unique ID of the Verify request. This may be blank in an error situation
           maxLength: 32
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         status:
           type: string
           example: '2'
@@ -512,10 +512,10 @@ components:
           description: >-
             The `request_id` that you received in the response to the Verify request and
             used in the Verify check request.
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         event_id:
           type: string
-          description: The `message-id` of the verification SMS.
+          description: The ID of the verification event, such as an SMS or TTS call.
           example: 0A00000012345678
         status:
           type: string
@@ -531,6 +531,10 @@ components:
           type: string
           description: The currency code.
           example: EUR
+        estimated_price_messages_sent:
+          type: string
+          description: Estimated cost of calls made and messages sent; the total cost of the verification is the sum of this field and the `price` field. The value can change in the future if another event is taking place when the code is entered. For older accounts, this field is not present (only the `price` field is needed to calculate the cost in that case).
+          example: "0.03330000"
       xml:
         name: verify_response
     checkErrorResponse:
@@ -541,7 +545,7 @@ components:
           description: >-
             The `request_id` that you received in the response to the Verify request and
             used in the Verify check request.
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         status:
           type: string
           example: '16'
@@ -599,7 +603,7 @@ components:
           description: >-
             The `request_id` that you received in the response to the Verify request and
             used in the Verify search request.
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         account_id:
           type: string
           description: The Nexmo account ID the request was for.
@@ -613,7 +617,6 @@ components:
             - FAILED
             - EXPIRED
             - CANCELLED
-            - '101'
           description: |
             Code | Description
             -- | --
@@ -622,7 +625,6 @@ components:
             FAILED | Your user entered an incorrect code more than three times.
             EXPIRED | Your user did not enter a code before the `pin_expiry` time elapsed.
             CANCELLED | The verification process was cancelled by a Verify control request.
-            101 | You supplied an invalid `request_id`.
         number:
           type: string
           description: The phone number this verification request was used for.
@@ -675,9 +677,12 @@ components:
             properties:
               date_received:
                 type: string
+                description: The date and time this check was received (in the format YYYY-MM-DD HH:MM:SS)
                 example: '2020-01-01 12:00:00'
               code:
                 type: string
+                description: The code supplied with this check request
+                example: 987654
               status:
                 type: string
                 enum:
@@ -685,6 +690,7 @@ components:
                   - INVALID
               ip_address:
                 type: string
+                description: The IP address, if available
                 example: 123.0.0.255
         events:
           type: array
@@ -713,10 +719,10 @@ components:
           description: >-
             The `request_id` that you received in the response to the Verify request and
             used in the Verify search request. May be empty in an error situation.
-          example: aaaaaaaa-bbbb-...
+          example: abcdef012345...
         status:
           type: string
-          example: '101'
+          example: "IN PROGRESS"
           enum:
             - IN PROGRESS
             - FAILED
@@ -731,7 +737,7 @@ components:
             FAILED | Your user entered an incorrect code more than three times.
             EXPIRED | Your user did not enter a code before the `pin_expiry` time elapsed.
             CANCELLED | The verification process was cancelled by a Verify control request.
-            101 | You supplied an invalid `request_id`.
+            101 | You supplied an invalid `request_id`, or the data is not available. Note that for recently-completed requests, there can be a delay of up to 1 minute before the results are available in search.
         error_text:
           type: string
           description: If `status` is not `SUCCESS`, this message explains the issue encountered.
