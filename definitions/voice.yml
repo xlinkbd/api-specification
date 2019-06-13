@@ -586,7 +586,7 @@ paths:
                   enum:
                     - start
                     - stop
-                eventUrl:
+                event_url:
                   description: URL to send the recording callback to
                   type: array
                   x-nexmo-developer-collection-description-shown: true
@@ -594,7 +594,7 @@ paths:
                   items:
                     type: string
                     format: string
-                eventMethod:
+                event_method:
                   description: The HTTP method used to send the callback to your event URL. Uses the application event URL if not provided
                   type: string
                   example: POST
@@ -626,6 +626,43 @@ paths:
       responses:
         '204':
           description: No Content
+  "/v1/calls/{uuid}/recording":
+    parameters:
+    - in: path
+      name: conversation_uuid
+      schema:
+        type: string
+      required: true
+      description: UUID of the Conversation
+      example: CON-f972836a-550f-45fa-956c-12a2ab5b7d22
+    put:
+      security:
+      - bearerAuth: []
+      summary: Start/Stop recording of a leg
+      description: Start/Stop recording of a leg
+      operationId: controlRecordingLeg
+      requestBody:
+        description: action to perform
+        required: true
+        content:
+          application/json:
+            schema:
+              properties:
+                split:
+                  type: boolean
+                  default: false
+                  description: 
+                streamed:
+                  type: string
+                  example: start
+                  description: Start/Stop a recording
+                  enum:
+                    - start
+                    - stop
+      responses:
+        '204':
+          description: No Content
+ 
 components:
   securitySchemes:
     bearerAuth:
