@@ -8,6 +8,10 @@
     }
   ],
   "env": {
+      "OAS_CI": {
+          "description": "Disable the OAS constraint in the renderer to allow all available definitions",
+          "value": "true"
+      }
   },
   "formation": {
   },
