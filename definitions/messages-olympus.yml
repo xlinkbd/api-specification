@@ -569,7 +569,7 @@ components:
         name:
           type: string
           description: 'The name of the template. For WhatsApp use "WhatsApp_namespace:template_name"'
-          example: 'whatsapp:hsm:technology:nexmo:verify'
+          example: 'WhatsApp_namespace:template_name'
         parameters:
           type: array
           items:
