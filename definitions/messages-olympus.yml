@@ -568,8 +568,8 @@ components:
       properties:
         name:
           type: string
-          description: 'The name of the template. For WhatsApp use "WhatsApp_namespace:template_name"'
-          example: 'whatsapp:hsm:technology:nexmo:verify'
+          description: 'The name of the template. For WhatsApp use your Whatsapp namespace (available via Facebook Business Manager), followed by a colon `:` and the name of the template to use.'
+          example: 'WhatsApp_namespace:template_name'
         parameters:
           type: array
           items:
