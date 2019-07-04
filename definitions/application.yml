@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Nexmo Application API
+  title: Application API
   version: 1.0.0
   description: >-
     A Nexmo application contains the security and configuration information you
@@ -25,25 +25,12 @@ externalDocs:
 security:
   - apiKey: []
     apiSecret: []
-tags:
-  - name: Create
-    description: Create an application
-  - name: Retrieve All
-    description: Retrieve your applications
-  - name: Retrieve
-    description: Retrieve an application
-  - name: Update
-    description: Update an application
-  - name: Destroy
-    description: Delete an application
 paths:
   /:
     post:
       summary: Create Application
       description: You use a `POST` request to create a new application.
       operationId: createApplication
-      tags:
-        - Create
       requestBody:
         content:
           application/x-www-form-urlencoded:
@@ -52,8 +39,6 @@ paths:
               required:
                 - name
                 - type
-                - answer_url
-                - event_url
               properties:
                 name:
                   description: The name of your application.
@@ -61,35 +46,50 @@ paths:
                   example: My Application
                 type:
                   description: >-
-                    The Nexmo product or products that you access with this
-                    application. Currently only `voice` is supported.
+                    The Nexmo product that you access with this
+                    application.
                   type: string
                   example: voice
+                  enum:
+                    - voice
+                    - messages
                 answer_url:
                   description: >-
                     The URL where your webhook delivers the Nexmo Call Control
                     Object that governs this call. As soon as your user answers
-                    a call Nexmo makes a request to `answer_url`.
+                    a call Nexmo makes a request to `answer_url`. (`voice` only)
                   type: string
-                  example: 'https://example.com'
+                  example: 'https://example.com/webhooks/answer'
                 answer_method:
                   description: >-
                     The HTTP method used to make the request to `answer_url`.
-                    The default value is `GET`.
+                    The default value is `GET`. (`voice` only)
                   type: string
                   example: GET
                 event_url:
                   description: >-
                     Nexmo sends event information asynchronously to this URL
-                    when status changes.
+                    when status changes. (`voice` only)
                   type: string
-                  example: 'https://example.com'
+                  example: 'https://example.com/webhooks/event'
                 event_method:
                   description: >-
                     The HTTP method used to send event information to event_url.
-                    The default value is `POST`.
+                    The default value is `POST`. (`voice` only)
                   type: string
                   example: POST
+                status_url:
+                  description: >-
+                    Nexmo sends event information asynchronously to this URL
+                    when status changes. (`messages` only)
+                  type: string
+                  example: POST
+                inbound_url:
+                  description: >-
+                    Nexmo sends a request to this URL when an inbound message
+                    is received (`messages` only)
+                  type: string
+                  example: 'https://example.com/webhooks/inbound'
       responses:
         '201':
           description: Created
@@ -106,8 +106,6 @@ paths:
         You use a `GET` request to retrieve details of all applications
         associated with your account.
       operationId: retrieveApplications
-      tags:
-        - Retrieve All
       parameters:
         - name: page_size
           required: false
@@ -142,8 +140,6 @@ paths:
       summary: Retrieve Application
       description: You use a `GET` request to retrieve details about a single application.
       operationId: retrieveApplication
-      tags:
-        - Retrieve
       parameters:
         - $ref: '#/components/parameters/app_id'
       responses:
@@ -160,8 +156,6 @@ paths:
       summary: Update Application
       description: You use a `PUT` request to update an existing application.
       operationId: updateApplication
-      tags:
-        - Update
       parameters:
         - $ref: '#/components/parameters/app_id'
         - name: name
@@ -175,12 +169,12 @@ paths:
           required: true
           in: query
           description: >-
-            The Nexmo product or products that you access with this application.
-            Currently only `voice` is supported.
+            The Nexmo product that you access with this application.
           schema:
             type: string
             enum:
               - voice
+              - messages
           example: voice
         - name: answer_url
           required: true
@@ -237,8 +231,6 @@ paths:
       summary: Destroy Application
       description: You use a `DELETE` request to delete a single application.
       operationId: deleteApplication
-      tags:
-        - Destroy
       parameters:
         - $ref: '#/components/parameters/app_id'
       responses:
@@ -285,8 +277,7 @@ components:
             example: /v1/applications/aaaaaaaa-bbbb-cccc-dddd-0123456789ab
     voiceXml:
       description: >-
-        The Nexmo product or products that you access with this application.
-        Currently only `voice` is supported.
+        The Nexmo product that you access with this application.
       type: object
       properties:
         webhooks:
@@ -295,8 +286,7 @@ components:
           $ref: '#/components/schemas/voiceBase/properties/keys'
     voiceBase:
       description: >-
-        The Nexmo product or products that you access with this application.
-        Currently only `voice` is supported.
+        The Nexmo product that you access with this application.
       type: object
       properties:
         webhooks:
