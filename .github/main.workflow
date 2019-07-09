@@ -1,4 +1,4 @@
-workflow "New workflow" {
+workflow "Commit Push" {
   on = "push"
   resolves = ["nexmo/github-actions/submodule-auto-pr@master"]
 }
@@ -15,4 +15,18 @@ action "nexmo/github-actions/submodule-auto-pr@master" {
     PR_TARGET_BRANCH = "master"
     PR_ACTIVE_BRANCH = "master"
   }
+}
+
+workflow "PR Edited" {
+  resolves = ["Create Review App"]
+  on = "pull_request"
+}
+
+action "Create Review App" {
+  uses = "docker://mheap/github-action-pr-heroku-review-app"
+  secrets = [
+    "GITHUB_TOKEN",
+    "HEROKU_APPLICATION_ID",
+    "HEROKU_AUTH_TOKEN",
+  ]
 }
