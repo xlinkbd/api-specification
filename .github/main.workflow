@@ -26,7 +26,7 @@ action "Create Review App" {
   uses = "docker://mheap/github-action-pr-heroku-review-app"
   secrets = [
     "GITHUB_TOKEN",
-    "HEROKU_APPLICATION_ID",
     "HEROKU_AUTH_TOKEN",
+    "HEROKU_APPLICATION_ID",
   ]
 }
