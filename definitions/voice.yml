@@ -365,6 +365,10 @@ paths:
                       type: array
                       items:
                         type: string
+                    ncco:
+                      type: array
+                      example: '[{"action": "talk", "text": "hello world"}]'
+                      description: Can be used instead of `url` for `transfer` only.
       responses:
         '204':
           description: No Content
