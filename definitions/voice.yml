@@ -3,7 +3,7 @@ openapi: 3.0.0
 info:
   version: 1.1.0
   title: Voice API
-  description: The Voice API lets you create outboud calls, control in progress calls
+  description: The Voice API lets you create outbound calls, control in-progress calls
     and get information about historical calls. More information about the Voice API
     can be found at <https://developer.nexmo.com/voice/voice-api/overview>.
   contact:
@@ -352,25 +352,31 @@ paths:
                   - earmuff
                   - unearmuff
                   - transfer
+                  description: The action to apply to the in-progress call
                 destination:
                   type: object
-                  description: Required when action is `transfer`
+                  description: Required when `action` is `transfer`
+                  x-nexmo-developer-collection-description-shown: true
                   properties:
                     type:
                       type: string
                       example: ncco
-                    url:
+                      description: Always `ncco`
                       x-nexmo-developer-collection-description-shown: true
+                    url:                      
                       example: '["https://example.com/ncco.json"]'
                       type: array
                       items:
                         type: string
+                      description: The URL that Nexmo makes a request to. Must return an NCCO.
+                      x-nexmo-developer-collection-description-shown: true
                     ncco:
+                      example: '[{"action": "talk", "text": "hello world"}]'
                       type: array
                       items:
                         type: string
-                      example: '[{"action": "talk", "text": "hello world"}]'
-                      description: Can be used instead of `url` for `transfer` only.
+                      description: Can be used instead of `url` for the `transfer` action only.
+                      x-nexmo-developer-collection-description-shown: true
       responses:
         '204':
           description: No Content
