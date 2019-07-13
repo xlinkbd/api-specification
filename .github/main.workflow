@@ -37,7 +37,7 @@ workflow "OpenAPI Release" {
 }
 
 action "Release OAS" {
-  uses = "nexmo/github-actions/release-openapi-on-push@master"
+  uses = "nexmo/github-actions/openapi-release@master"
   secrets = [
     "GH_ADMIN_TOKEN",
   ]
