@@ -30,3 +30,28 @@ action "Create Review App" {
     "HEROKU_APPLICATION_ID",
   ]
 }
+
+workflow "OpenAPI Release" {
+  resolves = ["Release OAS"]
+  on = "push"
+}
+
+action "Release OAS" {
+  uses = "nexmo/github-actions/release-openapi-on-push@master"
+  secrets = [
+    "GH_ADMIN_TOKEN",
+  ]
+}
+
+workflow "Add Changelog on Release" {
+  on = "release"
+  resolves = ["Add Changelog"]
+}
+
+action "Add Changelog" {
+  uses = "nexmo/github-actions/headway-changelog@master"
+  secrets = ["HEADWAY_USERNAME", "HEADWAY_PASSWORD"]
+  env = {
+    HEADWAY_CATEGORY = "API"
+  }
+}
