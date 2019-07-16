@@ -43,15 +43,16 @@ action "Release OAS" {
   ]
 }
 
-workflow "Add Changelog on Release" {
+workflow "New release" {
   on = "release"
   resolves = ["Add Changelog"]
 }
 
 action "Add Changelog" {
-  uses = "nexmo/github-actions/headway-changelog@master"
-  secrets = ["HEADWAY_USERNAME", "HEADWAY_PASSWORD"]
+  uses = "nexmo/github-actions/nexmo-changelog@master"
+  secrets = ["CHANGELOG_AUTH_TOKEN"]
   env = {
-    HEADWAY_CATEGORY = "API"
+    CHANGELOG_CATEGORY = "API"
+    CHANGELOG_SUBCATEGORY = "N/A"
   }
 }
