@@ -433,7 +433,13 @@ components:
   schemas:
     estimated_price_messages_sent:
       type: string
-      description: Estimated cost of calls made and messages sent; the total cost of the verification is the sum of this field and the `price` field. The value can change in the future if another event is taking place when the code is entered. For older accounts, this field is not present (only the `price` field is needed to calculate the cost in that case).
+      description: |
+        This field may not be present, depending on your pricing model. The
+        value indicates the cost (in EUR) of the calls made and messages sent
+        for the verification process. This value may be updated during and
+        shortly after the request completes because user input events can
+        overlap with message/call events. When this field is present, the total
+        cost of the verification is the sum of this field and the `price` field.
       example: "0.03330000"
     requestResponse:
       type: object
