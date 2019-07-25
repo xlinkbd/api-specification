@@ -15,6 +15,10 @@
       "OAS_PATH": "./"
   },
   "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "free"
+    }
   },
   "name": "api-specification",
   "scripts": {
