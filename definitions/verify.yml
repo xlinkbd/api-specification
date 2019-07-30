@@ -29,7 +29,6 @@ externalDocs:
   url: 'https://developer.nexmo.com/verify'
 security:
   - apiKey: []
-    apiSecret: []
 paths:
   '/{format}':
     get:
@@ -49,9 +48,9 @@ paths:
         3. Use the `request_id` field in the response for the Verify check.
 
 
-        **Note**: You can make a __maximum of one Verify request per second__.
       parameters:
         - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/api_secret'
         - name: number
           required: true
           in: query
@@ -273,6 +272,7 @@ paths:
       summary: Verify Check
       parameters:
         - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/api_secret'
         - name: request_id
           required: true
           in: query
@@ -329,6 +329,7 @@ paths:
       summary: Verify Search
       parameters:
         - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/api_secret'
         - name: request_id
           required: false
           in: query
@@ -377,6 +378,7 @@ paths:
       summary: Verify Control
       parameters:
         - $ref: '#/components/parameters/format'
+        - $ref: '#/components/parameters/api_secret'
         - name: request_id
           required: true
           in: query
@@ -430,6 +432,15 @@ components:
           - json
           - xml
       example: json
+    api_secret:
+      name: api_secret
+      required: true
+      in: query
+      description: >-
+        You can find your API secret in your Nexmo account [developer
+        dashboard](https://dashboard.nexmo.com)
+      schema:
+        type: string
   schemas:
     requestResponse:
       type: object
@@ -818,12 +829,3 @@ components:
       description: >-
         You can find your API key in your Nexmo account [developer
         dashboard](https://dashboard.nexmo.com/)
-    apiSecret:
-      type: apiKey
-      name: api_secret
-      in: query
-      description: >-
-        You can find your API secret in your Nexmo account [developer
-        dashboard](https://dashboard.nexmo.com)
-
-
