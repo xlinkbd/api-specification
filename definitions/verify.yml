@@ -3,7 +3,7 @@ servers:
   - url: 'https://api.nexmo.com/verify'
 info:
   title: Nexmo Verify API
-  version: 1.0.5
+  version: 1.0.6
   description: >-
     The Verify API helps you to implement 2FA (two-factor authentication) in your applications.
     This is useful for:
@@ -201,7 +201,7 @@ paths:
           required: false
           in: query
           description: >-
-            How log the generated verification code is valid for, in seconds.
+            How long the generated verification code is valid for, in seconds.
             When you specify both `pin_expiry` and `next_event_wait` then
             `pin_expiry` must be an integer multiple of `next_event_wait`
             otherwise `pin_expiry` is defaulted to equal next_event_wait. See
@@ -442,6 +442,16 @@ components:
       schema:
         type: string
   schemas:
+    estimated_price_messages_sent:
+      type: string
+      description: |
+        This field may not be present, depending on your pricing model. The
+        value indicates the cost (in EUR) of the calls made and messages sent
+        for the verification process. This value may be updated during and
+        shortly after the request completes because user input events can
+        overlap with message/call events. When this field is present, the total
+        cost of the verification is the sum of this field and the `price` field.
+      example: "0.03330000"
     requestResponse:
       type: object
       xml:
@@ -543,9 +553,7 @@ components:
           description: The currency code.
           example: EUR
         estimated_price_messages_sent:
-          type: string
-          description: Estimated cost of calls made and messages sent; the total cost of the verification is the sum of this field and the `price` field. The value can change in the future if another event is taking place when the code is entered. For older accounts, this field is not present (only the `price` field is needed to calculate the cost in that case).
-          example: "0.03330000"
+          $ref: '#/components/schemas/estimated_price_messages_sent'
       xml:
         name: verify_response
     checkErrorResponse:
@@ -720,6 +728,8 @@ components:
                   - sms
               id:
                 type: string
+        estimated_price_messages_sent:
+          $ref: '#/components/schemas/estimated_price_messages_sent'
     searchErrorResponse:
       xml:
         name: verify_request
