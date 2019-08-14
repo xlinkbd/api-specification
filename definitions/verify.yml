@@ -3,7 +3,7 @@ servers:
   - url: 'https://api.nexmo.com/verify'
 info:
   title: Nexmo Verify API
-  version: 1.0.5
+  version: 1.0.6
   description: >-
     The Verify API helps you to implement 2FA (two-factor authentication) in your applications.
     This is useful for:
@@ -433,6 +433,7 @@ components:
   schemas:
     requestResponse:
       type: object
+      description: Success
       xml:
         name: verify_response
       properties:
@@ -448,6 +449,7 @@ components:
           example: '0'
     requestErrorResponse:
       type: object
+      description: Error
       xml:
         name: verify_response
       properties:
@@ -506,6 +508,7 @@ components:
           example: 'Your request is incomplete and missing the mandatory parameter `number`'
     checkResponse:
       type: object
+      description: Success
       properties:
         request_id:
           type: string
@@ -539,6 +542,7 @@ components:
         name: verify_response
     checkErrorResponse:
       type: object
+      description: Error
       properties:
         request_id:
           type: string
@@ -597,6 +601,7 @@ components:
       xml:
         name: verify_request
       type: object
+      description: Success
       properties:
         request_id:
           type: string
@@ -713,6 +718,7 @@ components:
       xml:
         name: verify_request
       type: object
+      description: Error
       properties:
         request_id:
           type: string
@@ -744,6 +750,7 @@ components:
           example: No response found
     controlResponse:
       type: object
+      description: Success
       xml:
         name: response
       properties:
@@ -763,6 +770,7 @@ components:
           example: cancel
     controlErrorResponse:
       type: object
+      description: Error
       xml:
         name: response
       properties:
