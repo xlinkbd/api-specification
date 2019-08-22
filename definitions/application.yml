@@ -1,8 +1,16 @@
 openapi: 3.0.0
 info:
   title: Nexmo Application API
-  version: 1.0.1
+  version: 1.0.2
   description: >-
+    <div class="Vlt-callout Vlt-callout--critical">
+    <i></i>
+    <div class="Vlt-callout__content">
+      <h4>Applications V1 is deprecated</h4>
+      This version of the API has been deprecated. Please use <a href="/api/application.v2">version 2</a> going forwards
+    </div>
+    </div>
+
     A Nexmo application contains the security and configuration information you
     need to connect to Nexmo endpoints and easily use our products.
   contact:
