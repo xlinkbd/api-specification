@@ -424,7 +424,7 @@ paths:
       operationId: verifyRequestWithPSD2
       summary: Payment Standards Directive Verify Request
       description: >-
-        Use Verify request to generate and send a PIN to your user to authorise a payment:
+        Use Verify request to generate and send a PIN to your user to authorize a payment:
 
         1. Create a request to send a verification code to your user.
 
@@ -475,12 +475,12 @@ paths:
           schema:
             type: string
             maxLength: 30
-          example: Online Retailer Inc
+          example: Acme Inc
         - name: amount
           required: true
           in: query
           description: >-
-            A decimal amount for the payment to be confirmed, in Euros
+            The decimal amount of the payment to be confirmed, in Euros
           schema:
             type: number
             format: float
@@ -489,9 +489,11 @@ paths:
           required: false
           in: query
           description: >-
-            An 11-character alphanumeric string that represents the [identity of the sender](https://developer.nexmo.com/messaging/sms/guides/custom-sender-id) 
-            of the verification request. Depending on the destination of the phone number you are sending the verification SMS to,
-            restrictions might apply.
+            An 11-character alphanumeric string that represents the
+            [identity of the sender](https://developer.nexmo.com/messaging/sms/guides/custom-sender-id)
+            of the verification request. Depending on the destination of the
+            phone number you are sending the verification SMS to, restrictions
+            might apply. There is [more information on our Knowledgebase](https://help.nexmo.com/hc/en-us/articles/115011781468).
           schema:
             type: string
             maxLength: 11
@@ -550,10 +552,10 @@ paths:
           required: false
           in: query
           description: >-
-            How log the generated verification code is valid for, in seconds.
+            How long the generated verification code is valid for, in seconds.
             When you specify both `pin_expiry` and `next_event_wait` then
             `pin_expiry` must be an integer multiple of `next_event_wait`
-            otherwise `pin_expiry` is defaulted to equal next_event_wait. See
+            otherwise `pin_expiry` defaults to equal `next_event_wait`. See
             [changing the event
             timings](https://developer.nexmo.com/verify/guides/changing-default-timings).
           schema:
