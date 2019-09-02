@@ -433,9 +433,19 @@ paths:
 
         3. Use the `request_id` field in the response for the Verify check.
 
+        _Please note that XML format is not supported for the Payment Services Directive endpoint at this time._
+
       parameters:
-        - $ref: '#/components/parameters/format'
         - $ref: '#/components/parameters/api_secret'
+        - name: format
+          required: true
+          in: path
+          description: The response format (only JSON is supported at this time)
+          schema:
+            type: string
+            enum:
+              - json
+          example: json
         - name: number
           required: true
           in: query
@@ -470,7 +480,7 @@ paths:
           required: true
           in: query
           description: >-
-            A decimal amount for the payment to be confirmed.
+            A decimal amount for the payment to be confirmed, in Euros
           schema:
             type: number
             format: float
@@ -591,12 +601,7 @@ paths:
               schema:
                 oneOf:
                   - $ref: '#/components/schemas/requestResponse'
-                  - $ref: '#/components/schemas/requestErrorResponse'
-            text/xml:
-              schema:
-                oneOf:
-                  - $ref: '#/components/schemas/requestResponse'
-                  - $ref: '#/components/schemas/requestErrorResponse'
+                  - $ref: '#/components/schemas/psdErrorResponse'
 components:
   parameters:
     format:
@@ -1017,6 +1022,65 @@ components:
           type: string
           description: If the `status` is non-zero, this explains the error encountered.
           example: The requestId 'abcdef0123456789abcdef' does not exist or its no longer active.
+    psdErrorResponse:
+      type: object
+      description: Error
+      properties:
+        request_id:
+          type: string
+          description: >-
+            The unique ID of the Verify request. This may be blank in an error situation
+          maxLength: 32
+          example: abcdef012345...
+        status:
+          type: string
+          example: '2'
+          enum:
+            - '0'
+            - '1'
+            - '2'
+            - '3'
+            - '4'
+            - '5'
+            - '6'
+            - '7'
+            - '8'
+            - '9'
+            - '10'
+            - '15'
+            - '16'
+            - '17'
+            - '18'
+            - '19'
+            - '20'
+            - '21'
+            - '101'
+          description: |
+            Code | Text | Description
+            -- | -- | --
+            0 | Success | The request was successfully accepted by Nexmo.
+            1 | Throttled | You are trying to send more than the maximum of 30 requests per second.
+            2 | Your request is incomplete and missing the mandatory parameter `$parameter` | The stated parameter is missing.
+            3 | Invalid value for parameter `$parameter` | Invalid value for parameter. If you see Facility not allowed in the error text, check that you are using the correct Base URL in your request.
+            4 | Invalid credentials were provided | The supplied API key or secret in the request is either invalid or disabled.
+            5 | Internal Error | An error occurred processing this request in the Cloud Communications Platform.
+            6 | The Nexmo platform was unable to process this message for the following reason: `$reason` | The request could not be routed.
+            7 | The number you are trying to verify is blacklisted for verification. |
+            8 | The api_key you supplied is for an account that has been barred from submitting messages. |
+            9 | Partner quota exceeded | Your account does not have sufficient credit to process this request.
+            10 | Concurrent verifications to the same number are not allowed | 
+            15 | The destination number is not in a supported network | The request has been rejected. Find out more about this error in the [Knowledge Base](https://help.nexmo.com/hc/en-us/articles/360018406532-Verify-On-demand-Service-to-High-Risk-Countries)
+            16 | The code inserted does not match the expected value |
+            17 | The wrong code was provided too many times | You can run Verify check on a specific `request_id` up to three times unless a new verification code is generated. If you check a request more than three times, it is set to FAILED and you cannot check it again.
+            18 | Too many request_ids provided | You added more than the maximum ten `request_id`s to your request.
+            19 | No more events are left to execute for this request |
+            20 | This account does not support the parameter: pin_code. | Only certain accounts have the ability to set the `pin_code`. Please contact your account manager for more information.
+            21 | This account does not support the PSD2 feature. Please contact support for more information at support@nexmo.com. |
+            101 | No request found | There are no matching verify requests.
+        error_text:
+          type: string
+          description: 'If `status` is non-zero, this explains the error encountered.'
+          example: 'Your request is incomplete and missing the mandatory parameter `number`'
   securitySchemes:
     apiKey:
       type: apiKey
