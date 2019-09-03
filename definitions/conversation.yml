@@ -687,7 +687,6 @@ components:
       enum:
         - start
         - stop
-      required: true
     event_url:
       type: string
       format: url
@@ -1170,6 +1169,8 @@ components:
                 $ref: '#/components/schemas/split'
               format:
                 $ref: '#/components/schemas/format'
+            required:
+              - action
   securitySchemes:
     bearerAuth:
       type: http
