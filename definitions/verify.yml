@@ -422,7 +422,7 @@ paths:
   '/psd2/{format}':
     get:
       operationId: verifyRequestWithPSD2
-      summary: Payment Standards Directive Verify Request
+      summary: PSD2 (Payment Services Directive 2) Request
       description: >-
         Use Verify request to generate and send a PIN to your user to authorize a payment:
 
@@ -433,7 +433,7 @@ paths:
 
         3. Use the `request_id` field in the response for the Verify check.
 
-        _Please note that XML format is not supported for the Payment Services Directive endpoint at this time._
+        (Please note that XML format is not supported for the Payment Services Directive endpoint at this time.)
 
       parameters:
         - $ref: '#/components/parameters/api_secret'
